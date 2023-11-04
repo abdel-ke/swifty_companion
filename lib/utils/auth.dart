@@ -8,7 +8,7 @@ import 'package:oauth2_client/oauth2_helper.dart';
 import 'package:swifty_companion/models/User.dart';
 import 'package:swifty_companion/utils/storage.dart';
 
-void authorization() async {
+Future<bool> authorization() async {
   try {
     // Create an OAuth2Client
     final client = OAuth2Client(
@@ -28,11 +28,14 @@ void authorization() async {
     );
 
     final response = await helper.getToken();
+    print('response auth: $response');
     if (response!.accessToken != null) {
       storage.write(key: 'AccessToken', value: response.accessToken);
     }
+    return true;
   } catch (e) {
     print('ERROR AUTH: $e');
+    return false;
   }
 }
 
@@ -55,15 +58,20 @@ getUser(String login) async {
   }
 }
 
-
-Future<User> fetchUser() async {
+Future<User> fetchUser(String login) async {
   final token = await MyStorage().read('AccessToken');
-  const url = 'https://api.intra.42.fr/v2/users/abdel-ke';
+  String url = 'https://api.intra.42.fr/v2/users/$login';
   final response = await http
       .get(Uri.parse(url), headers: {'Authorization': 'Bearer $token'});
   if (response.statusCode == 200) {
     return User.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to load user');
+  }
+}
+
+checkStorage() async {
+  if (await MyStorage().read('AccessToken') == null) {
+    authorization();
   }
 }

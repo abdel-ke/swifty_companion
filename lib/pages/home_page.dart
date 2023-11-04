@@ -1,62 +1,51 @@
-import 'package:flutter/material.dart';
-import 'package:swifty_companion/models/User.dart';
-import 'package:swifty_companion/utils/auth.dart';
-import 'package:swifty_companion/utils/storage.dart';
+// ignore_for_file: prefer_const_constructors
 
-class HOMEPAGE extends StatefulWidget {
-  const HOMEPAGE({super.key});
+import 'package:flutter/material.dart';
+import 'package:swifty_companion/pages/login_page.dart';
+import 'package:swifty_companion/pages/search_user.dart';
+import 'package:swifty_companion/utils/token.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<HOMEPAGE> createState() => _HOMEPAGEState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HOMEPAGEState extends State<HOMEPAGE> {
-  late Future<User> futureUser;
+class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    checkStorage();
-    futureUser = fetchUser();
+    userInfo();
   }
 
-  checkStorage() async {
-    if (await MyStorage().read('AccessToken') == null) {
-      print('im in initstate');
-      authorization();
+  userInfo() async {
+    final tokenInfo = await checkToekn();
+    print('tokenInfo: $tokenInfo');
+    pushPage(tokenInfo);
+  }
+
+  pushPage(tokenInfo) {
+    if (tokenInfo == 'Unauthorized' || tokenInfo == false) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const LoginPage()));
     }
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SearchPage()));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: FutureBuilder<User>(
-          future: futureUser,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            }
-            if (snapshot.hasError) {
-              print('hasError: ${snapshot.error}');
-              return const Text('Error');
-            }
-            if (snapshot.hasData) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(snapshot.data!.login),
-                  Text(snapshot.data!.fullName),
-                  Text(snapshot.data!.email),
-                  Text(snapshot.data!.location),
-                  Image.network(snapshot.data!.imageUrl),
-                ],
-              );
-            } else {
-              return const CircularProgressIndicator();
-            }
-          },
-        ),
-      ),
+    return Center(
+      child: SizedBox(
+          height: 80,
+          width: 350,
+          child: Text(
+            '42',
+            style: TextStyle(fontSize: 52, fontWeight: FontWeight.bold),
+          )),
+      // child: MyButton(onTap: userInfo, title: 'Check token')),
     );
+    // return Text('Home Page');
   }
 }
