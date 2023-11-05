@@ -26,24 +26,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   pushPage(tokenInfo) {
-    if (tokenInfo == 'Unauthorized' || tokenInfo == false) {
+    print('tokenInfo: $tokenInfo *');
+    if (tokenInfo == false) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const LoginPage()));
     }
-    Navigator.push(
+    else {
+      Navigator.push(
         context, MaterialPageRoute(builder: (context) => SearchPage()));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SizedBox(
-          height: 80,
-          width: 350,
-          child: Text(
-            '42',
-            style: TextStyle(fontSize: 52, fontWeight: FontWeight.bold),
-          )),
+      child: CircularProgressIndicator(),
       // child: MyButton(onTap: userInfo, title: 'Check token')),
     );
     // return Text('Home Page');

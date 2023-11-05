@@ -6,6 +6,7 @@ class User {
   String fullName;
   String imageUrl;
   String location;
+  double level;
 
   User(
       {required this.email,
@@ -14,7 +15,9 @@ class User {
       // required this.lastName,
       required this.fullName,
       required this.imageUrl,
-      required this.location});
+      required this.location,
+      required this.level
+      });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -25,6 +28,7 @@ class User {
       fullName: json['usual_full_name'],
       imageUrl: json['image']['versions']['small'],
       location: json['location'] ?? 'Unavailable',
+      level: json['cursus_users'][1]['level'],
     );
   }
 }

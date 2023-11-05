@@ -16,7 +16,7 @@ getTokenInfo(String token) async {
   }
 }
 
-checkToekn() async {
+Future<bool> checkToekn() async {
   // MyStorage().delete('AccessToken');
   // return;
   final token = await MyStorage().read('AccessToken');
@@ -28,10 +28,12 @@ checkToekn() async {
   final ret = await getTokenInfo(token);
   print('ret: $ret');
   if (ret == 'Unauthorized') {
-    return 'Unauthorized';
+    // return 'Unauthorized';
+    return false;
   }
   final retJson = jsonDecode(ret);
   if (retJson['expires_in_seconds'] <= 60) {
     await authorization();
   }
+  return true;
 }

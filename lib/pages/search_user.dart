@@ -10,6 +10,20 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Swifty Companion'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              // await MyStorage().delete('AccessToken');
+              // ignore: use_build_context_synchronously
+              // Navigator.push(
+              //     context, MaterialPageRoute(builder: (context) => LoginPage()));
+            },
+          )
+        ],
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -21,7 +35,7 @@ class SearchPage extends StatelessWidget {
             height: 10,
           ),
           MyButton(
-              onTap: () {
+              onTap: () async {
                 if (user.text.isNotEmpty) {
                   Navigator.push(
                       context,
@@ -33,6 +47,31 @@ class SearchPage extends StatelessWidget {
               title: 'Search'),
         ],
       ),
+      // drawer: Drawer(
+      //   child: ListView(
+      //     padding: EdgeInsets.zero,
+      //     children: [
+      //       const DrawerHeader(
+      //         decoration: BoxDecoration(
+      //           color: Colors.blue,
+      //         ),
+      //         child: Text('Drawer Header'),
+      //       ),
+      //       ListTile(
+      //         title: const Text('Item 1'),
+      //         onTap: () {
+      //           Navigator.pop(context);
+      //         },
+      //       ),
+      //       ListTile(
+      //         title: const Text('Item 2'),
+      //         onTap: () {
+      //           Navigator.pop(context);
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
