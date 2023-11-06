@@ -14,6 +14,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Swifty Companion'),
@@ -24,7 +25,7 @@ class MainApp extends StatelessWidget {
                 await MyStorage().delete('AccessToken');
                 // ignore: use_build_context_synchronously
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => LoginPage()));
+                    context, MaterialPageRoute(builder: (context) => const LoginPage()));
               },
             )
           ],
