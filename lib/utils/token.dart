@@ -28,6 +28,7 @@ Future<bool> checkToekn() async {
   final ret = await getTokenInfo(token);
   print('ret: $ret');
   if (ret == 'Unauthorized') {
+    print('Unauthorized');
     // return 'Unauthorized';
     return false;
   }

@@ -14,24 +14,24 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Swifty Companion'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: () async {
-                await MyStorage().delete('AccessToken');
-                // ignore: use_build_context_synchronously
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => const LoginPage()));
-              },
-            )
-          ],
-        ),
-        body: const HomePage(),
-      )
-    );
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Swifty Companion'),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.logout),
+                onPressed: () {
+                  MyStorage().delete('AccessToken');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()));
+                },
+              )
+            ],
+          ),
+          body: const HomePage(),
+        ));
   }
 }

@@ -17,10 +17,9 @@ class _UserPageState extends State<UserPage> {
         title: const Text('Swifty Companion'),
         elevation: 0,
       ),
-      body: Column(
-        children: [
-        ProfileWidget(user: widget.user),
-      ],),
+      body: SingleChildScrollView(
+        child: ProfileWidget(user: widget.user),
+      ),
     );
   }
 }

@@ -7,6 +7,7 @@ import 'package:oauth2_client/oauth2_client.dart';
 import 'package:oauth2_client/oauth2_helper.dart';
 import 'package:swifty_companion/models/User.dart';
 import 'package:swifty_companion/utils/storage.dart';
+import 'package:swifty_companion/utils/token.dart';
 
 Future<bool> authorization() async {
   try {
@@ -29,6 +30,7 @@ Future<bool> authorization() async {
 
     final response = await helper.getToken();
     print('response token auth: ${response!.accessToken}');
+    print('response reftoken auth: ${response.refreshToken}');
     if (response!.accessToken != null) {
       storage.write(key: 'AccessToken', value: response.accessToken);
       storage.write(key: 'RefreshToken', value: response.refreshToken);
@@ -60,6 +62,10 @@ getUser(String login) async {
 }
 
 Future<User> fetchUser(String login) async {
+  final checkToken = await checkToekn();
+  if (checkToken == false) {
+    await authorization();
+  }
   final token = await MyStorage().read('AccessToken');
   print('fetchUser token: $token');
   String url = 'https://api.intra.42.fr/v2/users/$login';
