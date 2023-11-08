@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:swifty_companion/models/User.dart';
 import 'package:swifty_companion/utils/auth.dart';
 import 'package:swifty_companion/widgets/profile_screen.dart';
-import 'package:swifty_companion/widgets/projects.dart';
 
 class ProfileWidget extends StatefulWidget {
   String user;

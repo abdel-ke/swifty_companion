@@ -17,10 +17,7 @@ getTokenInfo(String token) async {
 }
 
 Future<bool> checkToekn() async {
-  // MyStorage().delete('AccessToken');
-  // return;
   final token = await MyStorage().read('AccessToken');
-  print('token: $token');
   if (token == null) {
     print('storage token is null!!');
     return false;
@@ -28,13 +25,13 @@ Future<bool> checkToekn() async {
   final ret = await getTokenInfo(token);
   print('ret: $ret');
   if (ret == 'Unauthorized') {
-    print('Unauthorized');
-    // return 'Unauthorized';
-    return false;
-  }
-  final retJson = jsonDecode(ret);
-  if (retJson['expires_in_seconds'] <= 60) {
+    print('Unauthorized !!');
     await authorization();
+  } else {
+    final retJson = jsonDecode(ret);
+    if (retJson['expires_in_seconds'] <= 60) {
+      await authorization();
+    }
   }
   return true;
 }

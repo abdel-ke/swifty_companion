@@ -13,12 +13,14 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Swifty Companion'),
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        child: ProfileWidget(user: widget.user),
+      // appBar: AppBar(
+      //   title: const Text('Swifty Companion'),
+      //   elevation: 0,
+      // ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: ProfileWidget(user: widget.user),
+        ),
       ),
     );
   }

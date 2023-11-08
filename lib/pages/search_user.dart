@@ -23,27 +23,7 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Swifty Companion'),
-        actions: [
-          IconButton(
-              onPressed: () async {
-                final token = await MyStorage().read('AccessToken');
-                final refresh = await MyStorage().read('RefreshToken');
-                print('token: $token');
-                print('refresh: $refresh');
-              },
-              icon: const Icon(Icons.remove_red_eye_outlined)),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              MyStorage().delete('AccessToken');
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()));
-            },
-          )
-        ],
-      ),
+      appBar: appBar(context),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -61,6 +41,30 @@ class SearchPage extends StatelessWidget {
           MyButton(onTap: () => search(context), title: 'Search'),
         ],
       ),
+    );
+  }
+
+  AppBar appBar(BuildContext context) {
+    return AppBar(
+      title: const Text('Swifty Companion'),
+      actions: [
+        IconButton(
+            onPressed: () async {
+              final token = await MyStorage().read('AccessToken');
+              final refresh = await MyStorage().read('RefreshToken');
+              print('token: $token');
+              print('refresh: $refresh');
+            },
+            icon: const Icon(Icons.remove_red_eye_outlined)),
+        IconButton(
+          icon: const Icon(Icons.logout),
+          onPressed: () {
+            MyStorage().delete('AccessToken');
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const LoginPage()));
+          },
+        )
+      ],
     );
   }
 }

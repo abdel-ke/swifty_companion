@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:swifty_companion/widgets/projects.dart';
+import 'package:swifty_companion/widgets/projects_list.dart';
+import 'package:swifty_companion/widgets/skills_list.dart';
 import 'package:swifty_companion/widgets/user_info.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -9,12 +10,13 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         userInfo(data, context),
         infoC(data),
         Projects(projects: data!.projects),
-        // SafeArea(child: Projects(projects: data!.projects)),
+        const SizedBox(height: 10),
+        SkillsList(skills: data!.skills),
+        const SizedBox(height: 15),
       ],
     );
   }
@@ -30,14 +32,20 @@ Widget userInfo(data, context) => Container(
             backgroundImage: NetworkImage(data!.imageUrl),
           ),
           const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(data!.fullName,
-                  style: const TextStyle(color: Colors.white),
-                  overflow: TextOverflow.ellipsis),
-              Text(data!.login, style: const TextStyle(color: Colors.white)),
-            ],
+          Container(
+            color: Colors.black.withOpacity(0.6),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                // const Icon(Icons.person, color: Colors.white),
+                Text(data!.fullName,
+                    style: const TextStyle(color: Colors.white),
+                    overflow: TextOverflow.ellipsis),
+                Text(data!.login, style: const TextStyle(color: Colors.white)),
+              ],
+            ),
           ),
           const SizedBox(height: 10),
           infoA(data),
@@ -138,19 +146,50 @@ Widget infoB(data, context) => Padding(
             Text(data!.location,
                 style: const TextStyle(color: Colors.white, fontSize: 20)),
             const SizedBox(height: 50),
-            if (data!.blackholedAt != "null")
-              const Text('Black Hole absorption',
-                  style: TextStyle(
-                    color: Color.fromRGBO(33, 90, 22, 1),
-                  )),
-            if (data!.blackholedAt != "null")
-              Text('${date(data!.blackholedAt) + 1} days',
-                  style: const TextStyle(
-                      color: Color.fromRGBO(33, 90, 22, 1), fontSize: 22)),
+            if (data!.blackholedAt != "null") blackHole(data),
           ],
         ),
       ),
     );
+/* 
+You've been absorbed by the Black Hole.
+ */
+Color colorsBH(blackHole) {
+  return blackHole >= 42
+      ? const Color.fromRGBO(33, 90, 22, 1)
+      : blackHole >= 15
+          ? Colors.amber.shade600
+          : Colors.red;
+}
+
+Widget blackHole(data) {
+  int blackHole = date(data!.blackholedAt) + 1;
+  if (blackHole < 0) {
+    return const Column(
+      children: [
+        Text(
+          'Black Hole absorption',
+          style: TextStyle(color: Colors.red),
+        ),
+        Text(
+          'You\'ve been absorbed by the Black Hole.',
+          style: TextStyle(color: Colors.red, fontSize: 26),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+  return Column(
+    children: [
+      Text('Black Hole absorption',
+          style: TextStyle(
+            color: colorsBH(blackHole),
+          )),
+      Text('$blackHole days',
+          style: TextStyle(color: colorsBH(blackHole), fontSize: 22)),
+    ],
+  );
+}
 
 Widget infoC(data) => Container(
       color: Colors.black.withOpacity(0.8),

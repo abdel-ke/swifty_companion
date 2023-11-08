@@ -29,8 +29,6 @@ Future<bool> authorization() async {
     );
 
     final response = await helper.getToken();
-    print('response token auth: ${response!.accessToken}');
-    print('response reftoken auth: ${response.refreshToken}');
     if (response!.accessToken != null) {
       storage.write(key: 'AccessToken', value: response.accessToken);
       storage.write(key: 'RefreshToken', value: response.refreshToken);
@@ -67,7 +65,6 @@ Future<User> fetchUser(String login) async {
     await authorization();
   }
   final token = await MyStorage().read('AccessToken');
-  print('fetchUser token: $token');
   String url = 'https://api.intra.42.fr/v2/users/$login';
   final response = await http
       .get(Uri.parse(url), headers: {'Authorization': 'Bearer $token'});

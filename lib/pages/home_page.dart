@@ -21,28 +21,24 @@ class _HomePageState extends State<HomePage> {
 
   userInfo() async {
     final tokenInfo = await checkToekn();
-    print('tokenInfo: $tokenInfo');
     pushPage(tokenInfo);
   }
 
   pushPage(tokenInfo) {
-    print('tokenInfo: $tokenInfo *');
     if (tokenInfo == false) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const LoginPage()));
-    }
-    else {
+    } else {
       Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SearchPage()));
+          context, MaterialPageRoute(builder: (context) => SearchPage()));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: CircularProgressIndicator(),
-      // child: MyButton(onTap: userInfo, title: 'Check token')),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [CircularProgressIndicator()],
     );
-    // return Text('Home Page');
   }
 }

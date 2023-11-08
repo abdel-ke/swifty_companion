@@ -12,6 +12,7 @@ class User {
   final String phone;
   final String blackholedAt;
   final List<Project> projects;
+  final List<Skills> skills;
 
   User({
     required this.email,
@@ -27,26 +28,42 @@ class User {
     required this.phone,
     required this.blackholedAt,
     required this.projects,
+    required this.skills,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
+    int index = json['cursus_users']
+        .indexWhere((element) => element['grade'] == 'Member');
+
+    if (index == -1) {
+      index = json['cursus_users']
+          .indexWhere((element) => element['grade'] == 'Student');
+    }
+
+    if (index == -1) {
+      index = json['cursus_users']
+          .indexWhere((element) => element['grade'] == null);
+    }
+    // element['grade'] == 'Student' || element['grade'] == 'Member');
+    print('index; $index');
     return User(
       email: json['email'] ?? "Unavailable",
       login: json['login'] ?? "Unavailable",
       fullName: json['usual_full_name'] ?? "Unavailable",
       imageUrl: json['image']['versions']['small'] ?? "Unavailable",
       location: json['location'] ?? '-',
-      level: json['cursus_users'][1]['level'] ?? 0,
-      grade: json['cursus_users'][1]['grade'] ?? "Unavailable",
-      blackholedAt: json['cursus_users'][1]['blackholed_at'] ?? "null",
+      level: json['cursus_users'][index]['level'] ?? 0,
+      grade: json['cursus_users'][index]['grade'] ?? "Novice",
+      blackholedAt: json['cursus_users'][index]['blackholed_at'] ?? "null",
       correctionPoint: json['correction_point'] ?? 0,
       wallet: json['wallet'] ?? 0,
       city: json['campus'][0]['city'] ?? "Unavailable",
       phone: json['phone'] ?? "-",
-      // projects: List<Project>.from(
-      //     json['projects_users'].map((x) => Project.fromJson(x))),
       projects: (json['projects_users'] as List)
           .map((projectJson) => Project.fromJson(projectJson))
+          .toList(),
+      skills: (json['cursus_users'][index]['skills'] as List)
+          .map((skillJson) => Skills.fromJson(skillJson))
           .toList(),
     );
   }
@@ -57,12 +74,18 @@ class Project {
   bool validated;
   String name;
   String markedAt;
+  String status;
+  int cursusIds;
+  String marked_at;
 
   Project({
     required this.finalMark,
     required this.validated,
     required this.name,
     required this.markedAt,
+    required this.status,
+    required this.cursusIds,
+    required this.marked_at,
   });
 
   factory Project.fromJson(Map<String, dynamic> json) {
@@ -71,6 +94,27 @@ class Project {
       validated: json['validated?'] ?? false,
       name: json['project']['name'] ?? "Unavailable",
       markedAt: json['marked_at'] ?? "Unavailable",
+      status: json['status'],
+      cursusIds: json['cursus_ids'][0] ?? 0,
+      marked_at: json['marked_at'] ?? "Unavailable",
     );
+  }
+}
+
+class Skills {
+  int id;
+  String name;
+  double level;
+
+  Skills({
+    required this.id,
+    required this.name,
+    required this.level,
+  });
+  factory Skills.fromJson(Map<String, dynamic> json) {
+    return Skills(
+        id: json['id'] ?? 0,
+        name: json['name'] ?? "undefined",
+        level: json['level'] ?? 0.0);
   }
 }
