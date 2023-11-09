@@ -17,7 +17,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   void initState() {
     super.initState();
     setState(() {
-      futureUser = fetchUser(widget.user.trim());
+      futureUser = fetchUser2(widget.user);
     });
   }
 
@@ -27,7 +27,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         future: futureUser,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const CircularProgressIndicator();
           }
           if (snapshot.hasError) {
             print(
@@ -35,14 +35,11 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             return const Text('Error occured while fetching data from API 42');
           }
           if (snapshot.hasData) {
-            return 
-            // Projects(projects: snapshot.data!.projects);
-            ProfileScreen(
+            return ProfileScreen(
               data: snapshot.data,
             );
-          } else {
-            return const CircularProgressIndicator();
           }
+          return const Text('No data found');
         });
   }
 }

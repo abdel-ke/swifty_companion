@@ -9,11 +9,12 @@ class ProfileScreen extends StatelessWidget {
   final data;
   @override
   Widget build(BuildContext context) {
+    print('data!.blackholedAt: ${data!.blackholedAt}');
     return Column(
       children: <Widget>[
-        userInfo(data, context),
+        userInfo(context, data, "#b61282"),
         infoC(data),
-        Projects(projects: data!.projects),
+        Projects(projects: data!.projects, grade: data!.grade,),
         const SizedBox(height: 10),
         SkillsList(skills: data!.skills),
         const SizedBox(height: 15),
@@ -22,8 +23,9 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-Widget userInfo(data, context) => Container(
-      color: const Color.fromRGBO(33, 90, 22, 0.7),
+Widget userInfo(context, data, color) => Container(
+      //#02cdd1
+      color: Colors.grey.shade200,
       child: Column(
         children: [
           const SizedBox(height: 10),
@@ -36,15 +38,18 @@ Widget userInfo(data, context) => Container(
             color: Colors.black.withOpacity(0.6),
             margin: const EdgeInsets.symmetric(horizontal: 10),
             padding: const EdgeInsets.symmetric(vertical: 14),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                // const Icon(Icons.person, color: Colors.white),
-                Text(data!.fullName,
-                    style: const TextStyle(color: Colors.white),
-                    overflow: TextOverflow.ellipsis),
-                Text(data!.login, style: const TextStyle(color: Colors.white)),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // const Icon(Icons.person, color: Colors.white),
+                  Text(data!.fullName,
+                      style: const TextStyle(color: Colors.white),
+                      overflow: TextOverflow.ellipsis),
+                  Text(data!.login, style: const TextStyle(color: Colors.white)),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 10),
@@ -152,8 +157,8 @@ Widget infoB(data, context) => Padding(
       ),
     );
 /* 
-You've been absorbed by the Black Hole.
- */
+  You've been absorbed by the Black Hole.
+*/
 Color colorsBH(blackHole) {
   return blackHole >= 42
       ? const Color.fromRGBO(33, 90, 22, 1)
@@ -192,7 +197,9 @@ Widget blackHole(data) {
 }
 
 Widget infoC(data) => Container(
-      color: Colors.black.withOpacity(0.8),
+      // color: Colors.grey.shade200,
+      color: Colors.black.withOpacity(0.6),
+      margin: const EdgeInsets.symmetric(horizontal: 10)  ,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,

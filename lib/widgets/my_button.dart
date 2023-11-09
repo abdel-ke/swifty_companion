@@ -12,9 +12,9 @@ class MyButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(25),
-        margin: const EdgeInsets.symmetric(horizontal: 25),
+        margin: const EdgeInsets.symmetric(horizontal: 42),
         decoration: BoxDecoration(
-          color: Colors.blue[500],
+          color: Colors.grey[900],
           borderRadius: BorderRadius.circular(8),
         ),
         child: Center(

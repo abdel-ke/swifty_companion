@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:swifty_companion/models/User.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class Projects extends StatelessWidget {
-  const Projects({super.key, required this.projects});
+  Projects({super.key, required this.projects, required this.grade});
   final List<Project> projects;
+  String grade;
 
   @override
   Widget build(BuildContext context) {
@@ -12,24 +14,18 @@ class Projects extends StatelessWidget {
         child: ListView.builder(
           itemCount: projects.length,
           itemBuilder: (context, index) {
-            // DateTime marked_at = DateTime.parse(projects[index].marked_at);
-            // print("Marked at: ${marked_at.day}/${marked_at.month}/${marked_at.year}");
-            // final marked_at = DateTime.parse(projects[index].markedAt);
-            // print(marked_at.day);
             if (projects[index].cursusIds == 21) {
               return Card(
-                color: Colors.grey.shade200,
+                color: Colors.grey.shade100,
                 child: ListTile(
                   title: Text(projects[index].name),
-                  subtitle: Text(projects[index].markedAt),
-                  // subtitle: Text(projects[index].markedAt != "Unavailable" ?
-                  //     "Marked at: ${marked_at.day}/${marked_at.month}/${marked_at.year}" : "Unavailable"),
+                  subtitle: timeAgo(projects[index].markedAt),
                   trailing: projDetail(index),
                 ),
               );
-            } else if (projects[index].cursusIds == 9) {
+            } else if (projects[index].cursusIds == 9 && grade == "Novice") {
               return Card(
-                color: Colors.grey.shade200,
+                color: Colors.grey.shade100,
                 child: ListTile(
                   title: Text(projects[index].name),
                   trailing: projDetail(index),
@@ -38,6 +34,14 @@ class Projects extends StatelessWidget {
             }
           },
         ));
+  }
+
+  Text timeAgo(String markedAt) {
+    if (markedAt != "Unavailable") {
+      return Text(timeago.format(DateTime.parse(markedAt)));
+    } else {
+      return const Text('');
+    }
   }
 
   Text projDetail(int index) {

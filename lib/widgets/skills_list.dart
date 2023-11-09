@@ -21,7 +21,7 @@ class _SkillsListState extends State<SkillsList> {
   @override
   Widget build(BuildContext context) {
     return SfCircularChart(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Colors.grey.shade100,
       title: ChartTitle(text: 'Skills'),
       legend: const Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap, position: LegendPosition.bottom, alignment: ChartAlignment.near),
       tooltipBehavior: _tooltipBehavior,

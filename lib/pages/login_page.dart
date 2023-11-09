@@ -22,11 +22,15 @@ class LoginPage extends StatelessWidget {
       pushPage(ret);
     }
 
-    return Center(
-      child: SizedBox(
-          height: 80,
-          width: 350,
-          child: MyButton(onTap: checkAuthorization, title: 'Sign in with 42')),
+    return Scaffold(
+      backgroundColor: Colors.grey.shade200,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset('assets/images/42_Logo.png', width: 200,),
+          MyButton(onTap: checkAuthorization, title: 'Sign in with 42'),
+        ],
+      ),
     );
   }
 }

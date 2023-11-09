@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:swifty_companion/models/User.dart';
 import 'package:swifty_companion/pages/login_page.dart';
 import 'package:swifty_companion/pages/user_page.dart';
+import 'package:swifty_companion/utils/auth.dart';
 import 'package:swifty_companion/utils/storage.dart';
 import 'package:swifty_companion/widgets/my_button.dart';
 import 'package:swifty_companion/widgets/my_textfield.dart';
@@ -9,11 +11,15 @@ class SearchPage extends StatelessWidget {
   SearchPage({super.key});
   TextEditingController user = TextEditingController();
 
-  search(context) {
+  search(context) async {
     if (user.text.isNotEmpty) {
+      final futureUser = await fetchUser(user.text.trim());
+      if (futureUser == null) {
+        print('User not found');
+        return;
+      }
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => UserPage(user: user.text)));
-      // user.clear();
+          MaterialPageRoute(builder: (context) => UserPage(user: user.text.trim())));
     }
   }
 

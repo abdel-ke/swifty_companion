@@ -42,6 +42,11 @@ class User {
 
     if (index == -1) {
       index = json['cursus_users']
+          .indexWhere((element) => element['grade'] == 'Learner');
+    }
+
+    if (index == -1) {
+      index = json['cursus_users']
           .indexWhere((element) => element['grade'] == null);
     }
     // element['grade'] == 'Student' || element['grade'] == 'Member');
@@ -76,7 +81,6 @@ class Project {
   String markedAt;
   String status;
   int cursusIds;
-  String marked_at;
 
   Project({
     required this.finalMark,
@@ -85,7 +89,6 @@ class Project {
     required this.markedAt,
     required this.status,
     required this.cursusIds,
-    required this.marked_at,
   });
 
   factory Project.fromJson(Map<String, dynamic> json) {
@@ -96,7 +99,6 @@ class Project {
       markedAt: json['marked_at'] ?? "Unavailable",
       status: json['status'],
       cursusIds: json['cursus_ids'][0] ?? 0,
-      marked_at: json['marked_at'] ?? "Unavailable",
     );
   }
 }

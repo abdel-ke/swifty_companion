@@ -40,26 +40,26 @@ Future<bool> authorization() async {
   }
 }
 
-getUser(String login) async {
+
+fetchUser(String login) async {
+  final checkToken = await checkToekn();
+  if (checkToken == false) {
+    await authorization();
+  }
   final token = await MyStorage().read('AccessToken');
-  var headers = {
-    'Authorization': 'Bearer $token',
-  };
-  var request =
-      http.Request('GET', Uri.parse('https://api.intra.42.fr/v2/users/$login'));
-
-  request.headers.addAll(headers);
-
-  http.StreamedResponse response = await request.send();
-
+  String url = 'https://api.intra.42.fr/v2/users/$login';
+  final response = await http
+      .get(Uri.parse(url), headers: {'Authorization': 'Bearer $token'});
   if (response.statusCode == 200) {
-    print(await response.stream.bytesToString());
+    return User.fromJson(jsonDecode(response.body));
   } else {
-    print(response.reasonPhrase);
+    // throw Exception('Failed to load user');
+    print('Failed to load user');
+    return null;
   }
 }
 
-Future<User> fetchUser(String login) async {
+Future<User> fetchUser2(String login) async {
   final checkToken = await checkToekn();
   if (checkToken == false) {
     await authorization();
