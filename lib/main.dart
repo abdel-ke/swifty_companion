@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:swifty_companion/pages/home_page.dart';
 import 'package:swifty_companion/pages/login_page.dart';
+import 'package:swifty_companion/pages/search_user.dart';
 import 'package:swifty_companion/utils/storage.dart';
 
 void main() async {
@@ -11,14 +12,20 @@ void main() async {
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          // appBar: appBar(context),
-          body: HomePage(),
-        ));
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const Scaffold(
+        body: HomePage(),
+        // ),
+      ),
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/search': (context) => SearchPage(),
+      }
+    );
   }
 
   AppBar appBar(BuildContext context) {
@@ -29,8 +36,7 @@ class MainApp extends StatelessWidget {
           icon: const Icon(Icons.logout),
           onPressed: () {
             MyStorage().delete('AccessToken');
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const LoginPage()));
+            Navigator.pushNamed(context, '/login');
           },
         )
       ],

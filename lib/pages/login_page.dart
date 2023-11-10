@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swifty_companion/pages/search_user.dart';
 import 'package:swifty_companion/utils/auth.dart';
 import 'package:swifty_companion/widgets/my_button.dart';
 
@@ -10,10 +9,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     pushPage(ret) {
       if (ret == true) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SearchPage()));
-      } else {
-        Navigator.pop(context);
+        Navigator.pushNamed(context, '/search');
       }
     }
 

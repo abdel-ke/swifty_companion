@@ -1,7 +1,4 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:swifty_companion/pages/login_page.dart';
 import 'package:swifty_companion/pages/search_user.dart';
 import 'package:swifty_companion/utils/token.dart';
 
@@ -13,6 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isLogged = false;
   @override
   void initState() {
     super.initState();
@@ -21,24 +19,20 @@ class _HomePageState extends State<HomePage> {
 
   userInfo() async {
     final tokenInfo = await checkToekn();
-    pushPage(tokenInfo);
-  }
-
-  pushPage(tokenInfo) {
-    if (tokenInfo == false) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const LoginPage()));
-    } else {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => SearchPage()));
-    }
+    setState(() {
+      isLogged = tokenInfo;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: const [CircularProgressIndicator()],
-    );
+    if (isLogged == false) {
+      return const SafeArea(
+          child: Center(
+        child: CircularProgressIndicator(),
+      ));
+    } else {
+      return SearchPage();
+    }
   }
 }

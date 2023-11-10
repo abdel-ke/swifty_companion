@@ -49,8 +49,6 @@ class User {
       index = json['cursus_users']
           .indexWhere((element) => element['grade'] == null);
     }
-    // element['grade'] == 'Student' || element['grade'] == 'Member');
-    print('index; $index');
     return User(
       email: json['email'] ?? "Unavailable",
       login: json['login'] ?? "Unavailable",

@@ -23,14 +23,13 @@ Future<bool> checkToekn() async {
     return false;
   }
   final ret = await getTokenInfo(token);
-  print('ret: $ret');
   if (ret == 'Unauthorized') {
     print('Unauthorized !!');
-    await authorization();
+    return await authorization();
   } else {
     final retJson = jsonDecode(ret);
     if (retJson['expires_in_seconds'] <= 60) {
-      await authorization();
+      return await authorization();
     }
   }
   return true;

@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:swifty_companion/models/User.dart';
 import 'package:swifty_companion/widgets/projects_list.dart';
 import 'package:swifty_companion/widgets/skills_list.dart';
 import 'package:swifty_companion/widgets/user_info.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key, required this.data});
-  final data;
+class UserProfile extends StatelessWidget {
+  UserProfile({super.key, required this.data});
+  User data;
   @override
   Widget build(BuildContext context) {
-    print('data!.blackholedAt: ${data!.blackholedAt}');
-    return Column(
-      children: <Widget>[
-        userInfo(context, data, "#b61282"),
-        infoC(data),
-        Projects(projects: data!.projects, grade: data!.grade,),
-        const SizedBox(height: 10),
-        SkillsList(skills: data!.skills),
-        const SizedBox(height: 15),
-      ],
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            children: <Widget>[
+              userInfo(context, data, "#b61282"),
+              infoC(data),
+              Projects(projects: data!.projects, grade: data!.grade,),
+              const SizedBox(height: 10),
+              SkillsList(skills: data!.skills),
+              const SizedBox(height: 15),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

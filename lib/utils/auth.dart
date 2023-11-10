@@ -40,26 +40,7 @@ Future<bool> authorization() async {
   }
 }
 
-
-fetchUser(String login) async {
-  final checkToken = await checkToekn();
-  if (checkToken == false) {
-    await authorization();
-  }
-  final token = await MyStorage().read('AccessToken');
-  String url = 'https://api.intra.42.fr/v2/users/$login';
-  final response = await http
-      .get(Uri.parse(url), headers: {'Authorization': 'Bearer $token'});
-  if (response.statusCode == 200) {
-    return User.fromJson(jsonDecode(response.body));
-  } else {
-    // throw Exception('Failed to load user');
-    print('Failed to load user');
-    return null;
-  }
-}
-
-Future<User> fetchUser2(String login) async {
+Future<User> fetchUser(String login) async {
   final checkToken = await checkToekn();
   if (checkToken == false) {
     await authorization();
@@ -72,11 +53,5 @@ Future<User> fetchUser2(String login) async {
     return User.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to load user');
-  }
-}
-
-checkStorage() async {
-  if (await MyStorage().read('AccessToken') == null) {
-    authorization();
   }
 }
