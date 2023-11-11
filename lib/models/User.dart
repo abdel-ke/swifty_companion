@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class User {
   final String email;
   final String login;
@@ -116,5 +118,30 @@ class Skills {
         id: json['id'] ?? 0,
         name: json['name'] ?? "undefined",
         level: json['level'] ?? 0.0);
+  }
+}
+
+class Coalition {
+  String coverUrl;
+  Color color;
+  Coalition({
+    required this.coverUrl,
+    required this.color,
+  });
+
+  factory Coalition.fromJson(json) {
+    if (json.isEmpty) {
+      return Coalition(
+          coverUrl:
+              "https://profile.intra.42.fr/assets/background_login-a4e0666f73c02f025f590b474b394fd86e1cae20e95261a6e4862c2d0faa1b04.jpg",
+          color: const Color(0xff02cdd1));
+    }
+    return Coalition(
+      coverUrl: json[0]['cover_url'] ??
+          "https://profile.intra.42.fr/assets/background_login-a4e0666f73c02f025f590b474b394fd86e1cae20e95261a6e4862c2d0faa1b04.jpg",
+      color: (json[0]['color'] != null && json[0]['color'].isNotEmpty)
+          ? Color(int.parse('FF${json[0]['color'].substring(1)}', radix: 16))
+          : const Color(0xff02cdd1),
+    );
   }
 }

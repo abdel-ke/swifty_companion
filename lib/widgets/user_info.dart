@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class UserInfo extends StatelessWidget {
-  const UserInfo({super.key, required this.title, required this.icon});
+  UserInfo({super.key, required this.title, required this.icon, required this.color});
   final String title;
+  Color color;
 
   final IconData icon;
   @override
@@ -19,8 +20,8 @@ class UserInfo extends StatelessWidget {
               title,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: color,
               ),
             ),
           ),

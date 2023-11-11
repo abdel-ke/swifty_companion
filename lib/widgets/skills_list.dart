@@ -20,7 +20,9 @@ class _SkillsListState extends State<SkillsList> {
   }
   @override
   Widget build(BuildContext context) {
-    return SfCircularChart(
+    return widget.skills.isEmpty
+        ? const SizedBox(height: 200, child: Center(child: Text('No Skills data available')))
+        : SfCircularChart(
       backgroundColor: Colors.grey.shade100,
       title: ChartTitle(text: 'Skills'),
       legend: const Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap, position: LegendPosition.bottom, alignment: ChartAlignment.near),

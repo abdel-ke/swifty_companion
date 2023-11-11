@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset('assets/images/42_Logo.png', width: 200,),
-          MyButton(onTap: checkAuthorization, title: 'Sign in with 42'),
+          MyButton(onTap: checkAuthorization, title: 'Sign in with intra 42'),
         ],
       ),
     );

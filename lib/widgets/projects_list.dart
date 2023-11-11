@@ -9,7 +9,9 @@ class Projects extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return projects.isEmpty
+        ? const SizedBox(height: 150, child: Center(child: Text('No Projects data available')))
+        : SizedBox(
         height: 250,
         child: ListView.builder(
           itemCount: projects.length,
@@ -23,7 +25,8 @@ class Projects extends StatelessWidget {
                   trailing: projDetail(index),
                 ),
               );
-            } else if (projects[index].cursusIds == 9 && grade == "Novice") {
+            }
+            else if (projects[index].cursusIds != 21 && grade == "Novice") {
               return Card(
                 color: Colors.grey.shade100,
                 child: ListTile(

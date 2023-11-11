@@ -12,13 +12,24 @@ class SearchPage extends StatelessWidget {
 
   void search(context) async {
     if (user.text.isNotEmpty) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          });
       try {
+        final futureCoalition = await fetchCoalition(user.text.trim());
         final futureUser = await fetchUser(user.text.trim());
+        Navigator.pop(context);
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => UserProfile(data: futureUser)));
+                builder: (context) => UserProfile(data: futureUser, coalition: futureCoalition, controller: user)));
       } catch (e) {
+        debugPrint('ERROR: $e');
+        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Colors.red,
@@ -63,14 +74,16 @@ class SearchPage extends StatelessWidget {
       title: const Text('Swifty Companion'),
       backgroundColor: Colors.blueGrey[900],
       actions: [
-        IconButton(
-            onPressed: () async {
-              final token = await MyStorage().read('AccessToken');
-              final refresh = await MyStorage().read('RefreshToken');
-              print('token: $token');
-              print('refresh: $refresh');
-            },
-            icon: const Icon(Icons.remove_red_eye_outlined)),
+        // IconButton(
+        //     onPressed: () async {
+        //       final token = await MyStorage().read('AccessToken');
+        //       final refresh = await MyStorage().read('RefreshToken');
+        //       debugPrint('token: $token');
+        //       debugPrint('refresh: $refresh');
+        //       // Coalition cola = await fetchCoalition('abddel-ke');
+        //       // debugPrint('coalition: ${cola.color}');
+        //     },
+        //     icon: const Icon(Icons.remove_red_eye_outlined)),
         IconButton(
           icon: const Icon(Icons.logout),
           onPressed: () {

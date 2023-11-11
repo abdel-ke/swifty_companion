@@ -6,22 +6,37 @@ import 'package:swifty_companion/widgets/skills_list.dart';
 import 'package:swifty_companion/widgets/user_info.dart';
 
 class UserProfile extends StatelessWidget {
-  UserProfile({super.key, required this.data});
+  UserProfile({super.key, required this.data, required this.coalition,
+  required this.controller
+  });
   User data;
+  Coalition coalition;
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            children: <Widget>[
-              userInfo(context, data, "#b61282"),
-              infoC(data),
-              Projects(projects: data!.projects, grade: data!.grade,),
-              const SizedBox(height: 10),
-              SkillsList(skills: data!.skills),
-              const SizedBox(height: 15),
-            ],
+    return WillPopScope(
+      onWillPop: () async {
+        controller.clear();
+        Navigator.pop(context);
+        return true;
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Column(
+              children: <Widget>[
+                userInfo(context, data, coalition),
+                infoC(data, coalition),
+                Projects(
+                  projects: data.projects,
+                  grade: data.grade,
+                ),
+                const SizedBox(height: 10),
+                SkillsList(skills: data.skills),
+                const SizedBox(height: 15),
+              ],
+            ),
           ),
         ),
       ),
@@ -29,19 +44,23 @@ class UserProfile extends StatelessWidget {
   }
 }
 
-Widget userInfo(context, data, color) => Container(
-      //#02cdd1
-      color: Colors.grey.shade200,
+Widget userInfo(context, data, Coalition coalition) => Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage(coalition.coverUrl),
+          fit: BoxFit.cover,
+        ),
+      ),
       child: Column(
         children: [
-          const SizedBox(height: 10),
+          const SizedBox(height: 42),
           CircleAvatar(
             radius: 50,
             backgroundImage: NetworkImage(data!.imageUrl),
           ),
           const SizedBox(height: 10),
           Container(
-            color: Colors.black.withOpacity(0.6),
+            color: Colors.black.withOpacity(0.8),
             margin: const EdgeInsets.symmetric(horizontal: 10),
             padding: const EdgeInsets.symmetric(vertical: 14),
             child: Padding(
@@ -51,25 +70,25 @@ Widget userInfo(context, data, color) => Container(
                 children: [
                   // const Icon(Icons.person, color: Colors.white),
                   Text(data!.fullName,
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: coalition.color),
                       overflow: TextOverflow.ellipsis),
-                  Text(data!.login, style: const TextStyle(color: Colors.white)),
+                  Text(data!.login, style: TextStyle(color: coalition.color)),
                 ],
               ),
             ),
           ),
           const SizedBox(height: 10),
-          infoA(data),
+          infoA(data, coalition),
           const SizedBox(height: 10),
           infoB(data, context),
           const SizedBox(height: 10),
-          levelLinear(data),
+          levelLinear(data, coalition),
           const SizedBox(height: 15),
         ],
       ),
     );
 
-Widget levelLinear(data) => LinearPercentIndicator(
+Widget levelLinear(data, Coalition coalition) => LinearPercentIndicator(
       animation: true,
       lineHeight: 24.0,
       barRadius: const Radius.circular(3),
@@ -79,51 +98,52 @@ Widget levelLinear(data) => LinearPercentIndicator(
         '${data!.level.toString()}%',
         style: const TextStyle(color: Colors.white),
       ),
-      progressColor: const Color.fromRGBO(33, 90, 22, 0.7),
+      progressColor: coalition.color,
+      // progressColor: const Color.fromRGBO(33, 90, 22, 0.7),
       backgroundColor: Colors.black.withOpacity(0.6),
     );
 
-Widget infoA(data) => Padding(
+Widget infoA(data, Coalition coalition) => Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Container(
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(3),
-          color: Colors.black.withOpacity(0.6),
+          color: Colors.black.withOpacity(0.8),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Column(
               children: [
-                const Text(
+                Text(
                   'Wallet',
-                  style: TextStyle(color: Colors.green),
+                  style: TextStyle(color: coalition.color),
                 ),
-                Text(data!.wallet.toString(),
+                Text('${data!.wallet.toString()} ₳',
                     style: const TextStyle(color: Colors.white)),
               ],
             ),
             Column(
               children: [
                 // const SizedBox(height: 2),
-                const Text('Evaluation points',
-                    style: TextStyle(color: Colors.green)),
+                Text('Evaluation points',
+                    style: TextStyle(color: coalition.color)),
                 Text(data!.correctionPoint.toString(),
                     style: const TextStyle(color: Colors.white)),
               ],
             ),
             // ignore: prefer_const_constructors
+            // Column(
+            //   // ignore: prefer_const_literals_to_create_immutables
+            //   children: [
+            //     Text('Cursus', style: TextStyle(color: coalition.color)),
+            //     const Text('42 cursus', style: TextStyle(color: Colors.white)),
+            //   ],
+            // ),
             Column(
-              // ignore: prefer_const_literals_to_create_immutables
               children: [
-                const Text('Cursus', style: TextStyle(color: Colors.green)),
-                const Text('42 cursus', style: TextStyle(color: Colors.white)),
-              ],
-            ),
-            Column(
-              children: [
-                const Text('Grade', style: TextStyle(color: Colors.green)),
+                Text('Grade', style: TextStyle(color: coalition.color)),
                 Text(data!.grade.toString(),
                     style: const TextStyle(color: Colors.white)),
               ],
@@ -147,7 +167,7 @@ Widget infoB(data, context) => Padding(
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(3),
-          color: Colors.black.withOpacity(0.6),
+          color: Colors.black.withOpacity(0.8),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -202,18 +222,18 @@ Widget blackHole(data) {
   );
 }
 
-Widget infoC(data) => Container(
+Widget infoC(data, Coalition coalition) => Container(
       // color: Colors.grey.shade200,
-      color: Colors.black.withOpacity(0.6),
-      margin: const EdgeInsets.symmetric(horizontal: 10)  ,
+      color: Colors.black.withOpacity(0.9),
+      // margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           if (data!.phone != "hidden")
-            UserInfo(title: data!.phone, icon: Icons.phone),
-          UserInfo(title: data!.email, icon: Icons.email),
-          UserInfo(title: data!.city, icon: Icons.location_on),
+            UserInfo(title: data!.phone, icon: Icons.phone_android_outlined, color: coalition.color),
+          UserInfo(title: data!.email, icon: Icons.email_outlined, color: coalition.color),
+          UserInfo(title: data!.city, icon: Icons.location_on_outlined, color: coalition.color),
         ],
       ),
     );
