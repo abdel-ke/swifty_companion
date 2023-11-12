@@ -11,7 +11,8 @@ class Projects extends StatelessWidget {
   Widget build(BuildContext context) {
     return projects.isEmpty
         ? const SizedBox(height: 150, child: Center(child: Text('No Projects data available')))
-        : SizedBox(
+        : Container(
+          color: Colors.grey.shade100,
         height: 250,
         child: ListView.builder(
           itemCount: projects.length,

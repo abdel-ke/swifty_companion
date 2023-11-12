@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   userInfo() async {
     final tokenInfo = await checkToekn();
+    debugPrint(tokenInfo.toString());
     setState(() {
       isLogged = tokenInfo;
     });

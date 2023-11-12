@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:swifty_companion/utils/auth.dart';
 import 'package:swifty_companion/utils/storage.dart';
@@ -20,7 +19,7 @@ getTokenInfo(String token) async {
 Future<bool> checkToekn() async {
   final token = await MyStorage().read('AccessToken');
   if (token == null) {
-    return false;
+    return await authorization();
   }
   final ret = await getTokenInfo(token);
   if (ret == 'Unauthorized') {

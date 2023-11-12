@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:swifty_companion/models/User.dart';
+import 'package:swifty_companion/widgets/drawer.dart';
 import 'package:swifty_companion/widgets/projects_list.dart';
 import 'package:swifty_companion/widgets/skills_list.dart';
 import 'package:swifty_companion/widgets/user_info.dart';
 
 class UserProfile extends StatelessWidget {
-  UserProfile({super.key, required this.data, required this.coalition,
-  required this.controller
-  });
+  UserProfile(
+      {super.key,
+      required this.data,
+      required this.coalition,
+      required this.controller});
   User data;
   Coalition coalition;
   TextEditingController controller = TextEditingController();
@@ -22,24 +25,38 @@ class UserProfile extends StatelessWidget {
         return true;
       },
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Column(
-              children: <Widget>[
-                userInfo(context, data, coalition),
-                infoC(data, coalition),
-                Projects(
-                  projects: data.projects,
-                  grade: data.grade,
-                ),
-                const SizedBox(height: 10),
-                SkillsList(skills: data.skills),
-                const SizedBox(height: 15),
-              ],
+          appBar: AppBar(
+            backgroundColor: coalition.color,
+            elevation: 0,
+            title: Text(data.fullName),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.logout),
+                onPressed: () {
+                  controller.clear();
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: SafeArea(
+              child: Column(
+                children: <Widget>[
+                  userInfo(context, data, coalition),
+                  infoC(data, coalition),
+                  Projects(
+                    projects: data.projects,
+                    grade: data.grade,
+                  ),
+                  // const SizedBox(height: 10),
+                  SkillsList(skills: data.skills),
+                  const SizedBox(height: 15),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+          drawer: MyDrawer(coalition: coalition, data: data)),
     );
   }
 }
@@ -231,9 +248,18 @@ Widget infoC(data, Coalition coalition) => Container(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           if (data!.phone != "hidden")
-            UserInfo(title: data!.phone, icon: Icons.phone_android_outlined, color: coalition.color),
-          UserInfo(title: data!.email, icon: Icons.email_outlined, color: coalition.color),
-          UserInfo(title: data!.city, icon: Icons.location_on_outlined, color: coalition.color),
+            UserInfo(
+                title: data!.phone,
+                icon: Icons.phone_android_outlined,
+                color: coalition.color),
+          UserInfo(
+              title: data!.email,
+              icon: Icons.email_outlined,
+              color: coalition.color),
+          UserInfo(
+              title: data!.city,
+              icon: Icons.location_on_outlined,
+              color: coalition.color),
         ],
       ),
     );
