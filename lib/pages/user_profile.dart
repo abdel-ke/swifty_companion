@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:swifty_companion/models/User.dart';
+import 'package:swifty_companion/utils/generation.dart';
 import 'package:swifty_companion/widgets/drawer.dart';
 import 'package:swifty_companion/widgets/projects_list.dart';
 import 'package:swifty_companion/widgets/skills_list.dart';
@@ -110,7 +111,7 @@ Widget levelLinear(data, Coalition coalition) => LinearPercentIndicator(
       lineHeight: 24.0,
       barRadius: const Radius.circular(3),
       animationDuration: 1000,
-      percent: double.parse(data!.level.toString().split(".")[1]) / 100,
+      percent: double.parse(data.level.toStringAsFixed(2).split(".")[1]) / 100,
       center: Text(
         '${data!.level.toString()}%',
         style: const TextStyle(color: Colors.white),
@@ -169,12 +170,6 @@ Widget infoA(data, Coalition coalition) => Padding(
         ),
       ),
     );
-
-int date(String date) {
-  DateTime now = DateTime.now();
-  DateTime bk = DateTime.parse(date);
-  return bk.difference(now).inDays;
-}
 
 Widget infoB(data, context) => Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),

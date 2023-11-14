@@ -19,3 +19,11 @@ final Map<String, List<String>> generation = {
     '3rd promo 10/2023',
   ],
 };
+
+int date(String date) {
+  print('date: $date');
+  if (date == 'null') return -1;
+  DateTime now = DateTime.now();
+  DateTime bk = DateTime.parse(date);
+  return bk.difference(now).inDays;
+}

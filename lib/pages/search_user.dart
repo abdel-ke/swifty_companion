@@ -20,8 +20,8 @@ class SearchPage extends StatelessWidget {
             );
           });
       try {
-        final futureCoalition = await fetchCoalition(user.text.trim());
-        final futureUser = await fetchUser(user.text.trim());
+        final futureCoalition = await fetchCoalition(user.text.trim().toLowerCase());
+        final futureUser = await fetchUser(user.text.trim().toLowerCase());
         Navigator.pop(context);
         Navigator.push(
             context,
@@ -74,16 +74,16 @@ class SearchPage extends StatelessWidget {
       title: const Text('Swifty Companion'),
       backgroundColor: Colors.blueGrey[900],
       actions: [
-        // IconButton(
-        //     onPressed: () async {
-        //       final token = await MyStorage().read('AccessToken');
-        //       final refresh = await MyStorage().read('RefreshToken');
-        //       debugPrint('token: $token');
-        //       debugPrint('refresh: $refresh');
-        //       // Coalition cola = await fetchCoalition('abddel-ke');
-        //       // debugPrint('coalition: ${cola.color}');
-        //     },
-        //     icon: const Icon(Icons.remove_red_eye_outlined)),
+        IconButton(
+            onPressed: () async {
+              final token = await MyStorage().read('AccessToken');
+              final refresh = await MyStorage().read('RefreshToken');
+              debugPrint('token: $token');
+              debugPrint('refresh: $refresh');
+              // Coalition cola = await fetchCoalition('abddel-ke');
+              // debugPrint('coalition: ${cola.color}');
+            },
+            icon: const Icon(Icons.remove_red_eye_outlined)),
         IconButton(
           icon: const Icon(Icons.logout),
           onPressed: () {

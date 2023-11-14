@@ -40,7 +40,7 @@ class MyDrawer extends StatelessWidget {
                     onTap: () {
                       debugPrint(e);
                       Navigator.pop(context);
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => GenerationList(promo: '${entry.key} $e')));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => GenerationList(promo: '${entry.key} $e', data: data)));
                     },
                     title: Text(e),
                   );
