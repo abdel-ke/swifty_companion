@@ -31,9 +31,10 @@ Future<bool> authorization() async {
 
     final response = await helper.getToken();
     if (response!.accessToken != null) {
-      storage.write(key: 'AccessToken', value: response.accessToken);
-      storage.write(key: 'RefreshToken', value: response.refreshToken);
+      await storage.write(key: 'AccessToken', value: response.accessToken);
+      await storage.write(key: 'RefreshToken', value: response.refreshToken);
     }
+    print('ref: ${response.respMap['secret_valid_until']}');
     return true;
   } catch (e) {
     debugPrint('ERROR AUTH: $e');

@@ -88,6 +88,7 @@ class SearchPage extends StatelessWidget {
           icon: const Icon(Icons.logout),
           onPressed: () {
             MyStorage().delete('AccessToken');
+            MyStorage().delete('RefreshToken');
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const LoginPage()));
           },
