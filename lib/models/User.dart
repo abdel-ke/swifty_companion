@@ -15,7 +15,6 @@ class User {
   final String blackholedAt;
   final List<Project> projects;
   final List<Skills> skills;
-
   User({
     required this.email,
     required this.login,
