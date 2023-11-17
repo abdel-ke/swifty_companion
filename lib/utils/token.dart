@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:swifty_companion/utils/auth.dart';
 import 'package:swifty_companion/utils/storage.dart';

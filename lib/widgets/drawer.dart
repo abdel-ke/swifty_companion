@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/User.dart';
 import 'package:swifty_companion/pages/generation_list.dart';
 import 'package:swifty_companion/utils/generation.dart';
+import 'package:swifty_companion/utils/provider.dart';
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({super.key, required this.data, required this.coalition});
-  final User data;
-  final Coalition coalition;
+  const MyDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final User data = context.watch<MyProvider>().futureUser;
+    final coalition = context.watch<MyProvider>().futureCoalition;
+  
     return Drawer(
       child: ListView(
         children: [
@@ -39,8 +42,9 @@ class MyDrawer extends StatelessWidget {
                   return ListTile(
                     onTap: () {
                       debugPrint(e);
+                      context.read<MyProvider>().setPromo(e);
                       Navigator.pop(context);
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => GenerationList(promo: '${entry.key} $e', data: data)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const GenerationList()));
                     },
                     title: Text(e),
                   );

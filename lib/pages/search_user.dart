@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:swifty_companion/pages/login_page.dart';
 import 'package:swifty_companion/pages/user_profile.dart';
 import 'package:swifty_companion/utils/auth.dart';
+import 'package:swifty_companion/utils/provider.dart';
 import 'package:swifty_companion/utils/storage.dart';
 import 'package:swifty_companion/widgets/my_button.dart';
 import 'package:swifty_companion/widgets/my_textfield.dart';
 
 class SearchPage extends StatelessWidget {
   SearchPage({super.key});
-  TextEditingController user = TextEditingController();
 
-  void search(context) async {
+  void search(BuildContext context, user) async {
     if (user.text.isNotEmpty) {
       showDialog(
           context: context,
@@ -22,11 +23,13 @@ class SearchPage extends StatelessWidget {
       try {
         final futureCoalition = await fetchCoalition(user.text.trim().toLowerCase());
         final futureUser = await fetchUser(user.text.trim().toLowerCase());
+        context.read<MyProvider>().setFutureUser(futureUser);
+        context.read<MyProvider>().setFutureCoalition(futureCoalition);
         Navigator.pop(context);
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => UserProfile(data: futureUser, coalition: futureCoalition, controller: user)));
+                builder: (context) => UserProfile()));
       } catch (e) {
         debugPrint('ERROR: $e');
         Navigator.pop(context);
@@ -43,6 +46,7 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.read<MyProvider>().controller;
     return Scaffold(
       appBar: appBar(context),
       body: Column(
@@ -54,7 +58,7 @@ class SearchPage extends StatelessWidget {
           ),
           MyTextField(
             onSubmitted: (String? value) {
-              search(context);
+              search(context, user);
             },
             controller: user,
             hintText: 'User login',
@@ -63,7 +67,7 @@ class SearchPage extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          MyButton(onTap: () => search(context), title: 'Search'),
+          MyButton(onTap: () => search(context, user), title: 'Search'),
         ],
       ),
     );

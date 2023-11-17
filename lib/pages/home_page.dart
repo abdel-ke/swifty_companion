@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:swifty_companion/pages/search_user.dart';
+import 'package:swifty_companion/utils/provider.dart';
 import 'package:swifty_companion/utils/token.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,11 +16,18 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    // userInfo();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     userInfo();
   }
 
   userInfo() async {
-    final tokenInfo = await checkToekn();
+    // final tokenInfo = await checkToekn();
+    final tokenInfo = await context.watch<MyProvider>().auth.checkToekn();
     debugPrint(tokenInfo.toString());
     setState(() {
       isLogged = tokenInfo;

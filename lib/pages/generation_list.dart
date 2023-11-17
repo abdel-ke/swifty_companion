@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/User.dart';
-import 'package:swifty_companion/pages/user_profile.dart';
-import 'package:swifty_companion/utils/generation.dart';
+import 'package:swifty_companion/utils/provider.dart';
 import 'package:swifty_companion/widgets/card_user.dart';
 
 class GenerationList extends StatelessWidget {
   const GenerationList({
     super.key,
-    required this.promo,
-    required this.data,
   });
-  final String promo;
-  final User data;
 
   @override
   Widget build(BuildContext context) {
+    final User data = context.watch<MyProvider>().futureUser;
+    final String promo = context.watch<MyProvider>().promo;
     return Scaffold(
         appBar: AppBar(
           elevation: 0,

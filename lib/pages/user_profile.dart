@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/User.dart';
 import 'package:swifty_companion/utils/generation.dart';
+import 'package:swifty_companion/utils/provider.dart';
 import 'package:swifty_companion/widgets/drawer.dart';
 import 'package:swifty_companion/widgets/projects_list.dart';
 import 'package:swifty_companion/widgets/skills_list.dart';
@@ -10,15 +12,19 @@ import 'package:swifty_companion/widgets/user_info.dart';
 class UserProfile extends StatelessWidget {
   UserProfile(
       {super.key,
-      required this.data,
-      required this.coalition,
-      required this.controller});
-  User data;
-  Coalition coalition;
-  TextEditingController controller = TextEditingController();
+      // required this.data,
+      // required this.coalition,
+      // required this.controller
+      });
+  // User data = 
+  // Coalition coalition;
+  // TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final data = context.watch<MyProvider>().futureUser;
+    final coalition = context.watch<MyProvider>().futureCoalition;
+    final controller = context.watch<MyProvider>().controller;
     return WillPopScope(
       onWillPop: () async {
         controller.clear();
@@ -57,7 +63,7 @@ class UserProfile extends StatelessWidget {
               ),
             ),
           ),
-          drawer: MyDrawer(coalition: coalition, data: data)),
+          drawer: const MyDrawer()),
     );
   }
 }
