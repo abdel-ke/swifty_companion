@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isLogged = false;
+  int isLogged = 0;
   @override
   void initState() {
     super.initState();
@@ -30,7 +30,11 @@ class _HomePageState extends State<HomePage> {
     try {
       final tokenInfo = await context.read<MyProvider>().auth.checkToken();
       setState(() {
-        isLogged = tokenInfo;
+        if (tokenInfo == false) {
+          isLogged = 1;
+        } else {
+          isLogged = 2;
+        }
       });
     } catch (e) {
       print(e);
@@ -39,14 +43,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (isLogged == false) {
+    if (isLogged == 0) {
       return const SafeArea(
           child: Center(
-        child: LoginPage(),
-        // child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(),
       ));
-    } else {
-      return SearchPage();
+    } else if (isLogged == 1) {
+      return const LoginPage();
     }
+    return SearchPage();
   }
 }

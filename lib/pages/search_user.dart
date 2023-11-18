@@ -88,9 +88,6 @@ class SearchPage extends StatelessWidget {
       backgroundColor: Colors.blueGrey[900],
       actions: [
         IconButton(
-            onPressed: () async {},
-            icon: const Icon(Icons.remove_red_eye_outlined)),
-        IconButton(
           icon: const Icon(Icons.logout),
           onPressed: () {
             context.watch<MyProvider>().auth.helper.disconnect();

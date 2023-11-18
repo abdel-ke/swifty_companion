@@ -22,9 +22,11 @@ class GenerationList extends StatelessWidget {
         ),
         body: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2),
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            crossAxisCount: 2,
+          ),
           itemCount: 35,
-          // itemBuilder: (context, index) => CardUser(data: data),
           itemBuilder: (context, index) => CardUser(data: data),
         )
         // drawer: MyDrawer(data: data, coalition: coalition),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swifty_companion/models/User.dart';
 import 'package:swifty_companion/models/authentication.dart';
+import 'package:swifty_companion/models/ranking.dart';
 
 class MyProvider extends ChangeNotifier {
   late User _user;
@@ -9,11 +10,18 @@ class MyProvider extends ChangeNotifier {
   late User _futureUser;
   late Coalition _futureCoalition;
   String _promo = '42';
+  late Ranking _rank;
 
+  String get promo => _promo;
+  Ranking get rank => _rank;
   User get user => _user;
   Authentication get auth => _auth;
   TextEditingController get controller => _controller;
-  String get promo => _promo;
+
+  void setRank(Ranking rank) {
+    _rank = rank;
+    notifyListeners();
+  }
 
   void setPromo(String promo) {
     _promo = promo;

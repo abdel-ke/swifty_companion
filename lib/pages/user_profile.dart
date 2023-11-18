@@ -10,15 +10,9 @@ import 'package:swifty_companion/widgets/skills_list.dart';
 import 'package:swifty_companion/widgets/user_info.dart';
 
 class UserProfile extends StatelessWidget {
-  UserProfile(
-      {super.key,
-      // required this.data,
-      // required this.coalition,
-      // required this.controller
-      });
-  // User data = 
-  // Coalition coalition;
-  // TextEditingController controller = TextEditingController();
+  UserProfile({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +34,13 @@ class UserProfile extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.logout),
                 onPressed: () {
-                  controller.clear();
-                  Navigator.pop(context);
+                  Provider.of<MyProvider>(context, listen: false)
+                      .auth
+                      .helper
+                      .disconnect();
+                  Navigator.pushNamed(context, '/login');
+                  // controller.clear();
+                  // Navigator.pop(context);
                 },
               )
             ],

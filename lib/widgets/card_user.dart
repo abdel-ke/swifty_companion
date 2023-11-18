@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:swifty_companion/models/User.dart';
+import 'package:swifty_companion/models/ranking.dart';
 import 'package:swifty_companion/pages/user_profile.dart';
 import 'package:swifty_companion/utils/generation.dart';
 
 class CardUser extends StatelessWidget {
   const CardUser({super.key, required this.data});
-  final User data;
+  final Ranking data;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +28,9 @@ class CardUser extends StatelessWidget {
                       const SizedBox(height: 10),
                       CircleAvatar(
                         radius: 50,
-                        backgroundImage: NetworkImage(data.imageUrl),
+                        backgroundImage: NetworkImage(data.imageUrl[0]),
                       ),
-                      Text(data.login),
+                      Text(data.login[0]),
                       Text('Level: ${data.level.toString()}', style: TextStyle(fontSize: 16, color: Colors.green.shade700)),
                       LinearPercentIndicator(
                         animation: false,
@@ -39,7 +39,7 @@ class CardUser extends StatelessWidget {
                         alignment: MainAxisAlignment.center,
                         barRadius: const Radius.circular(3),
                         percent: double.parse(
-                                data.level.toStringAsFixed(2).split(".")[1]) /
+                                data.level![0].toStringAsFixed(2).split(".")[1]) /
                             100,
                         center: Text(
                           '${data.level.toString()}%',
@@ -51,7 +51,7 @@ class CardUser extends StatelessWidget {
                       if (data.blackholedAt != "null")
                         blackHole(data),
                         // Text(date(data.blackholedAt).toString()),
-                      Text(data.location == '-' ? 'Unavailable' : data.location),
+                      Text(data.location[0] == '-' ? 'Unavailable' : data.location[0]),
                     ],
                   ),
                   const Row(

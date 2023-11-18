@@ -6,6 +6,7 @@ import 'package:oauth2_client/access_token_response.dart';
 import 'package:oauth2_client/oauth2_client.dart';
 import 'package:oauth2_client/oauth2_helper.dart';
 import 'package:swifty_companion/models/User.dart';
+import 'package:swifty_companion/models/ranking.dart';
 
 class Authentication {
   late final OAuth2Helper _helper;
@@ -76,6 +77,27 @@ class Authentication {
           coverUrl:
               "https://profile.intra.42.fr/assets/background_login-a4e0666f73c02f025f590b474b394fd86e1cae20e95261a6e4862c2d0faa1b04.jpg",
           color: const Color(0xff02cdd1));
+    }
+  }
+
+  Future<Ranking> fetchPromo(compus, pos, page) async {
+    try {
+      AccessTokenResponse? token = await _helper.getToken();
+      if (token!.isExpired()) {
+        Uri url = Uri.parse(
+            'https://api.intra.42.fr/v2/cursus/21/cursus_users?&filter[campus_id]=${compus}&range[begin_at]=${dateStirng[pos]}&page=${page}&per_page=100');
+        final response = await http.get(url,
+            headers: {'Authorization': 'Bearer ${token.accessToken}'});
+        if (response.statusCode == 200) {
+          return Ranking.fromJson(jsonDecode(response.body));
+        } else {
+          throw Exception('Failed to load Promo');
+        }
+      }
+      throw Exception('token is expired');
+    } catch (e) {
+      print('error: $e');
+      throw Exception(e);
     }
   }
 }
