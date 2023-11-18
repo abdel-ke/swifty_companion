@@ -21,7 +21,6 @@ final Map<String, List<String>> generation = {
 };
 
 int date(String date) {
-  print('date: $date');
   if (date == 'null') return -1;
   DateTime now = DateTime.now();
   DateTime bk = DateTime.parse(date);

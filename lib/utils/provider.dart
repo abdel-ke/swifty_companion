@@ -11,7 +11,7 @@ class MyProvider extends ChangeNotifier {
   String _promo = '42';
 
   User get user => _user;
-  get auth => _auth;
+  Authentication get auth => _auth;
   TextEditingController get controller => _controller;
   String get promo => _promo;
 

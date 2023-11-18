@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swifty_companion/utils/auth.dart';
 import 'package:swifty_companion/widgets/my_button.dart';
 
 class LoginPage extends StatelessWidget {
@@ -7,15 +6,15 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    pushPage(ret) {
-      if (ret == true) {
-        Navigator.pushNamed(context, '/search');
-      }
-    }
+    // pushPage(ret) {
+    //   if (ret == true) {
+    //     Navigator.pushNamed(context, '/search');
+    //   }
+    // }
 
     checkAuthorization() async {
-      final ret = await authorization();
-      pushPage(ret);
+      // final ret = await authorization();
+      // pushPage(ret);
     }
 
     return Scaffold(

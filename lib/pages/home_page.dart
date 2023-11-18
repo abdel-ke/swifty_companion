@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:swifty_companion/pages/login_page.dart';
 import 'package:swifty_companion/pages/search_user.dart';
 import 'package:swifty_companion/utils/provider.dart';
-import 'package:swifty_companion/utils/token.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,11 +27,14 @@ class _HomePageState extends State<HomePage> {
 
   userInfo() async {
     // final tokenInfo = await checkToekn();
-    final tokenInfo = await context.watch<MyProvider>().auth.checkToekn();
-    debugPrint(tokenInfo.toString());
-    setState(() {
-      isLogged = tokenInfo;
-    });
+    try {
+      final tokenInfo = await context.read<MyProvider>().auth.checkToken();
+      setState(() {
+        isLogged = tokenInfo;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -39,7 +42,8 @@ class _HomePageState extends State<HomePage> {
     if (isLogged == false) {
       return const SafeArea(
           child: Center(
-        child: CircularProgressIndicator(),
+        child: LoginPage(),
+        // child: CircularProgressIndicator(),
       ));
     } else {
       return SearchPage();

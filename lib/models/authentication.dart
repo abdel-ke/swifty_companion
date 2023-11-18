@@ -6,7 +6,6 @@ import 'package:oauth2_client/access_token_response.dart';
 import 'package:oauth2_client/oauth2_client.dart';
 import 'package:oauth2_client/oauth2_helper.dart';
 import 'package:swifty_companion/models/User.dart';
-import 'package:swifty_companion/utils/storage.dart';
 
 class Authentication {
   late final OAuth2Helper _helper;
@@ -26,7 +25,8 @@ class Authentication {
     );
   }
 
-  get helper => _helper;
+  OAuth2Helper get helper => _helper;
+
   getToken() {
     return _helper.getToken();
   }
@@ -64,10 +64,11 @@ class Authentication {
   }
 
   Future<Coalition> fetchCoalition(String login) async {
-    final token = await MyStorage().read('AccessToken');
+    // final token = await MyStorage().read('AccessToken');
+    AccessTokenResponse? token = await _helper.getToken();
     String url = 'https://api.intra.42.fr/v2/users/$login/coalitions';
-    final response = await http
-        .get(Uri.parse(url), headers: {'Authorization': 'Bearer $token'});
+    final response = await http.get(Uri.parse(url),
+        headers: {'Authorization': 'Bearer ${token!.accessToken}'});
     if (response.statusCode == 200) {
       return Coalition.fromJson(jsonDecode(response.body));
     } else {

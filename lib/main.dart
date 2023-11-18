@@ -6,7 +6,6 @@ import 'package:swifty_companion/pages/login_page.dart';
 import 'package:swifty_companion/pages/search_user.dart';
 import 'package:swifty_companion/pages/user_profile.dart';
 import 'package:swifty_companion/utils/provider.dart';
-import 'package:swifty_companion/utils/storage.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
@@ -42,7 +41,10 @@ class MainApp extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.logout),
           onPressed: () {
-            MyStorage().delete('AccessToken');
+            Provider.of<MyProvider>(context, listen: false)
+                .auth
+                .helper
+                .disconnect();
             Navigator.pushNamed(context, '/login');
           },
         )

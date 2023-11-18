@@ -41,7 +41,6 @@ class MyDrawer extends StatelessWidget {
                 children: entry.value.map<ListTile>((e) {
                   return ListTile(
                     onTap: () {
-                      debugPrint(e);
                       context.read<MyProvider>().setPromo(e);
                       Navigator.pop(context);
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const GenerationList()));

@@ -10,7 +10,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.1.0
-  flutter_secure_storage: ^8.1.0
   http: ^1.1.0
   oauth2_client: ^3.2.2
   percent_indicator: ^4.2.3
