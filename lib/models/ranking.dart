@@ -11,13 +11,13 @@ final dateStirng = [
 ];
 
 class Ranking {
-  final List<String>? grade;
-  final List<double>? level;
-  final List<String> blackholedAt;
-  final List<String> login;
-  final List<String> fullName;
-  final List<String> imageUrl;
-  final List<String> location;
+  final String grade;
+  final double level;
+  final String blackholedAt;
+  final String login;
+  final String fullName;
+  final String imageUrl;
+  final String location;
   Ranking({
     required this.grade,
     required this.level,
@@ -30,13 +30,22 @@ class Ranking {
 
   factory Ranking.fromJson(Map<String, dynamic> json) {
     return Ranking(
-        grade: json["grade"] as List<String>,
-        level: json["level"] as List<double>,
-        blackholedAt: json["blackholed_at"] as List<String>,
-        login: json["user"]["login"] as List<String>,
-        fullName: json["user"]["usual_full_name"] as List<String>,
-        imageUrl: json["user"]["image"]["versions"]["medium"]["imageUrl"] as List<String>,
-        location: json["user"]["location"] as List<String>,
-        );
+      grade: json["grade"] ?? "null",
+      level: json["level"] ?? 0.0,
+      blackholedAt: json["blackholed_at"] ?? "null",
+      login: json["user"]["login"] ?? "null",
+      fullName: json["user"]["usual_full_name"] ?? "null",
+      imageUrl:
+          json["user"]["image"]["versions"]["medium"] ?? "null",
+      location: json["user"]["location"] ?? "null",
+    );
+  }
+
+  static List<Ranking> fromListJson(List<dynamic> listJson) {
+    List<Ranking> rankings = [];
+    for (Map<String, dynamic> json in listJson) {
+      rankings.add(Ranking.fromJson(json));
+    }
+    return rankings;
   }
 }

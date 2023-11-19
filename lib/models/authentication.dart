@@ -80,16 +80,17 @@ class Authentication {
     }
   }
 
-  Future<Ranking> fetchPromo(compus, pos, page) async {
+  Future<List<Ranking>> fetchPromo(compus, pos, page) async {
     try {
       AccessTokenResponse? token = await _helper.getToken();
-      if (token!.isExpired()) {
+      if (!token!.isExpired()) {
         Uri url = Uri.parse(
-            'https://api.intra.42.fr/v2/cursus/21/cursus_users?&filter[campus_id]=${compus}&range[begin_at]=${dateStirng[pos]}&page=${page}&per_page=100');
+            'https://api.intra.42.fr/v2/cursus/21/cursus_users?&filter[campus_id]=${compus}&range[begin_at]=${dateStirng[pos]}&page=${page}&per_page=100&sort=-level');
         final response = await http.get(url,
             headers: {'Authorization': 'Bearer ${token.accessToken}'});
         if (response.statusCode == 200) {
-          return Ranking.fromJson(jsonDecode(response.body));
+          // return Ranking.fromJson(jsonDecode(response.body));
+          return Ranking.fromListJson(jsonDecode(response.body));
         } else {
           throw Exception('Failed to load Promo');
         }
