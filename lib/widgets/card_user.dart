@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:swifty_companion/helper/functions.dart';
 import 'package:swifty_companion/models/ranking.dart';
 import 'package:swifty_companion/pages/user_profile.dart';
-import 'package:swifty_companion/utils/generation.dart';
+import 'package:swifty_companion/widgets/custom_image.dart';
 
 class CardUser extends StatelessWidget {
   const CardUser({super.key, required this.data, required this.index});
@@ -10,67 +11,64 @@ class CardUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Container(
-            width: 200,
-            height: 200,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade200,
-              borderRadius: BorderRadius.circular(20),
+    return Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(height: 10),
+            CustomImage(imageUrl: data.imageUrl),
+            const SizedBox(height: 5),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade700,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    data.login,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  Text('level: ${data.level.toStringAsFixed(2)}',
+                      style: TextStyle(
+                          fontSize: 16, color: Colors.green.shade500)),
+                ],
+              ),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            const SizedBox(height: 5),
+            Text(data.location == 'null' ? '-' : data.location),
+            const SizedBox(height: 5),
+            if (data.blackholedAt != "null") blackHole(data),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 10),
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(data.imageUrl),
+                Container(
+                  padding: const EdgeInsets.all(8.0), // Adjust as needed
+                  margin: const EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade700,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    (index + 1).toString(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: (index + 1) > 99 ? 10 : 8,
+                      color: Colors.white,
                     ),
-                    Text(data.login),
-                    Text('Level: ${data.level.toString()}',
-                        style: TextStyle(
-                            fontSize: 16, color: Colors.green.shade700)),
-                    // LinearPercentIndicator(
-                    //   animation: false,
-                    //   lineHeight: 18.0,
-                    //   width: 170,
-                    //   alignment: MainAxisAlignment.center,
-                    //   barRadius: const Radius.circular(3),
-                    //   percent: double.parse(
-                    //           data.level.toStringAsFixed(2).split(".")[1]) /
-                    //       100,
-                    //   center: Text(
-                    //     '${data.level.toString()}%',
-                    //     style: const TextStyle(color: Colors.white),
-                    //   ),
-                    //   progressColor: Colors.green.shade700,
-                    //   backgroundColor: Colors.black.withOpacity(0.6),
-                    // ),
-                    if (data.blackholedAt != "null") blackHole(data),
-                    // Text(date(data.blackholedAt).toString()),
-                    if (data.location != 'null')
-                      Text(
-                        data.location,
-                      ),
-                    // Text(data.location == '-' ? 'Unavailable' : data.location),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      (index + 1).toString(),
-                      textAlign: TextAlign.right,
-                    ),
-                    const SizedBox(width: 15),
-                  ],
+                  ),
                 ),
               ],
-            )));
+            ),
+            const Padding(padding: EdgeInsets.only(bottom: 5)),
+          ],
+        ));
   }
 
   Widget blackHole(data) {

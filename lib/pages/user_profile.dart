@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:swifty_companion/helper/functions.dart';
 import 'package:swifty_companion/models/User.dart';
-import 'package:swifty_companion/utils/generation.dart';
 import 'package:swifty_companion/utils/provider.dart';
+import 'package:swifty_companion/widgets/custom_image.dart';
 import 'package:swifty_companion/widgets/drawer.dart';
 import 'package:swifty_companion/widgets/projects_list.dart';
 import 'package:swifty_companion/widgets/skills_list.dart';
@@ -29,21 +31,10 @@ class UserProfile extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: coalition.color,
             elevation: 0,
-            title: Text(data.fullName),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.logout),
-                onPressed: () {
-                  Provider.of<MyProvider>(context, listen: false)
-                      .auth
-                      .helper
-                      .disconnect();
-                  Navigator.pushNamed(context, '/login');
-                  // controller.clear();
-                  // Navigator.pop(context);
-                },
-              )
-            ],
+            title: Text(
+              data.fullName,
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
           body: SingleChildScrollView(
             child: SafeArea(
@@ -55,7 +46,6 @@ class UserProfile extends StatelessWidget {
                     projects: data.projects,
                     grade: data.grade,
                   ),
-                  // const SizedBox(height: 10),
                   SkillsList(skills: data.skills),
                   const SizedBox(height: 15),
                 ],
@@ -70,17 +60,15 @@ class UserProfile extends StatelessWidget {
 Widget userInfo(context, data, Coalition coalition) => Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage(coalition.coverUrl),
+          image: CachedNetworkImageProvider(coalition.coverUrl),
+          // image: NetworkImage(coalition.coverUrl),
           fit: BoxFit.cover,
         ),
       ),
       child: Column(
         children: [
           const SizedBox(height: 42),
-          CircleAvatar(
-            radius: 50,
-            backgroundImage: NetworkImage(data!.imageUrl),
-          ),
+          CustomImage(imageUrl: data.imageUrl),
           const SizedBox(height: 10),
           Container(
             color: Colors.black.withOpacity(0.8),
@@ -118,11 +106,10 @@ Widget levelLinear(data, Coalition coalition) => LinearPercentIndicator(
       animationDuration: 1000,
       percent: double.parse(data.level.toStringAsFixed(2).split(".")[1]) / 100,
       center: Text(
-        '${data!.level.toString()}%',
+        '${data!.level.toStringAsFixed(2)}%',
         style: const TextStyle(color: Colors.white),
       ),
       progressColor: coalition.color,
-      // progressColor: const Color.fromRGBO(33, 90, 22, 0.7),
       backgroundColor: Colors.black.withOpacity(0.6),
     );
 
@@ -149,21 +136,12 @@ Widget infoA(data, Coalition coalition) => Padding(
             ),
             Column(
               children: [
-                // const SizedBox(height: 2),
                 Text('Evaluation points',
                     style: TextStyle(color: coalition.color)),
                 Text(data!.correctionPoint.toString(),
                     style: const TextStyle(color: Colors.white)),
               ],
             ),
-            // ignore: prefer_const_constructors
-            // Column(
-            //   // ignore: prefer_const_literals_to_create_immutables
-            //   children: [
-            //     Text('Cursus', style: TextStyle(color: coalition.color)),
-            //     const Text('42 cursus', style: TextStyle(color: Colors.white)),
-            //   ],
-            // ),
             Column(
               children: [
                 Text('Grade', style: TextStyle(color: coalition.color)),
@@ -204,7 +182,7 @@ Widget infoB(data, context) => Padding(
 */
 Color colorsBH(blackHole) {
   return blackHole >= 42
-      ? const Color.fromRGBO(33, 90, 22, 1)
+      ? const Color.fromARGB(255, 26, 152, 1)
       : blackHole >= 15
           ? Colors.amber.shade600
           : Colors.red;
@@ -240,9 +218,7 @@ Widget blackHole(data) {
 }
 
 Widget infoC(data, Coalition coalition) => Container(
-      // color: Colors.grey.shade200,
       color: Colors.black.withOpacity(0.9),
-      // margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,

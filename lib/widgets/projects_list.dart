@@ -12,14 +12,14 @@ class Projects extends StatelessWidget {
     return projects.isEmpty
         ? const SizedBox(height: 150, child: Center(child: Text('No Projects data available')))
         : Container(
-          color: Colors.grey.shade100,
+          color: Theme.of(context).colorScheme.primary,
         height: 250,
         child: ListView.builder(
           itemCount: projects.length,
           itemBuilder: (context, index) {
             if (projects[index].cursusIds == 21) {
               return Card(
-                color: Colors.grey.shade100,
+                color: Theme.of(context).colorScheme.background,
                 child: ListTile(
                   title: Text(projects[index].name),
                   subtitle: timeAgo(projects[index].markedAt),
@@ -29,7 +29,7 @@ class Projects extends StatelessWidget {
             }
             else if (projects[index].cursusIds != 21 && grade == "Novice") {
               return Card(
-                color: Colors.grey.shade100,
+                color: Theme.of(context).colorScheme.background,
                 child: ListTile(
                   title: Text(projects[index].name),
                   trailing: projDetail(index),

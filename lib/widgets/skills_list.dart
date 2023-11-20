@@ -23,7 +23,7 @@ class _SkillsListState extends State<SkillsList> {
     return widget.skills.isEmpty
         ? const SizedBox(height: 200, child: Center(child: Text('No Skills data available')))
         : SfCircularChart(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Theme.of(context).colorScheme.background,
       title: ChartTitle(text: 'Skills'),
       legend: const Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap, position: LegendPosition.bottom, alignment: ChartAlignment.near),
       tooltipBehavior: _tooltipBehavior,

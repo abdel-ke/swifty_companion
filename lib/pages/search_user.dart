@@ -19,7 +19,6 @@ class SearchPage extends StatelessWidget {
             );
           });
       try {
-        
         final futureCoalition =
             await Provider.of<MyProvider>(context, listen: false)
                 .auth
@@ -54,12 +53,19 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.read<MyProvider>().controller;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: appBar(context),
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/images/42_Logo.png', width: 200, height: 200),
+          Image.asset(
+              isDarkMode
+                  ? 'assets/images/42_logo_dark.png'
+                  : 'assets/images/42_Logo.png',
+              width: 200,
+              height: 200),
           const SizedBox(
             height: 10,
           ),
@@ -84,8 +90,10 @@ class SearchPage extends StatelessWidget {
 
   AppBar appBar(BuildContext context) {
     return AppBar(
-      title: const Text('Swifty Companion'),
-      backgroundColor: Colors.blueGrey[900],
+      centerTitle: true,
+      title: const Text('Swifty Companion',),
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+      elevation: 0,
       actions: [
         IconButton(
           icon: const Icon(Icons.logout),

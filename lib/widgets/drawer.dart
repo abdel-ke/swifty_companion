@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/User.dart';
-import 'package:swifty_companion/pages/generation_list.dart';
-import 'package:swifty_companion/utils/generation.dart';
+import 'package:swifty_companion/models/ranking.dart';
+import 'package:swifty_companion/pages/ranking_list.dart';
 import 'package:swifty_companion/utils/provider.dart';
+import 'package:swifty_companion/widgets/custom_image.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -23,10 +24,11 @@ class MyDrawer extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(data.imageUrl),
-                ),
+                // CircleAvatar(
+                //   radius: 50,
+                //   backgroundImage: NetworkImage(data.imageUrl),
+                // ),
+                CustomImage(imageUrl: data.imageUrl),
                 Text(data.fullName,
                     style: TextStyle(color: coalition.color),
                     overflow: TextOverflow.ellipsis),
@@ -41,9 +43,10 @@ class MyDrawer extends StatelessWidget {
                 children: entry.value.map<ListTile>((e) {
                   return ListTile(
                     onTap: () {
-                      context.read<MyProvider>().setPromo(e);
+                      context.read<MyProvider>().setPromo('${entry.key} $e');
                       Navigator.pop(context);
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const GenerationList()));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => const GenerationList()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyWidget()));
                     },
                     title: Text(e),
                   );

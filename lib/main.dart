@@ -5,6 +5,8 @@ import 'package:swifty_companion/pages/home_page.dart';
 import 'package:swifty_companion/pages/login_page.dart';
 import 'package:swifty_companion/pages/search_user.dart';
 import 'package:swifty_companion/pages/user_profile.dart';
+import 'package:swifty_companion/themes/dark_theme.dart';
+import 'package:swifty_companion/themes/light_theme.dart';
 import 'package:swifty_companion/utils/provider.dart';
 
 void main() async {
@@ -22,6 +24,8 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => MyProvider()),
       ],
       child: MaterialApp(
+          theme: lightTheme,
+          darkTheme: darkTheme,
           debugShowCheckedModeBanner: false,
           home: const Scaffold(
             body: HomePage(),
