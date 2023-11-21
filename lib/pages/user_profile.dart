@@ -4,7 +4,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/helper/functions.dart';
 import 'package:swifty_companion/models/User.dart';
-import 'package:swifty_companion/utils/provider.dart';
+import 'package:swifty_companion/providers/provider.dart';
 import 'package:swifty_companion/widgets/custom_image.dart';
 import 'package:swifty_companion/widgets/drawer.dart';
 import 'package:swifty_companion/widgets/projects_list.dart';
@@ -12,7 +12,7 @@ import 'package:swifty_companion/widgets/skills_list.dart';
 import 'package:swifty_companion/widgets/user_info.dart';
 
 class UserProfile extends StatelessWidget {
-  UserProfile({
+  const UserProfile({
     super.key,
   });
 
@@ -21,6 +21,7 @@ class UserProfile extends StatelessWidget {
     final data = context.watch<MyProvider>().futureUser;
     final coalition = context.watch<MyProvider>().futureCoalition;
     final controller = context.watch<MyProvider>().controller;
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
         controller.clear();
@@ -60,8 +61,10 @@ class UserProfile extends StatelessWidget {
 Widget userInfo(context, data, Coalition coalition) => Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: CachedNetworkImageProvider(coalition.coverUrl),
-          // image: NetworkImage(coalition.coverUrl),
+          image: coalition.coverUrl != "null"
+              ? CachedNetworkImageProvider(coalition.coverUrl)
+              : const AssetImage('assets/images/default_cover.jpeg')
+                  as ImageProvider,
           fit: BoxFit.cover,
         ),
       ),

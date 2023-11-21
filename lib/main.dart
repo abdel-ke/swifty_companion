@@ -7,7 +7,7 @@ import 'package:swifty_companion/pages/search_user.dart';
 import 'package:swifty_companion/pages/user_profile.dart';
 import 'package:swifty_companion/themes/dark_theme.dart';
 import 'package:swifty_companion/themes/light_theme.dart';
-import 'package:swifty_companion/utils/provider.dart';
+import 'package:swifty_companion/providers/provider.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");

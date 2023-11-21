@@ -5,14 +5,15 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:oauth2_client/access_token_response.dart';
 import 'package:oauth2_client/oauth2_client.dart';
 import 'package:oauth2_client/oauth2_helper.dart';
+import 'package:swifty_companion/constants/constant.dart';
 import 'package:swifty_companion/models/User.dart';
 import 'package:swifty_companion/models/ranking.dart';
 
 class Authentication {
   late final OAuth2Helper _helper;
   final client = OAuth2Client(
-      authorizeUrl: dotenv.env['AUTHORIZEURL'].toString(),
-      tokenUrl: dotenv.env['TOKENURL'].toString(),
+      authorizeUrl: authorizeURL,
+      tokenUrl: tokenURL,
       redirectUri: dotenv.env['REDIRECTURL'].toString(),
       customUriScheme: dotenv.env['CUSTOMURISCHEME'].toString());
 
@@ -54,7 +55,7 @@ class Authentication {
       await _helper.refreshToken(token);
       token = await _helper.getToken();
     }
-    Uri url = Uri.parse('https://api.intra.42.fr/v2/users/$login');
+    Uri url = Uri.parse('$intraURL/v2/users/$login');
     final response = await http
         .get(url, headers: {'Authorization': 'Bearer ${token!.accessToken}'});
     if (response.statusCode == 200) {
@@ -65,18 +66,14 @@ class Authentication {
   }
 
   Future<Coalition> fetchCoalition(String login) async {
-    // final token = await MyStorage().read('AccessToken');
     AccessTokenResponse? token = await _helper.getToken();
-    String url = 'https://api.intra.42.fr/v2/users/$login/coalitions';
+    String url = '$intraURL/v2/users/$login/coalitions';
     final response = await http.get(Uri.parse(url),
         headers: {'Authorization': 'Bearer ${token!.accessToken}'});
     if (response.statusCode == 200) {
       return Coalition.fromJson(jsonDecode(response.body));
     } else {
-      return Coalition(
-          coverUrl:
-              "https://profile.intra.42.fr/assets/background_login-a4e0666f73c02f025f590b474b394fd86e1cae20e95261a6e4862c2d0faa1b04.jpg",
-          color: const Color(0xff02cdd1));
+      return Coalition(coverUrl: "null", color: const Color(0xff02cdd1));
     }
   }
 
@@ -85,7 +82,7 @@ class Authentication {
       AccessTokenResponse? token = await _helper.getToken();
       if (!token!.isExpired()) {
         Uri url = Uri.parse(
-            'https://api.intra.42.fr/v2/cursus/21/cursus_users?&filter[campus_id]=${compus}&range[begin_at]=${promo[city]![date]}&page=${page}&per_page=100&sort=-level');
+            '$intraURL/v2/cursus/21/cursus_users?&filter[campus_id]=$compus&range[begin_at]=${promo[city]![date]}&page=$page&per_page=100&sort=-level');
         final response = await http.get(url,
             headers: {'Authorization': 'Bearer ${token.accessToken}'});
         if (response.statusCode == 200) {

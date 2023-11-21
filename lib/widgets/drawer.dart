@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/User.dart';
 import 'package:swifty_companion/models/ranking.dart';
 import 'package:swifty_companion/pages/ranking_list.dart';
-import 'package:swifty_companion/utils/provider.dart';
+import 'package:swifty_companion/providers/provider.dart';
 import 'package:swifty_companion/widgets/custom_image.dart';
 
 class MyDrawer extends StatelessWidget {

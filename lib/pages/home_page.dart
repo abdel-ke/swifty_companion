@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/pages/login_page.dart';
 import 'package:swifty_companion/pages/search_user.dart';
-import 'package:swifty_companion/utils/provider.dart';
+import 'package:swifty_companion/providers/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
