@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swifty_companion/models/User.dart';
+import 'package:swifty_companion/models/user.dart';
 import 'package:swifty_companion/models/authentication.dart';
 import 'package:swifty_companion/models/ranking.dart';
 

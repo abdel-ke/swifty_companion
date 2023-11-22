@@ -6,7 +6,7 @@ import 'package:oauth2_client/access_token_response.dart';
 import 'package:oauth2_client/oauth2_client.dart';
 import 'package:oauth2_client/oauth2_helper.dart';
 import 'package:swifty_companion/constants/constant.dart';
-import 'package:swifty_companion/models/User.dart';
+import 'package:swifty_companion/models/user.dart';
 import 'package:swifty_companion/models/ranking.dart';
 
 class Authentication {
@@ -82,7 +82,7 @@ class Authentication {
       AccessTokenResponse? token = await _helper.getToken();
       if (!token!.isExpired()) {
         Uri url = Uri.parse(
-            '$intraURL/v2/cursus/21/cursus_users?&filter[campus_id]=$compus&range[begin_at]=${promo[city]![date]}&page=$page&per_page=100&sort=-level');
+            '$intraURL/v2/cursus/21/cursus_users?&filter[campus_id]=$compus&range[begin_at]=${promo[city]![date]}&page=$page&per_page=10&sort=-level');
         final response = await http.get(url,
             headers: {'Authorization': 'Bearer ${token.accessToken}'});
         if (response.statusCode == 200) {

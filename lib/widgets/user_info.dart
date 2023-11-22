@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class UserInfo extends StatelessWidget {
-  UserInfo({super.key, required this.title, required this.icon, required this.color});
+  const UserInfo({super.key, required this.title, required this.icon, required this.color});
   final String title;
-  Color color;
+  final Color color;
 
   final IconData icon;
   @override

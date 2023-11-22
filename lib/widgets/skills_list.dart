@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swifty_companion/models/User.dart';
+import 'package:swifty_companion/models/user.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SkillsList extends StatefulWidget {

@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/pages/home_page.dart';
 import 'package:swifty_companion/pages/login_page.dart';
+import 'package:swifty_companion/pages/ranking_list.dart';
 import 'package:swifty_companion/pages/search_user.dart';
 import 'package:swifty_companion/pages/user_profile.dart';
 import 'package:swifty_companion/themes/dark_theme.dart';
@@ -32,8 +33,9 @@ class MainApp extends StatelessWidget {
           ),
           routes: {
             '/login': (context) => const LoginPage(),
-            '/search': (context) => SearchPage(),
-            '/user': (context) => UserProfile(),
+            '/search': (context) => const SearchPage(),
+            '/user': (context) => const UserProfile(),
+            '/ranking': (context) => const RankingList(),
           }),
     );
   }

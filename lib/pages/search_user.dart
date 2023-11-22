@@ -7,7 +7,7 @@ import 'package:swifty_companion/widgets/my_button.dart';
 import 'package:swifty_companion/widgets/my_textfield.dart';
 
 class SearchPage extends StatelessWidget {
-  SearchPage({super.key});
+  const SearchPage({super.key});
 
   void search(BuildContext context, String login) async {
     if (login.isNotEmpty) {

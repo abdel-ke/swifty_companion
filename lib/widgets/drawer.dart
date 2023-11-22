@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:swifty_companion/models/User.dart';
+import 'package:swifty_companion/models/user.dart';
 import 'package:swifty_companion/models/ranking.dart';
 import 'package:swifty_companion/pages/ranking_list.dart';
 import 'package:swifty_companion/providers/provider.dart';
@@ -24,15 +24,9 @@ class MyDrawer extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                // CircleAvatar(
-                //   radius: 50,
-                //   backgroundImage: NetworkImage(data.imageUrl),
-                // ),
                 CustomImage(imageUrl: data.imageUrl),
                 Text(data.fullName,
-                    style: TextStyle(color: coalition.color),
                     overflow: TextOverflow.ellipsis),
-                Text(data.login, style: TextStyle(color: coalition.color)),
               ],
             ),
           ),
@@ -45,8 +39,8 @@ class MyDrawer extends StatelessWidget {
                     onTap: () {
                       context.read<MyProvider>().setPromo('${entry.key} $e');
                       Navigator.pop(context);
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => const GenerationList()));
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyWidget()));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => const RankingList()));
+                      Navigator.pushNamed(context, '/ranking');
                     },
                     title: Text(e),
                   );

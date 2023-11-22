@@ -64,7 +64,7 @@ class Ranking {
       login: json["user"]["login"] ?? "null",
       fullName: json["user"]["usual_full_name"] ?? "null",
       imageUrl:
-          json["user"]["image"]["link"] ?? "https://cdn.intra.42.fr/users/78999b974389f4c1370718e6c4eb0512/3b3.jpg",
+          json["user"]["image"]["link"] ?? "3b3",
       location: json["user"]["location"] ?? "null",
     );
   }

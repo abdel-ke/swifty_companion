@@ -6,6 +6,12 @@ class CustomImage extends StatelessWidget {
   final String imageUrl;
   @override
   Widget build(BuildContext context) {
+    if (imageUrl == "3b3") {
+      return const CircleAvatar(
+        radius: 50,
+        backgroundImage: AssetImage('assets/images/3b3.jpeg'),
+      );
+    }
     return CachedNetworkImage(
       imageUrl: imageUrl,
       placeholder: (context, url) => const SizedBox(width: 100, height: 100 ,child: Center(child: CircularProgressIndicator())),

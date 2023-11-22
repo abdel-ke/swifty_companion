@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:swifty_companion/models/User.dart';
+import 'package:swifty_companion/models/user.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class Projects extends StatelessWidget {
-  Projects({super.key, required this.projects, required this.grade});
+  const Projects({super.key, required this.projects, required this.grade});
   final List<Project> projects;
-  String grade;
+  final String grade;
 
   @override
   Widget build(BuildContext context) {

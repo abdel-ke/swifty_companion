@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/ranking.dart';
 import 'package:swifty_companion/providers/provider.dart';
-import 'package:swifty_companion/widgets/card_user.dart';
+import 'package:swifty_companion/widgets/user_card.dart';
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({super.key});
+class RankingList extends StatefulWidget {
+  const RankingList({super.key});
 
   @override
-  _MyWidgetState createState() => _MyWidgetState();
+  _MyRankingListState createState() => _MyRankingListState();
 }
 
-class _MyWidgetState extends State<MyWidget> {
+class _MyRankingListState extends State<RankingList> {
   List<Ranking> data = [];
   int page = 1;
   bool isLoading = false;
@@ -70,12 +70,15 @@ class _MyWidgetState extends State<MyWidget> {
             crossAxisCount: 2, // Change this value as needed
             mainAxisSpacing: 10.0,
             crossAxisSpacing: 10.0,
-            mainAxisExtent: 215,
+            mainAxisExtent: 230,
           ),
           itemCount: data.length + (isLoading ? 1 : 0),
           itemBuilder: (context, index) {
             if (index == data.length) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(
+                  child: CircularProgressIndicator(
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+              ));
             } else {
               return CardUser(data: data[index], index: index);
             }
