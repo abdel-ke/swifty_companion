@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/user.dart';
 import 'package:swifty_companion/models/ranking.dart';
-import 'package:swifty_companion/pages/ranking_list.dart';
 import 'package:swifty_companion/providers/provider.dart';
 import 'package:swifty_companion/widgets/custom_image.dart';
 
