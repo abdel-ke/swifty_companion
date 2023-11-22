@@ -5,13 +5,19 @@ import 'package:swifty_companion/models/ranking.dart';
 
 class MyProvider extends ChangeNotifier {
   late User _user;
+  late User _me;
   final Authentication _auth = Authentication();
   final TextEditingController _controller = TextEditingController();
   late User _futureUser;
   late Coalition _futureCoalition;
+  late Coalition _myCoalition;
   String _promo = '42';
   late Ranking _rank;
 
+  User get me => _me;
+  Coalition get myCoalition => _myCoalition;
+  User get futureUser => _futureUser;
+  Coalition get futureCoalition => _futureCoalition;
   String get promo => _promo;
   Ranking get rank => _rank;
   User get user => _user;
@@ -20,6 +26,11 @@ class MyProvider extends ChangeNotifier {
 
   void setRank(Ranking rank) {
     _rank = rank;
+    notifyListeners();
+  }
+
+  void setMe(User me) {
+    _me = me;
     notifyListeners();
   }
 
@@ -43,7 +54,8 @@ class MyProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  User get futureUser => _futureUser;
-
-  Coalition get futureCoalition => _futureCoalition;
+  void setMyCoalition(Coalition coalition) {
+    _myCoalition = coalition;
+    notifyListeners();
+  }
 }

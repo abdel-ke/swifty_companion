@@ -26,7 +26,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   userInfo() async {
-    // final tokenInfo = await checkToekn();
     try {
       final tokenInfo = await context.read<MyProvider>().auth.checkToken();
       setState(() {
@@ -51,6 +50,6 @@ class _HomePageState extends State<HomePage> {
     } else if (isLogged == 1) {
       return const LoginPage();
     }
-    return SearchPage();
+    return const SearchPage();
   }
 }

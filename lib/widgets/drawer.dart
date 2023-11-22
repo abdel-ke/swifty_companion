@@ -10,22 +10,21 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final User data = context.watch<MyProvider>().futureUser;
-    final coalition = context.watch<MyProvider>().futureCoalition;
-  
+    final User data = context.watch<MyProvider>().me;
+    final myCoalition = context.watch<MyProvider>().myCoalition;
+
     return Drawer(
       child: ListView(
         children: [
           DrawerHeader(
             decoration: BoxDecoration(
-              color: coalition.color,
+              color: myCoalition.color,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 CustomImage(imageUrl: data.imageUrl),
-                Text(data.fullName,
-                    overflow: TextOverflow.ellipsis),
+                Text(data.fullName, overflow: TextOverflow.ellipsis),
               ],
             ),
           ),

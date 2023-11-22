@@ -97,4 +97,25 @@ class Authentication {
       throw Exception(e);
     }
   }
+
+  Future<User> fetchMe() async {
+    try {
+      AccessTokenResponse? token = await _helper.getToken();
+      if (!token!.isExpired()) {
+        final Uri url = Uri.parse("$intraURL/v2/me");
+        final response = await http.get(url, headers: {
+          'Authorization': 'Bearer ${token.accessToken}',
+        });
+        if (response.statusCode == 200) {
+          return User.fromJson(jsonDecode(response.body));
+        } else {
+          throw Exception('Failed to load your info');
+        }
+      }
+      throw Exception('token is expired');
+    } catch (e) {
+      print('error(fetchMe): $e');
+      throw Exception(e);
+    }
+  }
 }
