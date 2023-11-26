@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:swifty_companion/pages/clusters.dart';
 import 'package:swifty_companion/pages/home_page.dart';
 import 'package:swifty_companion/pages/login_page.dart';
 import 'package:swifty_companion/pages/ranking_list.dart';
@@ -36,6 +37,7 @@ class MainApp extends StatelessWidget {
             '/search': (context) => const SearchPage(),
             '/user': (context) => const UserProfile(),
             '/ranking': (context) => const RankingList(),
+            '/cluster': (context) => const Clusters(),
           }),
     );
   }

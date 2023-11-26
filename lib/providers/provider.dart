@@ -4,13 +4,13 @@ import 'package:swifty_companion/models/authentication.dart';
 import 'package:swifty_companion/models/ranking.dart';
 
 class MyProvider extends ChangeNotifier {
-  late User _user;
-  late User _me;
+  late User _user = User.empty();
+  late User _me = User.empty();
   final Authentication _auth = Authentication();
   final TextEditingController _controller = TextEditingController();
   late User _futureUser;
-  late Coalition _futureCoalition;
-  late Coalition _myCoalition;
+  late Coalition _futureCoalition = Coalition.empty();
+  late Coalition _myCoalition = Coalition.empty();
   String _promo = '42';
   late Ranking _rank;
 

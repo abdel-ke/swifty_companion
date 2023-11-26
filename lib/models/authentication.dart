@@ -82,7 +82,7 @@ class Authentication {
       AccessTokenResponse? token = await _helper.getToken();
       if (!token!.isExpired()) {
         Uri url = Uri.parse(
-            '$intraURL/v2/cursus/21/cursus_users?&filter[campus_id]=$compus&range[begin_at]=${promo[city]![date]}&page=$page&per_page=10&sort=-level');
+            '$intraURL/v2/cursus/21/cursus_users?&filter[campus_id]=$compus&range[begin_at]=${promo[city]![date]}&page=$page&per_page=20&sort=-level');
         final response = await http.get(url,
             headers: {'Authorization': 'Bearer ${token.accessToken}'});
         if (response.statusCode == 200) {

@@ -8,10 +8,10 @@ class RankingList extends StatefulWidget {
   const RankingList({super.key});
 
   @override
-  _MyRankingListState createState() => _MyRankingListState();
+  MyRankingListState createState() => MyRankingListState();
 }
 
-class _MyRankingListState extends State<RankingList> {
+class MyRankingListState extends State<RankingList> {
   List<Ranking> data = [];
   int page = 1;
   bool isLoading = false;
@@ -85,7 +85,7 @@ class _MyRankingListState extends State<RankingList> {
           },
           controller: _controller
             ..addListener(() {
-              if (!isLoading && _controller.position.extentAfter < 98) {
+              if (!isLoading && _controller.position.extentAfter < 20) {
                 _loadData();
               }
             }),

@@ -29,7 +29,7 @@ class _SearchPageState extends State<SearchPage> {
           context.read<MyProvider>().setMyCoalition(myCoalition);
         }
       } catch (e) {
-        print('error to load your coalition');
+        print('error to load your coalition $e');
       }
       if (context.mounted) {
         context.read<MyProvider>().setMe(fetchMe);
@@ -93,16 +93,16 @@ class _SearchPageState extends State<SearchPage> {
       ),
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       elevation: 0,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.logout),
-          onPressed: () {
-            context.watch<MyProvider>().auth.helper.disconnect();
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const LoginPage()));
-          },
-        )
-      ],
+      // actions: [
+      //   IconButton(
+      //     icon: const Icon(Icons.logout),
+      //     onPressed: () {
+      //       context.watch<MyProvider>().auth.helper.disconnect();
+      //       Navigator.push(context,
+      //           MaterialPageRoute(builder: (context) => const LoginPage()));
+      //     },
+      //   )
+      // ],
     );
   }
 
@@ -129,8 +129,9 @@ class _SearchPageState extends State<SearchPage> {
         context.read<MyProvider>().setFutureCoalition(futureCoalition);
         Navigator.pop(context);
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => UserProfile()));
+            context, MaterialPageRoute(builder: (context) => const UserProfile()));
       } catch (e) {
+        print(e);
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

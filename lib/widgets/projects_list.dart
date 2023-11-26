@@ -3,41 +3,46 @@ import 'package:swifty_companion/models/user.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class Projects extends StatelessWidget {
-  const Projects({super.key, required this.projects, required this.grade});
+  Projects({super.key, required this.projects, required this.grade});
   final List<Project> projects;
   final String grade;
+  final ScrollController _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return projects.isEmpty
-        ? const SizedBox(height: 150, child: Center(child: Text('No Projects data available')))
+        ? const SizedBox(
+            height: 150,
+            child: Center(child: Text('No Projects data available')))
         : Container(
-          color: Theme.of(context).colorScheme.primary,
-        height: 250,
-        child: ListView.builder(
-          itemCount: projects.length,
-          itemBuilder: (context, index) {
-            if (projects[index].cursusIds == 21) {
-              return Card(
-                color: Theme.of(context).colorScheme.background,
-                child: ListTile(
-                  title: Text(projects[index].name),
-                  subtitle: timeAgo(projects[index].markedAt),
-                  trailing: projDetail(index),
-                ),
-              );
-            }
-            else if (projects[index].cursusIds != 21 && grade == "Novice") {
-              return Card(
-                color: Theme.of(context).colorScheme.background,
-                child: ListTile(
-                  title: Text(projects[index].name),
-                  trailing: projDetail(index),
-                ),
-              );
-            }
-          },
-        ));
+            color: Theme.of(context).colorScheme.primary,
+            height: 250,
+            child: ListView.builder(
+              itemCount: projects.length,
+              controller: _controller,
+              itemBuilder: (context, index) {
+                if (projects[index].cursusIds == 21) {
+                  return Card(
+                    color: Theme.of(context).colorScheme.background,
+                    child: ListTile(
+                      title: Text(projects[index].name),
+                      subtitle: timeAgo(projects[index].markedAt),
+                      // subtitle: timeAgo(projects[index].markedAt),
+                      trailing: projDetail(index),
+                    ),
+                  );
+                } else if (projects[index].cursusIds != 21 &&
+                    grade == "Novice") {
+                  return Card(
+                    color: Theme.of(context).colorScheme.background,
+                    child: ListTile(
+                      title: Text(projects[index].name),
+                      trailing: projDetail(index),
+                    ),
+                  );
+                }
+              },
+            ));
   }
 
   Text timeAgo(String markedAt) {
@@ -65,3 +70,9 @@ class Projects extends StatelessWidget {
     }
   }
 }
+
+/* 
+  date is 01/10/2023
+  now is 25-11-2023
+  return 2 moths ago not one month ago
+ */

@@ -30,6 +30,7 @@ class UserProfile extends StatelessWidget {
       },
       child: Scaffold(
           appBar: AppBar(
+            centerTitle: true,
             backgroundColor: coalition.color,
             elevation: 0,
             title: Text(
@@ -82,7 +83,6 @@ Widget userInfo(context, data, Coalition coalition) => Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // const Icon(Icons.person, color: Colors.white),
                   Text(data!.fullName,
                       style: TextStyle(color: coalition.color),
                       overflow: TextOverflow.ellipsis),
@@ -161,7 +161,7 @@ Widget infoB(data, context) => Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 200,
+        height: 250,
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(3),

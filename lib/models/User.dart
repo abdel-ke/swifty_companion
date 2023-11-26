@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class User {
@@ -15,6 +17,23 @@ class User {
   final String blackholedAt;
   final List<Project> projects;
   final List<Skills> skills;
+
+  User.empty()
+    : email = '',
+      login = '',
+      fullName = '',
+      imageUrl = '',
+      location = '',
+      level = 0.0,
+      correctionPoint = 0,
+      wallet = 0,
+      grade = '',
+      city = '',
+      phone = '',
+      blackholedAt = '',
+      projects = [],
+      skills = [];
+
   User({
     required this.email,
     required this.login,
@@ -54,7 +73,7 @@ class User {
       email: json['email'] ?? "Unavailable",
       login: json['login'] ?? "Unavailable",
       fullName: json['usual_full_name'] ?? "Unavailable",
-      imageUrl: json['image']['versions']['small'] ?? "Unavailable",
+      imageUrl: json['image']['link'] ?? "Unavailable",
       location: json['location'] ?? '-',
       level: json['cursus_users'][index]['level'] ?? 0,
       grade: json['cursus_users'][index]['grade'] ?? "Novice",
@@ -63,9 +82,15 @@ class User {
       wallet: json['wallet'] ?? 0,
       city: json['campus'][0]['city'] ?? "Unavailable",
       phone: json['phone'] ?? "-",
-      projects: (json['projects_users'] as List)
-          .map((projectJson) => Project.fromJson(projectJson))
-          .toList(),
+      projects: (json['projects_users'] as List).map((projectJson) {
+        // print('projectJson ${jsonEncode(projectJson)}');
+        if (projectJson['id'] == 2431897) {
+          JsonEncoder encoder = new JsonEncoder.withIndent('  ');
+          String prettyprint = encoder.convert(projectJson);
+          print('projectJson: $prettyprint');
+        }
+        return Project.fromJson(projectJson);
+      }).toList(),
       skills: (json['cursus_users'][index]['skills'] as List)
           .map((skillJson) => Skills.fromJson(skillJson))
           .toList(),
@@ -96,8 +121,10 @@ class Project {
       validated: json['validated?'] ?? false,
       name: json['project']['name'] ?? "Unavailable",
       markedAt: json['marked_at'] ?? "Unavailable",
-      status: json['status'],
-      cursusIds: json['cursus_ids'][0] ?? 0,
+      status: json['status'] ?? "null",
+      // cursusIds: json['cursus_ids'][0] ?? 0,
+      cursusIds: (json['cursus_ids'] as List).isNotEmpty ? json['cursus_ids'][0] : 0,
+      // cursusIds: (json['cursus_ids'] as List).firstWhere((_) => true, orElse: () => 0),
     );
   }
 }
@@ -123,6 +150,9 @@ class Skills {
 class Coalition {
   String coverUrl;
   Color color;
+
+  Coalition.empty(): coverUrl = 'null', color = const Color(0xff02cdd1);
+
   Coalition({
     required this.coverUrl,
     required this.color,
@@ -132,12 +162,12 @@ class Coalition {
     if (json.isEmpty) {
       return Coalition(
           coverUrl:
-              "https://profile.intra.42.fr/assets/background_login-a4e0666f73c02f025f590b474b394fd86e1cae20e95261a6e4862c2d0faa1b04.jpg",
+              "null",
           color: const Color(0xff02cdd1));
     }
     return Coalition(
       coverUrl: json[0]['cover_url'] ??
-          "https://profile.intra.42.fr/assets/background_login-a4e0666f73c02f025f590b474b394fd86e1cae20e95261a6e4862c2d0faa1b04.jpg",
+          "null",
       color: (json[0]['color'] != null && json[0]['color'].isNotEmpty)
           ? Color(int.parse('FF${json[0]['color'].substring(1)}', radix: 16))
           : const Color(0xff02cdd1),

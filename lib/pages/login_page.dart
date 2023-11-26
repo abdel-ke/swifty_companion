@@ -8,6 +8,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     pushPage(ret) {
       if (ret == true) {
         Navigator.pushNamed(context, '/search');
@@ -20,11 +21,20 @@ class LoginPage extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/images/42_Logo.png', width: 200,),
+          isDarkMode
+              ? Image.asset(
+                  'assets/images/42_Logo.png',
+                  width: 200,
+                  color: Colors.white,
+                )
+              : Image.asset(
+                  'assets/images/42_Logo.png',
+                  width: 200,
+                ),
           MyButton(onTap: checkAuthorization, title: 'Sign in with intra 42'),
         ],
       ),
