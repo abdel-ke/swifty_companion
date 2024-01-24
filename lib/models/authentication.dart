@@ -23,7 +23,7 @@ class Authentication {
       grantType: OAuth2Helper.authorizationCode,
       clientId: dotenv.env['CLIENT_ID'].toString(),
       clientSecret: dotenv.env['SECRET_CODE'].toString(),
-      scopes: ['public', 'profile'],
+      scopes: ['public'],
     );
   }
 

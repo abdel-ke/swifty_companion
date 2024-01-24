@@ -74,6 +74,7 @@ Widget userInfo(context, data, Coalition coalition) => Container(
           const SizedBox(height: 42),
           CustomImage(imageUrl: data.imageUrl),
           const SizedBox(height: 10),
+          if (data.alumni) alumni(),
           Container(
             color: Colors.black.withOpacity(0.8),
             margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -100,6 +101,28 @@ Widget userInfo(context, data, Coalition coalition) => Container(
           const SizedBox(height: 15),
         ],
       ),
+    );
+
+Widget alumni() => Column(
+      children: [
+        Container(
+          color: Colors.black.withOpacity(0.8),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Alumni',
+                    style:
+                        TextStyle(fontSize: 16, color: Colors.green.shade500))
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+      ],
     );
 
 Widget levelLinear(data, Coalition coalition) => LinearPercentIndicator(

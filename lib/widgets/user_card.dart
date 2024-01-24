@@ -13,8 +13,11 @@ class CardUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileInfo(login: data.login)));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProfileInfo(login: data.login)));
       },
       child: Container(
           decoration: BoxDecoration(
@@ -26,6 +29,18 @@ class CardUser extends StatelessWidget {
             children: [
               const SizedBox(height: 10),
               CustomImage(imageUrl: data.imageUrl),
+              const SizedBox(height: 5),
+              if (data.alumni)
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade700,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text('Alumni',
+                      style: TextStyle(
+                          fontSize: 16, color: Colors.green.shade500)),
+                ),
               const SizedBox(height: 5),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 10),

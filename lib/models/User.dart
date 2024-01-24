@@ -15,24 +15,26 @@ class User {
   final String city;
   final String phone;
   final String blackholedAt;
+  final bool alumni;
   final List<Project> projects;
   final List<Skills> skills;
 
   User.empty()
-    : email = '',
-      login = '',
-      fullName = '',
-      imageUrl = '',
-      location = '',
-      level = 0.0,
-      correctionPoint = 0,
-      wallet = 0,
-      grade = '',
-      city = '',
-      phone = '',
-      blackholedAt = '',
-      projects = [],
-      skills = [];
+      : email = '',
+        login = '',
+        fullName = '',
+        imageUrl = '',
+        location = '',
+        level = 0.0,
+        correctionPoint = 0,
+        wallet = 0,
+        grade = '',
+        city = '',
+        phone = '',
+        blackholedAt = '',
+        alumni = false,
+        projects = [],
+        skills = [];
 
   User({
     required this.email,
@@ -49,6 +51,7 @@ class User {
     required this.blackholedAt,
     required this.projects,
     required this.skills,
+    required this.alumni,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -82,6 +85,7 @@ class User {
       wallet: json['wallet'] ?? 0,
       city: json['campus'][0]['city'] ?? "Unavailable",
       phone: json['phone'] ?? "-",
+      alumni: json['alumni?'],
       projects: (json['projects_users'] as List).map((projectJson) {
         // print('projectJson ${jsonEncode(projectJson)}');
         if (projectJson['id'] == 2431897) {
@@ -123,7 +127,8 @@ class Project {
       markedAt: json['marked_at'] ?? "Unavailable",
       status: json['status'] ?? "null",
       // cursusIds: json['cursus_ids'][0] ?? 0,
-      cursusIds: (json['cursus_ids'] as List).isNotEmpty ? json['cursus_ids'][0] : 0,
+      cursusIds:
+          (json['cursus_ids'] as List).isNotEmpty ? json['cursus_ids'][0] : 0,
       // cursusIds: (json['cursus_ids'] as List).firstWhere((_) => true, orElse: () => 0),
     );
   }
@@ -151,7 +156,9 @@ class Coalition {
   String coverUrl;
   Color color;
 
-  Coalition.empty(): coverUrl = 'null', color = const Color(0xff02cdd1);
+  Coalition.empty()
+      : coverUrl = 'null',
+        color = const Color(0xff02cdd1);
 
   Coalition({
     required this.coverUrl,
@@ -160,14 +167,10 @@ class Coalition {
 
   factory Coalition.fromJson(json) {
     if (json.isEmpty) {
-      return Coalition(
-          coverUrl:
-              "null",
-          color: const Color(0xff02cdd1));
+      return Coalition(coverUrl: "null", color: const Color(0xff02cdd1));
     }
     return Coalition(
-      coverUrl: json[0]['cover_url'] ??
-          "null",
+      coverUrl: json[0]['cover_url'] ?? "null",
       color: (json[0]['color'] != null && json[0]['color'].isNotEmpty)
           ? Color(int.parse('FF${json[0]['color'].substring(1)}', radix: 16))
           : const Color(0xff02cdd1),

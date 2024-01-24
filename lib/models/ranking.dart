@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 final Map<String, List<String>> generation = {
   'khouribga': [
     '1st promo 10/2018',
@@ -46,6 +48,8 @@ class Ranking {
   final String fullName;
   final String imageUrl;
   final String location;
+  final bool alumni;
+
   Ranking({
     required this.grade,
     required this.level,
@@ -54,18 +58,24 @@ class Ranking {
     required this.fullName,
     required this.imageUrl,
     required this.location,
+    required this.alumni,
   });
 
   factory Ranking.fromJson(Map<String, dynamic> json) {
+    if (json['user']['login'] == 'oboualla') {
+      debugPrint('login: ${json['user']['login']}');
+      debugPrint('login0: ${json['user']['alumni?']}');
+      debugPrint('alumni1 : ${json['alumni?']}');
+    }
     return Ranking(
       grade: json["grade"] ?? "null",
       level: json["level"] ?? 0.0,
       blackholedAt: json["blackholed_at"] ?? "null",
       login: json["user"]["login"] ?? "null",
       fullName: json["user"]["usual_full_name"] ?? "null",
-      imageUrl:
-          json["user"]["image"]["link"] ?? "3b3",
+      imageUrl: json["user"]["image"]["link"] ?? "3b3",
       location: json["user"]["location"] ?? "null",
+      alumni: json['user']['alumni?'] ?? false,
     );
   }
 
