@@ -14,7 +14,10 @@ class CustomImage extends StatelessWidget {
     }
     return CachedNetworkImage(
       imageUrl: imageUrl,
-      placeholder: (context, url) => const SizedBox(width: 100, height: 100 ,child: Center(child: CircularProgressIndicator())),
+      placeholder: (context, url) => const SizedBox(
+          width: 100,
+          height: 100,
+          child: Center(child: CircularProgressIndicator())),
       errorWidget: (context, url, error) => const Icon(
         Icons.error,
         size: 100,
