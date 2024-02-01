@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     pushPage(ret) {
       if (ret == true) {
-        Navigator.pushNamed(context, '/search');
+        Navigator.pushNamed(context, '/myuser');
       }
     }
 

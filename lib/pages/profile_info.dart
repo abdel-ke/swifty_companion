@@ -5,6 +5,7 @@ import 'package:swifty_companion/pages/user_profile.dart';
 import 'package:swifty_companion/providers/provider.dart';
 import 'package:swifty_companion/widgets/projects_list.dart';
 import 'package:swifty_companion/widgets/skills_list.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileInfo extends StatefulWidget {
   const ProfileInfo({super.key, required this.login});
@@ -25,10 +26,9 @@ class _ProfileInfoState extends State<ProfileInfo> {
           .auth
           .fetchUser(widget.login);
       if (!context.mounted) return;
-      Coalition coal =
-          await Provider.of<MyProvider>(context, listen: false)
-              .auth
-              .fetchCoalition(widget.login);
+      Coalition coal = await Provider.of<MyProvider>(context, listen: false)
+          .auth
+          .fetchCoalition(widget.login);
       if (context.mounted) {
         setState(() {
           data = user;
@@ -63,6 +63,18 @@ class _ProfileInfoState extends State<ProfileInfo> {
           data.fullName,
           style: const TextStyle(color: Colors.white),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.launch),
+            onPressed: () async {
+              final Uri url = Uri.parse(
+                  'https://profile.intra.42.fr/users/${widget.login}');
+              if (!await launchUrl(url)) {
+                throw Exception('Could not launch $url');
+              }
+            },
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: SafeArea(

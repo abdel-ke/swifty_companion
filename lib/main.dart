@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:swifty_companion/pages/clusters.dart';
 import 'package:swifty_companion/pages/home_page.dart';
 import 'package:swifty_companion/pages/login_page.dart';
+import 'package:swifty_companion/pages/my_profile.dart';
 import 'package:swifty_companion/pages/ranking_list.dart';
 import 'package:swifty_companion/pages/search_user.dart';
 import 'package:swifty_companion/pages/user_profile.dart';
@@ -36,6 +37,7 @@ class MainApp extends StatelessWidget {
             '/login': (context) => const LoginPage(),
             '/search': (context) => const SearchPage(),
             '/user': (context) => const UserProfile(),
+            '/myuser': (context) => const MyProfile(),
             '/ranking': (context) => const RankingList(),
             '/cluster': (context) => const Clusters(),
           }),
