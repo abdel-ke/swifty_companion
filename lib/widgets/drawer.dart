@@ -4,7 +4,6 @@ import 'package:swifty_companion/models/user.dart';
 import 'package:swifty_companion/models/ranking.dart';
 import 'package:swifty_companion/pages/clusters.dart';
 import 'package:swifty_companion/providers/provider.dart';
-import 'package:swifty_companion/widgets/custom_image.dart';
 import 'package:swifty_companion/widgets/my_image_profile.dart';
 
 class MyDrawer extends StatelessWidget {

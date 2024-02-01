@@ -27,7 +27,6 @@ class Projects extends StatelessWidget {
                     child: ListTile(
                       title: Text(projects[index].name),
                       subtitle: timeAgo(projects[index].markedAt),
-                      // subtitle: timeAgo(projects[index].markedAt),
                       trailing: projDetail(index),
                     ),
                   );
@@ -41,6 +40,7 @@ class Projects extends StatelessWidget {
                     ),
                   );
                 }
+                return null;
               },
             ));
   }
@@ -70,9 +70,3 @@ class Projects extends StatelessWidget {
     }
   }
 }
-
-/* 
-  date is 01/10/2023
-  now is 25-11-2023
-  return 2 moths ago not one month ago
- */
