@@ -62,7 +62,7 @@ class MyRankingListState extends State<RankingList> {
           elevation: 0,
           centerTitle: true,
           backgroundColor: Theme.of(context).colorScheme.primary,
-          title: const Text('Swifty Companion')),
+          title: const Text('Ranking List',)),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: GridView.builder(
