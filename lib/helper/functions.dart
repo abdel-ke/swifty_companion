@@ -37,32 +37,6 @@ Text timeAgo2(String markedAt) {
   }
 }
 
-String addImageLinksToSVGs(String svgData, Map<String, dynamic> clusterData) {
-  clusterData.forEach((key, value) {
-    print('start');
-    final id = key;
-    final imageUrl = value['image'];
-    print('id: $id');
-    print('imageUrl: $imageUrl');
-    RegExp imageId = RegExp(
-      '<image\\s+[^>]*id="$id"[^>]*(?:/)?>(?:</image>)?',
-    );
-    final match = imageId.firstMatch(svgData);
-    print('match: $match');
-    final xlinkHref = RegExp('xlink:href="[^"]*"');
-    final xlinkHrefMatch =
-        xlinkHref.firstMatch('xlinkHrefMatch: xlink:href="$imageUrl"');
-    // print('xlinkHrefMatch: ${xlinkHrefMatch![0]}');
-    print('END');
-    final newMatch =
-        match![0]!.replaceFirst(xlinkHref, xlinkHrefMatch![0].toString());
-    svgData.replaceFirst(match[0].toString(), newMatch);
-  });
-  print('done');
-  return svgData;
-}
-
-
 List getLastTwoNumber(String str) {
   // Define a regular expression pattern to match numbers
   RegExp regex = RegExp(r'\b\d+\b');

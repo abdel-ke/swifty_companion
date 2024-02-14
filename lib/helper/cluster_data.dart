@@ -38,38 +38,18 @@ String addImageLinksToSVG(String svgString, rectImageMap) {
     '<style type="text/css">',
     '<style type="text/css">\nrect{fill:#f1f2f3;stroke:#000;}',
   );
-  return svgString; // You need to define this function
+  return svgString;
 }
 
 Future<String> fetchClusters(String url) async {
   final res = await http.get(Uri.parse(url));
   final Map<String, dynamic> data =
       await fetchPosts("https://clusters-watcher.onrender.com/16");
-  // final String svgData = ;
-
   String xmlString = addImageLinksToSVG(res.body, data);
   xmlString = xmlString.replaceAll(RegExp(r'<g\b[^>]*?>'), '');
   xmlString = xmlString.replaceAll(RegExp(r'</g>'), '');
   final myTransformer = Xml2Json();
   myTransformer.parse(xmlString);
   final jsonString = myTransformer.toGData();
-  // Map<String, dynamic> jsonObject = await json.decode(jsonString);
   return jsonString;
 }
-
-// Stream<String> fetchClusters(String url) {
-//   return Stream.periodic(const Duration(seconds: 60), (_) async {
-//     final res = await http.get(Uri.parse(url));
-//     final Map<String, dynamic> data =
-//         await fetchPosts("https://clusters-watcher.onrender.com/16");
-
-//     String xmlString = addImageLinksToSVG(res.body, data);
-//     xmlString = xmlString.replaceAll(RegExp(r'<g\b[^>]*?>'), '');
-//     xmlString = xmlString.replaceAll(RegExp(r'</g>'), '');
-//     final myTransformer = Xml2Json();
-//     myTransformer.parse(xmlString);
-//     final jsonString = myTransformer.toGData();
-
-//     return jsonString;
-//   }).asyncMap((event) => event);
-// }

@@ -22,8 +22,6 @@ class Another extends StatelessWidget {
             myTransformer.parse(xmlString);
             final jsonString = myTransformer.toGData();
             Map<String, dynamic> jsonObject = json.decode(jsonString);
-            // g[0].g[9].image[2]
-
             List<dynamic> images = jsonObject["svg"]["image"];
             // Clipboard.setData(ClipboardData(text: jsonString));
             return SingleChildScrollView(

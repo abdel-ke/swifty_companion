@@ -44,7 +44,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadUser();
   }

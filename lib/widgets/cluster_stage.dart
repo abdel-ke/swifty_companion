@@ -5,6 +5,7 @@ import 'package:swifty_companion/constants/constant.dart';
 import 'package:swifty_companion/helper/cluster_data.dart';
 import 'package:swifty_companion/helper/functions.dart';
 import 'package:swifty_companion/pages/profile_info.dart';
+import 'package:swifty_companion/widgets/my_image_profile.dart';
 
 class ClusterStage extends StatelessWidget {
   const ClusterStage({super.key, required this.index});
@@ -14,14 +15,10 @@ class ClusterStage extends StatelessWidget {
   Widget build(BuildContext context) {
     const double horizental = 0.60;
     const double vertical = 0.70;
-    final double width = MediaQuery.of(context).size.width;
-    final double height = MediaQuery.of(context).size.height;
 
     return FutureBuilder(
         future: fetchClusters(clustersSvgUrl[index]),
         builder: (context, snapshot) {
-          print('width: $width');
-          print('height: $height');
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(
@@ -34,11 +31,6 @@ class ClusterStage extends StatelessWidget {
             Map<String, dynamic> jsonObject =
                 json.decode(snapshot.data.toString());
             // Clipboard.setData(ClipboardData(text: snapshot.data.toString()));
-            // print('typeof: ${jsonObject.runtimeType}');
-            String viewBox = jsonObject["svg"]["viewBox"];
-            final splited = viewBox.split(' ');
-            print('|width: ${splited[2]}|');
-            print('|height: ${splited[3]}|');
             List<dynamic> images = jsonObject["svg"]["image"];
             List text = jsonObject["svg"]["text"];
             return InteractiveViewer(
@@ -72,8 +64,6 @@ class ClusterStage extends StatelessWidget {
                                 String? login;
                                 if (match != null && match.groupCount >= 1) {
                                   login = match.group(1);
-                                  // Navigator.pushNamed(context, '/profile',
-                                  //     arguments: login);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -83,21 +73,36 @@ class ClusterStage extends StatelessWidget {
                                     ),
                                   );
                                 }
-                                print('Extracted Text: $login');
                               },
-                              child: Image.network(
-                                e["xlink:href"],
-                                fit: BoxFit.cover,
+                              child: MyImageProfile(
+                                imageUrl: e["xlink:href"],
                                 width: double.parse(e["width"]) * horizental,
                                 height: double.parse(e["height"]) * vertical,
-                              ),
-                            )
+                                radius: 0,
+                                size: double.parse(e["width"]) * horizental,
+                                circle: false,
+                              )
+                              // child: Image.network(
+                              //   e["xlink:href"],
+                              //   fit: BoxFit.cover,
+                              //   width: double.parse(e["width"]) * horizental,
+                              //   height: double.parse(e["height"]) * vertical,
+                              // ),
+                              )
                           : Container(
                               color: Colors.white,
                             ),
                     );
                   }),
                 ],
+              ),
+            );
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                'Error: ${snapshot.error}',
+                style: const TextStyle(color: Colors.red),
               ),
             );
           }

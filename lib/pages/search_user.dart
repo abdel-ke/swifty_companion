@@ -73,23 +73,14 @@ class _SearchPageState extends State<SearchPage> {
             );
           });
       try {
-        // final futureCoalition =
-        //     await Provider.of<MyProvider>(context, listen: false)
-        //         .auth
-        //         .fetchCoalition(login);
-        // if (!context.mounted) return;
         await Provider.of<MyProvider>(context, listen: false)
             .auth
             .fetchUser(login);
         if (!context.mounted) return;
-        // context.read<MyProvider>().setFutureUser(futureUser);
-        // context.read<MyProvider>().setFutureCoalition(futureCoalition);
         Navigator.pop(context);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => ProfileInfo(login: login)));
-        // MaterialPageRoute(builder: (context) => const UserProfile()));
       } catch (e) {
-        print(e);
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

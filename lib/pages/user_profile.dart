@@ -85,7 +85,7 @@ Widget userInfo(context, data, Coalition coalition) => Container(
         children: [
           const SizedBox(height: 42),
           GestureDetector(
-            onTap: () => displayImage(context, data),
+            onTap: () => displayImage(context, data.imageUrl),
             child: CustomImage(imageUrl: data.imageUrl),
           ),
           const SizedBox(height: 10),
@@ -118,19 +118,18 @@ Widget userInfo(context, data, Coalition coalition) => Container(
       ),
     );
 
-Future<dynamic> displayImage(context, data) {
+Future<dynamic> displayImage(context, imageUrl) {
   return showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        // backgroundColor: coalition.color,
         backgroundColor: Colors.black,
         content: Container(
           width: MediaQuery.of(context).size.width / 3,
           height: MediaQuery.of(context).size.height / 3.5,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: CachedNetworkImageProvider(data.imageUrl),
+              image: CachedNetworkImageProvider(imageUrl),
               fit: BoxFit.cover,
             ),
           ),

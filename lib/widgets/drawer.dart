@@ -46,7 +46,6 @@ class MyDrawer extends StatelessWidget {
                                 .read<MyProvider>()
                                 .setPromo('${entry.key} $e');
                             Navigator.pop(context);
-                            // Navigator.push(context, MaterialPageRoute(builder: (context) => const RankingList()));
                             Navigator.pushNamed(context, '/ranking');
                           },
                           title: Text(e),

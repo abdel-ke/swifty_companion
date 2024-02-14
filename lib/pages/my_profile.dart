@@ -86,9 +86,8 @@ Widget userInfo(context, data, Coalition coalition) => Container(
         children: [
           const SizedBox(height: 42),
           GestureDetector(
-            onTap: () => displayImage(context, data),
+            onTap: () => displayImage(context, data.imageUrl),
             child: MyImageProfile(imageUrl: data.imageUrl),
-            // child: CustomImage(imageUrl: data.imageUrl),
           ),
           const SizedBox(height: 10),
           if (data.alumni) alumni(),
