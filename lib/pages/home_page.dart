@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/user.dart';
+import 'package:swifty_companion/pages/Skeletonizer/skeletonizer_profile.dart';
 import 'package:swifty_companion/pages/login_page.dart';
 import 'package:swifty_companion/pages/my_profile.dart';
 import 'package:swifty_companion/providers/provider.dart';
@@ -54,11 +55,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     if (isLogged == 0) {
-      return const SafeArea(
-          child: Center(
-        child: CircularProgressIndicator(),
-      ));
-    } else if (isLogged == 1) {
+      return const SkeletonizerProfile();
+    } 
+    else
+    if (isLogged == 1) {
       return const LoginPage();
     }
     return const MyProfile();

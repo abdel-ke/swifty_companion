@@ -17,6 +17,7 @@ dependencies:
   oauth2_client: ^3.2.2
   percent_indicator: ^4.2.3
   provider: ^6.1.1
+  skeletonizer: ^1.0.1
   syncfusion_flutter_charts: ^23.1.44
   timeago: ^3.6.0
   url_launcher: ^6.2.4
@@ -32,4 +33,4 @@ flutter:
   assets:
     - .env
     - assets/images/
-    - assets/svg/
+    - assets/clustersSvg/

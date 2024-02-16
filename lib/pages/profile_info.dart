@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/user.dart';
+import 'package:swifty_companion/pages/Skeletonizer/skeletonizer_profile.dart';
 import 'package:swifty_companion/pages/user_profile.dart';
 import 'package:swifty_companion/providers/provider.dart';
 import 'package:swifty_companion/widgets/projects_list.dart';
@@ -51,7 +52,8 @@ class _ProfileInfoState extends State<ProfileInfo> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      // return const Center(child: CircularProgressIndicator());
+      return const SkeletonizerProfile();
     }
     return Scaffold(
       appBar: AppBar(

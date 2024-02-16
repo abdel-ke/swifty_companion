@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/ranking.dart';
+import 'package:swifty_companion/pages/Skeletonizer/Skeletonizer_rank_page.dart';
 import 'package:swifty_companion/providers/provider.dart';
 import 'package:swifty_companion/widgets/user_card.dart';
 
@@ -75,10 +76,7 @@ class MyRankingListState extends State<RankingList> {
           itemCount: data.length + (isLoading ? 1 : 0),
           itemBuilder: (context, index) {
             if (index == data.length) {
-              return Center(
-                  child: CircularProgressIndicator(
-                backgroundColor: Theme.of(context).colorScheme.secondary,
-              ));
+              return const SkeletonizerCardUser();
             } else {
               return CardUser(data: data[index], index: index);
             }
