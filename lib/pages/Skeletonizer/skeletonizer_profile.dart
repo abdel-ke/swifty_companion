@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:swifty_companion/widgets/user_info.dart';
+import 'package:swifty_companion/widgets/profile_page/user_info.dart';
 
 class SkeletonizerProfile extends StatelessWidget {
   const SkeletonizerProfile({super.key});

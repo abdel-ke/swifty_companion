@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:swifty_companion/helper/functions.dart';
 import 'package:swifty_companion/models/ranking.dart';
-import 'package:swifty_companion/pages/profile_info.dart';
-import 'package:swifty_companion/pages/user_profile.dart';
+import 'package:swifty_companion/pages/profile_page/profile_info.dart';
+import 'package:swifty_companion/pages/profile_page/user_profile.dart';
 import 'package:swifty_companion/widgets/custom_image.dart';
 
 class CardUser extends StatelessWidget {

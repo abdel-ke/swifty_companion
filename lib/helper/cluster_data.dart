@@ -16,7 +16,7 @@ String addImageLinksToSVG(String svgString, rectImageMap) {
     var rectId = item;
     var imageUrl = value['image'];
     var regex = RegExp(
-      '${'<image\\s+[^>]*id="' + rectId}"[^>]*(?:/)?>(?:</image>)?',
+      '<image\\s+[^>]*id="$rectId"[^>]*(?:/)?>(?:</image>)?',
     );
     var match = regex.firstMatch(svgString);
     if (match != null) {

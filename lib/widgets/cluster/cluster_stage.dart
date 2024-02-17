@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:swifty_companion/constants/constant.dart';
 import 'package:swifty_companion/helper/cluster_data.dart';
 import 'package:swifty_companion/helper/functions.dart';
-import 'package:swifty_companion/pages/profile_info.dart';
-import 'package:swifty_companion/widgets/my_image_profile.dart';
+import 'package:swifty_companion/pages/profile_page/profile_info.dart';
+import 'package:swifty_companion/widgets/profile_page/my_image_profile.dart';
 
 class ClusterStage extends StatelessWidget {
   const ClusterStage({super.key, required this.index});

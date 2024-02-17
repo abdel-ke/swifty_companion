@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swifty_companion/widgets/cluster_stage.dart';
+import 'package:swifty_companion/widgets/cluster/cluster_stage.dart';
 
 class Clusters extends StatelessWidget {
   const Clusters({super.key});

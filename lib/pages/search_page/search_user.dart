@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:swifty_companion/pages/profile_info.dart';
+import 'package:swifty_companion/pages/profile_page/profile_info.dart';
 import 'package:swifty_companion/providers/provider.dart';
 import 'package:swifty_companion/widgets/my_button.dart';
 import 'package:swifty_companion/widgets/my_textfield.dart';

@@ -4,45 +4,47 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/helper/functions.dart';
 import 'package:swifty_companion/models/user.dart';
+import 'package:swifty_companion/pages/profile_page/user_profile.dart';
 import 'package:swifty_companion/providers/provider.dart';
-import 'package:swifty_companion/widgets/custom_image.dart';
-import 'package:swifty_companion/widgets/projects_list.dart';
-import 'package:swifty_companion/widgets/skills_list.dart';
-import 'package:swifty_companion/widgets/user_info.dart';
+import 'package:swifty_companion/widgets/drawer.dart';
+import 'package:swifty_companion/widgets/profile_page/my_image_profile.dart';
+import 'package:swifty_companion/widgets/profile_page/projects_list.dart';
+import 'package:swifty_companion/widgets/profile_page/skills_list.dart';
+import 'package:swifty_companion/widgets/profile_page/user_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class UserProfile extends StatelessWidget {
-  const UserProfile({
+class MyProfile extends StatelessWidget {
+  const MyProfile({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final data = context.watch<MyProvider>().futureUser;
-    final coalition = context.watch<MyProvider>().futureCoalition;
-    final controller = context.watch<MyProvider>().controller;
-    // ignore: deprecated_member_use
-    return WillPopScope(
-      onWillPop: () async {
-        controller.clear();
-        Navigator.pop(context);
-        return true;
-      },
-      child: Scaffold(
+    final me = context.watch<MyProvider>().me;
+    final coalition = context.watch<MyProvider>().myCoalition;
+
+    return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: coalition.color,
           elevation: 0,
           title: Text(
-            data.fullName,
+            me.fullName,
             style: const TextStyle(color: Colors.white),
           ),
           actions: [
             IconButton(
+              icon: const Icon(Icons.person_search_outlined),
+              onPressed: () {
+                context.read<MyProvider>().auth.helper.disconnect();
+                Navigator.pushNamed(context, '/search');
+              },
+            ),
+            IconButton(
               icon: const Icon(Icons.launch),
               onPressed: () async {
-                final Uri url = Uri.parse(
-                    'https://profile.intra.42.fr/users/${data.login}');
+                final Uri url =
+                    Uri.parse('https://profile.intra.42.fr/users/${me.login}');
                 if (!await launchUrl(url)) {
                   throw Exception('Could not launch $url');
                 }
@@ -54,20 +56,19 @@ class UserProfile extends StatelessWidget {
           child: SafeArea(
             child: Column(
               children: <Widget>[
-                userInfo(context, data, coalition),
-                infoC(data, coalition),
+                userInfo(context, me, coalition),
+                infoC(me, coalition),
                 Projects(
-                  projects: data.projects,
-                  grade: data.grade,
+                  projects: me.projects,
+                  grade: me.grade,
                 ),
-                SkillsList(skills: data.skills),
+                SkillsList(skills: me.skills),
                 const SizedBox(height: 15),
               ],
             ),
           ),
         ),
-      ),
-    );
+        drawer: const MyDrawer());
   }
 }
 
@@ -86,7 +87,7 @@ Widget userInfo(context, data, Coalition coalition) => Container(
           const SizedBox(height: 42),
           GestureDetector(
             onTap: () => displayImage(context, data.imageUrl),
-            child: CustomImage(imageUrl: data.imageUrl),
+            child: MyImageProfile(imageUrl: data.imageUrl),
           ),
           const SizedBox(height: 10),
           if (data.alumni) alumni(),
@@ -107,7 +108,7 @@ Widget userInfo(context, data, Coalition coalition) => Container(
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
           infoA(data, coalition),
           const SizedBox(height: 10),
           infoB(data, context),
@@ -117,27 +118,6 @@ Widget userInfo(context, data, Coalition coalition) => Container(
         ],
       ),
     );
-
-Future<dynamic> displayImage(context, imageUrl) {
-  return showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Colors.black,
-        content: Container(
-          width: MediaQuery.of(context).size.width / 3,
-          height: MediaQuery.of(context).size.height / 3.5,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: CachedNetworkImageProvider(imageUrl),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-      );
-    },
-  );
-}
 
 Widget alumni() => Column(
       children: [

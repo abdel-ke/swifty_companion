@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/user.dart';
 import 'package:swifty_companion/pages/Skeletonizer/skeletonizer_profile.dart';
-import 'package:swifty_companion/pages/user_profile.dart';
+import 'package:swifty_companion/pages/profile_page/user_profile.dart';
 import 'package:swifty_companion/providers/provider.dart';
-import 'package:swifty_companion/widgets/projects_list.dart';
-import 'package:swifty_companion/widgets/skills_list.dart';
+import 'package:swifty_companion/widgets/profile_page/projects_list.dart';
+import 'package:swifty_companion/widgets/profile_page/skills_list.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileInfo extends StatefulWidget {

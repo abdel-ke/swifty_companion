@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/ranking.dart';
 import 'package:swifty_companion/pages/Skeletonizer/Skeletonizer_rank_page.dart';
 import 'package:swifty_companion/providers/provider.dart';
-import 'package:swifty_companion/widgets/user_card.dart';
+import 'package:swifty_companion/widgets/profile_page/user_card.dart';
 
 class RankingList extends StatefulWidget {
   const RankingList({super.key});

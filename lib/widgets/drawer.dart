@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/ranking.dart';
 import 'package:swifty_companion/models/user.dart';
-import 'package:swifty_companion/pages/clusters.dart';
+import 'package:swifty_companion/pages/cluster/clusters.dart';
 import 'package:swifty_companion/providers/provider.dart';
-import 'package:swifty_companion/widgets/my_image_profile.dart';
+import 'package:swifty_companion/widgets/profile_page/my_image_profile.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
