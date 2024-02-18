@@ -12,7 +12,7 @@ class Clusters extends StatelessWidget {
         child: Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: const Text('Cluster'),
+              title: const Text('Clusters'),
               bottom: TabBar(
                 physics: const NeverScrollableScrollPhysics(),
                 labelColor: Theme.of(context).appBarTheme.foregroundColor,

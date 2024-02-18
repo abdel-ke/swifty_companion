@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:swifty_companion/constants/constant.dart';
 import 'package:swifty_companion/helper/cluster_data.dart';
 import 'package:swifty_companion/helper/functions.dart';
@@ -13,87 +14,30 @@ class ClusterStage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double horizental = 0.60;
-    const double vertical = 0.70;
+    final double widthSize = MediaQuery.of(context).size.width - 20;
+    final double heightSize = MediaQuery.of(context).size.height - 150;
 
     return FutureBuilder(
         future: fetchClusters(clustersSvgUrl[index]),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.green,
-              ),
-            );
-          }
           if (snapshot.hasData) {
-            // Map<String, dynamic> jsonObject = await json.decode(jsonString);
             Map<String, dynamic> jsonObject =
                 json.decode(snapshot.data.toString());
-            // Clipboard.setData(ClipboardData(text: snapshot.data.toString()));
             List<dynamic> images = jsonObject["svg"]["image"];
             List text = jsonObject["svg"]["text"];
+            List<dynamic> viewBoxValues = jsonObject["svg"]["viewBox"]
+                .split(' ')
+                .map((str) => double.parse(str))
+                .toList();
             return InteractiveViewer(
               minScale: 0.1,
               maxScale: 3.0,
               child: Stack(
                 children: [
-                  ...text.map((e) {
-                    List lastTwoNumbers = getLastTwoNumber(e["transform"]);
-                    if (lastTwoNumbers.length >= 2) {
-                      return Positioned(
-                        left: double.parse(lastTwoNumbers[0]) * horizental,
-                        top: double.parse(lastTwoNumbers[1]) * vertical,
-                        child: Text(e["\$t"]),
-                      );
-                    }
-                    return Container();
-                  }),
-                  ...images.map((e) {
-                    return Positioned(
-                      left: double.parse(e["x"]) * horizental,
-                      top: double.parse(e["y"]) * vertical,
-                      width: double.parse(e["width"]) * horizental,
-                      height: double.parse(e["height"]) * vertical,
-                      child: e["xlink:href"] != ""
-                          ? GestureDetector(
-                              onTap: () {
-                                final filename = e["xlink:href"];
-                                RegExp regExp = RegExp(r'small_(.*?)\.');
-                                Match? match = regExp.firstMatch(filename);
-                                String? login;
-                                if (match != null && match.groupCount >= 1) {
-                                  login = match.group(1);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ProfileInfo(
-                                        login: login!,
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: MyImageProfile(
-                                imageUrl: e["xlink:href"],
-                                width: double.parse(e["width"]) * horizental,
-                                height: double.parse(e["height"]) * vertical,
-                                radius: 0,
-                                size: double.parse(e["width"]) * horizental,
-                                circle: false,
-                              )
-                              // child: Image.network(
-                              //   e["xlink:href"],
-                              //   fit: BoxFit.cover,
-                              //   width: double.parse(e["width"]) * horizental,
-                              //   height: double.parse(e["height"]) * vertical,
-                              // ),
-                              )
-                          : Container(
-                              color: Colors.white,
-                            ),
-                    );
-                  }),
+                  ...text.map((e) => _buildTextPositioned(
+                      e, viewBoxValues, widthSize, heightSize)),
+                  ...images.map((e) => _buildImagePositioned(
+                      e, viewBoxValues, widthSize, heightSize, context)),
                 ],
               ),
             );
@@ -106,11 +50,87 @@ class ClusterStage extends StatelessWidget {
               ),
             );
           }
-          return const Center(
-            child: CircularProgressIndicator(
-              color: Colors.green,
-            ),
+          return SvgPicture.asset(
+            clustersSvg[index],
+            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
           );
         });
+  }
+
+  Positioned _buildTextPositioned(dynamic e, List<dynamic> viewBoxValues,
+      double widthSize, double heightSize) {
+    List lastTwoNumbers = getLastTwoNumber(e["transform"]);
+    final double left =
+        calculatePosition(lastTwoNumbers[0], viewBoxValues[2], widthSize);
+    final double top =
+        calculatePosition(lastTwoNumbers[1], viewBoxValues[3], heightSize);
+    if (lastTwoNumbers.length >= 2) {
+      return Positioned(
+        left: left,
+        top: top,
+        child: Text(
+          e["\$t"],
+          style: const TextStyle(fontSize: 8),
+        ),
+      );
+    }
+    return Positioned(child: Container());
+  }
+
+  Positioned _buildImagePositioned(dynamic e, List<dynamic> viewBoxValues,
+      double widthSize, double heightSize, BuildContext context) {
+    final double left = calculatePosition(e["x"], viewBoxValues[2], widthSize);
+    final double top = calculatePosition(e["y"], viewBoxValues[3], heightSize);
+    final double width = calculateSize(e["width"], viewBoxValues[2], widthSize);
+    final double height =
+        calculateSize(e["height"], viewBoxValues[3], heightSize);
+    return Positioned(
+      left: left,
+      top: top,
+      width: width,
+      height: height,
+      child: e["xlink:href"] != ""
+          ? GestureDetector(
+              onTap: () {
+                displayProfile(context, e["xlink:href"]);
+              },
+              child: MyImageProfile(
+                imageUrl: e["xlink:href"],
+                width: width,
+                height: height,
+                radius: 0,
+                size: height,
+                circle: false,
+              ))
+          : Container(
+              color: Colors.white,
+            ),
+    );
+  }
+
+  double calculatePosition(String value, double viewBoxValue, double size) {
+    return (double.parse(value) / viewBoxValue) * size;
+  }
+
+  double calculateSize(String value, double viewBoxValue, double size) {
+    return (double.parse(value) / viewBoxValue) * size;
+  }
+
+  void displayProfile(BuildContext context, String url) {
+    final filename = url;
+    RegExp regExp = RegExp(r'small_(.*?)\.');
+    Match? match = regExp.firstMatch(filename);
+    String? login;
+    if (match != null && match.groupCount >= 1) {
+      login = match.group(1);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProfileInfo(
+            login: login!,
+          ),
+        ),
+      );
+    }
   }
 }
