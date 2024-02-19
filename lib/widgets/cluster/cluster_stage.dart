@@ -62,8 +62,8 @@ class ClusterStage extends StatelessWidget {
     List lastTwoNumbers = getLastTwoNumber(e["transform"]);
     final double left =
         calculatePosition(lastTwoNumbers[0], viewBoxValues[2], widthSize);
-    final double top =
-        calculatePosition(lastTwoNumbers[1], viewBoxValues[3], heightSize);
+    final double top = calculatePosition(lastTwoNumbers[1], viewBoxValues[3],
+        heightSize);
     if (lastTwoNumbers.length >= 2) {
       return Positioned(
         left: left,
@@ -82,8 +82,8 @@ class ClusterStage extends StatelessWidget {
     final double left = calculatePosition(e["x"], viewBoxValues[2], widthSize);
     final double top = calculatePosition(e["y"], viewBoxValues[3], heightSize);
     final double width = calculateSize(e["width"], viewBoxValues[2], widthSize);
-    final double height =
-        calculateSize(e["height"], viewBoxValues[3], heightSize);
+    final double height = calculateSize(e["height"], viewBoxValues[3],
+        heightSize);// ;
     return Positioned(
       left: left,
       top: top,
