@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:swifty_companion/constants/constant.dart';
+import 'package:swifty_companion/helper/functions.dart';
 import 'package:swifty_companion/pages/cluster/clusters.dart';
 import 'package:swifty_companion/pages/home_page.dart';
 import 'package:swifty_companion/pages/login_page/login_page.dart';
@@ -11,8 +13,15 @@ import 'package:swifty_companion/pages/profile_page/user_profile.dart';
 import 'package:swifty_companion/providers/provider.dart';
 import 'package:swifty_companion/themes/dark_theme.dart';
 import 'package:swifty_companion/themes/light_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  secretId = await getSecretId();
   await dotenv.load(fileName: ".env");
   runApp(const MainApp());
 }

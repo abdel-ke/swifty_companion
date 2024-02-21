@@ -25,11 +25,13 @@ class CardUser extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const SizedBox(height: 10),
-              CustomImage(imageUrl: data.imageUrl),
-              const SizedBox(height: 5),
+              GestureDetector(
+                onTap: () {
+                  displayImage(context, data.imageUrl);
+                },
+                child: CustomImage(imageUrl: data.imageUrl)),
               if (data.alumni)
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -41,7 +43,6 @@ class CardUser extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 16, color: Colors.green.shade500)),
                 ),
-              const SizedBox(height: 5),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
@@ -61,32 +62,27 @@ class CardUser extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 5),
               Text(data.location == 'null' ? '-' : data.location),
-              const SizedBox(height: 5),
               if (data.blackholedAt != "null") blackHole(data),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8.0), // Adjust as needed
-                    margin: const EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade700,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                      (index + 1).toString(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: (index + 1) > 99 ? 10 : 8,
-                        color: Colors.white,
-                      ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  padding: const EdgeInsets.all(8.0), 
+                  margin: const EdgeInsets.only(right: 8),// Adjust as needed
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade700,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    '${index + 1}',
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      fontSize: (index + 1) > 99 ? 8 : 10,
+                      color: Colors.white,
                     ),
                   ),
-                ],
+                ),
               ),
-              const Padding(padding: EdgeInsets.only(bottom: 5)),
             ],
           )),
     );

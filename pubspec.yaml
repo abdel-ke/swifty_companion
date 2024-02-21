@@ -8,6 +8,8 @@ environment:
 
 dependencies:
   cached_network_image: ^3.3.0
+  cloud_firestore: ^4.15.5
+  firebase_core: ^2.25.4
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.1.0

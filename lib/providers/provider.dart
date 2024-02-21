@@ -4,6 +4,7 @@ import 'package:swifty_companion/models/authentication.dart';
 import 'package:swifty_companion/models/ranking.dart';
 
 class MyProvider extends ChangeNotifier {
+  late String _secretId ;
   late User _user = User.empty();
   late User _me = User.empty();
   final Authentication _auth = Authentication();
@@ -23,6 +24,8 @@ class MyProvider extends ChangeNotifier {
   User get user => _user;
   Authentication get auth => _auth;
   TextEditingController get controller => _controller;
+  String get secretId => _secretId;
+
 
   void setRank(Ranking rank) {
     _rank = rank;
@@ -58,4 +61,10 @@ class MyProvider extends ChangeNotifier {
     _myCoalition = coalition;
     notifyListeners();
   }
+  
+  void setSecretId(String secretId) {
+    _secretId = secretId;
+    notifyListeners();
+  }
+
 }

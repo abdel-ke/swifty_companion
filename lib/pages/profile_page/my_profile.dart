@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +50,11 @@ class MyProfile extends StatelessWidget {
                   throw Exception('Could not launch $url');
                 }
               },
-            )
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.ads_click),
+            ),
           ],
         ),
         body: SingleChildScrollView(

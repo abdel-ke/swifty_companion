@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/user.dart';
@@ -32,7 +33,6 @@ class _HomePageState extends State<HomePage> {
       if (tokenInfo == true) {
         if (!context.mounted) return;
         User me = await context.read<MyProvider>().auth.fetchMe();
-        debugPrint('me: ${me.login}');
         if (!context.mounted) return;
         context.read<MyProvider>().setMe(me);
         Coalition myCoalition =

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 int date(String date) {
@@ -32,7 +33,6 @@ Text timeAgo2(String markedAt) {
     }
     return const Text('just now');
   } catch (e) {
-    print('e: $e');
     return const Text('');
   }
 }
@@ -51,4 +51,11 @@ List getLastTwoNumber(String str) {
     return [secondLast, last];
   }
   return [];
+}
+
+Future<String> getSecretId() async {
+  final db = FirebaseFirestore.instance;
+  final result = await db.collection("intra").get();
+  final secretId = await result.docs.first.data()["secretId"];
+  return secretId;
 }

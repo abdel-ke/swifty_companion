@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:swifty_companion/constants/constant.dart';
 import 'package:swifty_companion/helper/cluster_data.dart';
 import 'package:swifty_companion/helper/functions.dart';
@@ -50,10 +49,13 @@ class ClusterStage extends StatelessWidget {
               ),
             );
           }
-          return SvgPicture.asset(
-            clustersSvg[index],
-            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          return const Center(
+            child: CircularProgressIndicator(color: Colors.green,),
           );
+          // return SvgPicture.asset(
+          //   clustersSvg[index],
+          //   colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          // );
         });
   }
 

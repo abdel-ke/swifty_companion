@@ -1,13 +1,14 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 import 'package:oauth2_client/access_token_response.dart';
 import 'package:oauth2_client/oauth2_client.dart';
 import 'package:oauth2_client/oauth2_helper.dart';
 import 'package:swifty_companion/constants/constant.dart';
-import 'package:swifty_companion/models/user.dart';
 import 'package:swifty_companion/models/ranking.dart';
+import 'package:swifty_companion/models/user.dart';
 
 class Authentication {
   late final OAuth2Helper _helper;
@@ -22,7 +23,7 @@ class Authentication {
       client,
       grantType: OAuth2Helper.authorizationCode,
       clientId: dotenv.env['CLIENT_ID'].toString(),
-      clientSecret: dotenv.env['SECRET_CODE'].toString(),
+      clientSecret: secretId,
       scopes: ['public'],
     );
   }

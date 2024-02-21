@@ -26,7 +26,6 @@ String addImageLinksToSVG(String svgString, rectImageMap) {
           RegExp('width="([^"]*)"').firstMatch(match.group(0).toString());
       var heightAttr =
           RegExp('height="([^"]*)"').firstMatch(match.group(0).toString());
-
       svgString = svgString.replaceAll(
         regex,
         '<image id="$rectId" xlink:href="$imageUrl" preserveAspectRatio="xMidYMid slice" ${xAttr != null ? 'x="${xAttr.group(1)}" ' : ''}${yAttr != null ? 'y="${yAttr.group(1)}" ' : ''}${widthAttr != null ? 'width="${widthAttr.group(1)}" ' : ''}${heightAttr != null ? 'height="${heightAttr.group(1)}" ' : ''}/>',
