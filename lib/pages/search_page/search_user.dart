@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:swifty_companion/pages/profile_page/profile_info.dart';
 import 'package:swifty_companion/providers/provider.dart';
 import 'package:swifty_companion/widgets/my_button.dart';
-import 'package:swifty_companion/widgets/my_textfield.dart';
+import 'package:swifty_companion/widgets/search_delegate.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -33,19 +32,12 @@ class _SearchPageState extends State<SearchPage> {
           const SizedBox(
             height: 10,
           ),
-          MyTextField(
-            onSubmitted: (String? value) {
-              search(context, user.text.trim().toString());
-            },
-            controller: user,
-            hintText: 'User login',
-            margin: 42,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
           MyButton(
-              onTap: () => search(context, user.text.trim().toString()),
+              // onTap: () => search(context, user.text.trim().toString()),
+              onTap: () async {
+                await showSearch(
+                    context: context, delegate: CustomSearchDelegate());
+              },
               title: 'Search'),
         ],
       ),
@@ -61,39 +53,5 @@ class _SearchPageState extends State<SearchPage> {
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       elevation: 0,
     );
-  }
-
-  void search(BuildContext context, String login) async {
-    if (login.isNotEmpty) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          });
-      try {
-        await Provider.of<MyProvider>(context, listen: false)
-            .auth
-            .fetchUser(login);
-        if (!context.mounted) return;
-        Navigator.pop(context);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ProfileInfo(login: login)));
-      } catch (e) {
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(
-              'User not found',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white),
-            ),
-            duration: Duration(seconds: 4),
-          ),
-        );
-      }
-    }
   }
 }

@@ -18,7 +18,7 @@ class User {
   final bool alumni;
   final List<Project> projects;
   final List<Skills> skills;
-
+  
   User.empty()
       : email = '',
         login = '',
@@ -89,7 +89,7 @@ class User {
       projects: (json['projects_users'] as List).map((projectJson) {
         // print('projectJson ${jsonEncode(projectJson)}');
         if (projectJson['id'] == 2431897) {
-          JsonEncoder encoder = new JsonEncoder.withIndent('  ');
+          JsonEncoder encoder = const JsonEncoder.withIndent('  ');
           String prettyprint = encoder.convert(projectJson);
           print('projectJson: $prettyprint');
         }
@@ -99,6 +99,10 @@ class User {
           .map((skillJson) => Skills.fromJson(skillJson))
           .toList(),
     );
+  }
+
+  static List<User> fromListJson(List<dynamic> jsonList) {
+    return jsonList.map((user) => User.fromJson(user)).toList();
   }
 }
 
@@ -175,5 +179,26 @@ class Coalition {
           ? Color(int.parse('FF${json[0]['color'].substring(1)}', radix: 16))
           : const Color(0xff02cdd1),
     );
+  }
+}
+
+class SearchUser {
+  String login;
+  String imageUrl;
+
+  SearchUser({
+    required this.login,
+    required this.imageUrl,
+  });
+
+  factory SearchUser.fromJson(Map<String, dynamic> json) {
+    return SearchUser(
+      login: json['login'] ?? "Unavailable",
+      imageUrl: json['image']['link'] ?? "Unavailable",
+    );
+  }
+
+  static List<SearchUser> fromListJson(List<dynamic> jsonList) {
+    return jsonList.map((user) => SearchUser.fromJson(user)).toList();
   }
 }

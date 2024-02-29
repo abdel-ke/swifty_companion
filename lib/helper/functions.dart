@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:swifty_companion/pages/profile_page/profile_info.dart';
+import 'package:swifty_companion/providers/provider.dart';
 
 int date(String date) {
   if (date == 'null') return -1;
@@ -59,3 +62,38 @@ Future<String> getSecretId() async {
   final secretId = await result.docs.first.data()["secretId"];
   return secretId;
 }
+
+void search(BuildContext context, String login) async {
+    if (login.isNotEmpty) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          });
+      try {
+        await Provider.of<MyProvider>(context, listen: false)
+            .auth
+            .fetchUser(login);
+        if (!context.mounted) return;
+        Navigator.pop(context);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ProfileInfo(login: login)));
+      } catch (e) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(
+              'User not found',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white),
+            ),
+            duration: Duration(seconds: 4),
+          ),
+        );
+      }
+    }
+  }
+  
