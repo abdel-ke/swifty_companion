@@ -10,7 +10,8 @@ Ranking: Explore the rankings of users for each campus promo.
 Screenshots
 Cluster: Display clusters of KH-compus
 
-Screenshots:
+##Screenshots
+
 ![Alt text](/screenshots/userProfilePage.png?raw=true "Profile page")
 ![Alt text](/screenshots/userProfile2page.pngraw=true "Profile page 2")
 ![Alt text](/screenshots/searchPage.pngraw=true "Search page")
