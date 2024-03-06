@@ -39,8 +39,10 @@ class MyImageProfile extends StatelessWidget {
                 )
             : (context, imageProvider) => Image(
                 image: imageProvider,
+                filterQuality: FilterQuality.high,
                 fit: BoxFit.cover,
                 width: width,
-                height: height));
+                height: height)
+                );
   }
 }

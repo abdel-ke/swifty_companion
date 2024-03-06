@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -120,16 +121,43 @@ class Authentication {
     }
   }
 
+  // Future<List<SearchUser>> fetchSearchedUser(String search) async {
+  //   try {
+  //     AccessTokenResponse? token = await _helper.getToken();
+  //     if (!token!.isExpired()) {
+  //       final Uri url = Uri.parse("$intraURL/v2/users?search[login]=$search");
+  //       final response = await http.get(url, headers: {
+  //         'Authorization': 'Bearer ${token!.accessToken}',
+  //       });
+  //       if (response.statusCode == 200) {
+  //         return SearchUser.fromListJson(jsonDecode(response.body));
+  //       } else {
+  //         throw Exception('Failed to load user');
+  //       }
+  //     }
+  //     throw Exception('token is expired');
+  //   } catch (e) {
+  //     print('error(fetchSearchedUser): $e');
+  //     throw Exception(e);
+  //   }
+  // }
+
   Future<List<SearchUser>> fetchSearchedUser(String search) async {
     try {
       AccessTokenResponse? token = await _helper.getToken();
       if (!token!.isExpired()) {
-        final Uri url = Uri.parse("$intraURL/v2/users?search[login]=$search");
-        final response = await http.get(url, headers: {
-          'Authorization': 'Bearer ${token.accessToken}',
-        });
+        final String url = "$intraURL/v2/users?search[login]=$search";
+        Dio dio = Dio();
+        final response = await dio.get(
+          url,
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer ${token.accessToken}',
+            },
+          ),
+        );
         if (response.statusCode == 200) {
-          return SearchUser.fromListJson(jsonDecode(response.body));
+          return SearchUser.fromListJson(response.data);
         } else {
           throw Exception('Failed to load user');
         }

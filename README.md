@@ -8,4 +8,12 @@ User Search: Easily search for any user at 42 School and get detailed informatio
 User Profile: View a user's full name, level, validated projects, projects in progress, and a graphical representation of their skills.
 Ranking: Explore the rankings of users for each campus promo.
 Screenshots
-You can check screenshots from the folder
+Cluster: Display clusters of KH-compus
+
+Screenshots:
+![Alt text](/screenshots/userProfilePage.png?raw=true "Profile page")
+![Alt text](/screenshots/userProfile2Page.png?raw=true "Profile page 2")
+![Alt text](/screenshots/searchPage.png?raw=true "Search page")
+![Alt text](/screenshots/Sidebar.png?raw=true "Sidebar page")
+![Alt text](/screenshots/rankingPage.png?raw=true "Ranking page")
+![Alt text](/screenshots/cluster.png?raw=true "Cluster page")

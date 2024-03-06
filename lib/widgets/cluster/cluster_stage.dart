@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:swifty_companion/constants/constant.dart';
 import 'package:swifty_companion/helper/cluster_data.dart';
 import 'package:swifty_companion/helper/functions.dart';
@@ -20,6 +21,7 @@ class ClusterStage extends StatelessWidget {
         future: fetchClusters(clustersSvgUrl[index]),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            debugPrint(snapshot.data.toString());
             Map<String, dynamic> jsonObject =
                 json.decode(snapshot.data.toString());
             List<dynamic> images = jsonObject["svg"]["image"];
