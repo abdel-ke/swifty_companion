@@ -12,9 +12,9 @@ Cluster: Display clusters of KH-compus
 
 ##Screenshots
 
-![Alt text](/screenshots/userProfilePage.png?raw=true "Profile page")
-![Alt text](/screenshots/userProfile2page.pngraw=true "Profile page 2")
-![Alt text](/screenshots/searchPage.pngraw=true "Search page")
-![Alt text](/screenshots/Sidebar.png?raw=true "Sidebar page")
-![Alt text](/screenshots/rankingPage.png?raw=true "Ranking page")
-![Alt text](/screenshots/cluster.png?raw=true "Cluster page")
+![Alt text](/screenShots/userProfilePage.png?raw=true "Profile page")
+![Alt text](/screenShots/userProfile2page.pngraw=true "Profile page 2")
+![Alt text](/screenShots/searchPage.pngraw=true "Search page")
+![Alt text](/screenShots/Sidebar.png?raw=true "Sidebar page")
+![Alt text](/screenShots/rankingPage.png?raw=true "Ranking page")
+![Alt text](/screenShots/cluster.png?raw=true "Cluster page")
