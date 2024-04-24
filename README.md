@@ -11,10 +11,13 @@ Screenshots
 Cluster: Display clusters of KH-compus
 
 ##Screenshots
+<div style="display: flex; flex-direction: 'row';">
+<img src="./screenshots/userProfilePage.png" width=20%>
+<img src="./screenshots/userProfile2page.png" width=20%>
+<img src="./screenshots/searchPage.png" width=20%>
+<img src="./screenshots/Sidebar.png" width=20%>
+<img src="./screenshots/rankingPage.png" width=20%>
+<img src="./screenshots/cluster.png" width=20%>
 
-![Alt text](/screenshots/userProfilePage.png?raw=true "Profile page")
-![Alt text](/screenshots/userProfile2page.png?raw=true "Profile page 2")
-![Alt text](/screenshots/searchPage.png?raw=true "Search page")
-![Alt text](/screenshots/Sidebar.png?raw=true "Sidebar page")
-![Alt text](/screenshots/rankingPage.png?raw=true "Ranking page")
-![Alt text](/screenshots/cluster.png?raw=true "Cluster page")
+</div>
+
