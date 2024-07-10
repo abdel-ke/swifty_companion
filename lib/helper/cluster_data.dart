@@ -1,10 +1,14 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
 
 Future<Map<String, dynamic>> fetchPosts(String url) async {
-  final res = await http.get(Uri.parse(url));
+  final res = await http.get(
+    Uri.parse(url),
+    headers: {'Cookie': dotenv.env['COOKIE'].toString()},
+  );
   String data = res.body.substring(0, res.body.length - 1);
   data = data.replaceAll("var campus_locations = ", "");
   final Map<String, dynamic> clusterData = await json.decode(data);
@@ -40,10 +44,11 @@ String addImageLinksToSVG(String svgString, rectImageMap) {
   return svgString;
 }
 
-Future<String> fetchClusters(String url) async {
+Future<String> fetchClusters(String url, int compusId) async {
   final res = await http.get(Uri.parse(url));
   final Map<String, dynamic> data =
-      await fetchPosts("https://clusters-watcher.onrender.com/16");
+      await fetchPosts("https://www.42tools.me/api/deprecated_locations/$compusId");
+  // await fetchPosts("https://clusters-watcher.onrender.com/16");
   String xmlString = addImageLinksToSVG(res.body, data);
   xmlString = xmlString.replaceAll(RegExp(r'<g\b[^>]*?>'), '');
   xmlString = xmlString.replaceAll(RegExp(r'</g>'), '');

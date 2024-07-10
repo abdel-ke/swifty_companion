@@ -33,7 +33,9 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return buidlSuggest();
+    return const Center(
+      child: Text('Enter a username to search'),
+    );
   }
 
   FutureBuilder<dynamic> buidlSuggest() {
@@ -60,7 +62,6 @@ class CustomSearchDelegate extends SearchDelegate {
             child: Text('No locations found for $query'),
           );
         }
-        // debugPrint('data: ${snapshot.data}');
         final List<SearchUser> listUsers = snapshot.data;
         return ListView.builder(
             itemCount: listUsers.length,
@@ -69,10 +70,9 @@ class CustomSearchDelegate extends SearchDelegate {
                 onTap: () {
                   search(context, listUsers[index].login);
                 },
-                leading:
-                    CircleAvatar(backgroundImage: NetworkImage(listUsers[index].imageUrl)),
+                leading: CircleAvatar(
+                    backgroundImage: NetworkImage(listUsers[index].imageUrl)),
                 title: Text(listUsers[index].login),
-                    // Text(listUsers[index].login),
               );
             });
       },

@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/constants/constant.dart';
 import 'package:swifty_companion/helper/functions.dart';
-import 'package:swifty_companion/pages/cluster/clusters.dart';
+import 'package:swifty_companion/pages/clusters/clusters.dart';
 import 'package:swifty_companion/pages/home_page.dart';
 import 'package:swifty_companion/pages/login_page/login_page.dart';
 import 'package:swifty_companion/pages/profile_page/my_profile.dart';
@@ -48,7 +48,7 @@ class MainApp extends StatelessWidget {
             '/user': (context) => const UserProfile(),
             '/myuser': (context) => const MyProfile(),
             '/ranking': (context) => const RankingList(),
-            '/cluster': (context) => const Clusters(),
+            '/cluster': (context) => const KHClusters(),
           }),
     );
   }
@@ -71,3 +71,6 @@ class MainApp extends StatelessWidget {
     );
   }
 }
+
+
+/*  */

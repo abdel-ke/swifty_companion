@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -85,6 +87,7 @@ Widget userInfo(context, data, Coalition coalition) => Container(
         children: [
           const SizedBox(height: 42),
           GestureDetector(
+            // onTap: () => displayImage(context, data.imageUrl, blur: false),
             onTap: () => displayImage(context, data.imageUrl),
             child: CustomImage(imageUrl: data.imageUrl),
           ),
@@ -118,7 +121,30 @@ Widget userInfo(context, data, Coalition coalition) => Container(
       ),
     );
 
+// Future<dynamic> displayImage(context, imageUrl, {bool blur = true}) {
 Future<dynamic> displayImage(context, imageUrl) {
+  // this for blurred images
+  // return showDialog(
+  //   context: context,
+  //   builder: (BuildContext context) {
+  //     return AlertDialog(
+  //       backgroundColor: Colors.black,
+  //       content: ImageFiltered(
+  //         imageFilter: ImageFilter.blur(sigmaX: blur == true ? 4 : 0, sigmaY: blur == true ? 4 : 0), // Adjust the blur intensity as needed
+  //         child: Container(
+  //           width: MediaQuery.of(context).size.width / 3,
+  //           height: MediaQuery.of(context).size.height / 3.5,
+  //           decoration: BoxDecoration(
+  //             image: DecorationImage(
+  //               image: CachedNetworkImageProvider(imageUrl),
+  //               fit: BoxFit.cover,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     );
+  //   },
+  // );
   return showDialog(
     context: context,
     builder: (BuildContext context) {

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:swifty_companion/helper/functions.dart';
 import 'package:swifty_companion/models/ranking.dart';
@@ -31,7 +33,15 @@ class CardUser extends StatelessWidget {
                 onTap: () {
                   displayImage(context, data.imageUrl);
                 },
-                child: CustomImage(imageUrl: data.imageUrl)),
+                // this for blurred images
+                //   child: ImageFiltered(
+                //     imageFilter: ImageFilter.blur(
+                //         sigmaX: 2, sigmaY: 2), // Specify the amount of blur
+                //     child: CustomImage(imageUrl: data.imageUrl),
+                //   ),
+                // ),
+                child: CustomImage(imageUrl: data.imageUrl),
+              ),
               if (data.alumni)
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -67,8 +77,8 @@ class CardUser extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Container(
-                  padding: const EdgeInsets.all(8.0), 
-                  margin: const EdgeInsets.only(right: 8),// Adjust as needed
+                  padding: const EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.only(right: 8), // Adjust as needed
                   decoration: BoxDecoration(
                     color: Colors.grey.shade700,
                     shape: BoxShape.circle,

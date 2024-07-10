@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -22,27 +24,38 @@ class MyImageProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-        imageUrl: imageUrl,
-        placeholder: (context, url) => SizedBox(
-            width: width,
-            height: height,
-            child: const Center(child: CircularProgressIndicator())),
-        errorWidget: (context, url, error) => Icon(
-              Icons.error,
-              size: size,
-              color: Colors.red,
-            ),
-        imageBuilder: circle == true
-            ? (context, imageProvider) => CircleAvatar(
-                  radius: radius,
-                  backgroundImage: imageProvider,
-                )
-            : (context, imageProvider) => Image(
-                image: imageProvider,
-                filterQuality: FilterQuality.high,
-                fit: BoxFit.cover,
-                width: width,
-                height: height)
-                );
+      imageUrl: imageUrl,
+      placeholder: (context, url) => SizedBox(
+          width: width,
+          height: height,
+          child: const Center(child: CircularProgressIndicator())),
+      errorWidget: (context, url, error) => Icon(
+        Icons.error,
+        size: size,
+        color: Colors.red,
+      ),
+      imageBuilder: circle == true
+          ? (context, imageProvider) => CircleAvatar(
+                radius: radius,
+                backgroundImage: imageProvider,
+              )
+          // this is for blurred images
+          // : (context, imageProvider) => ImageFiltered(
+          //     imageFilter: ImageFilter.blur(
+          //         sigmaX: 0.5,
+          //         sigmaY: 0.5), // Adjust the blur intensity as needed
+          //     child: Image(
+          //         image: imageProvider,
+          //         filterQuality: FilterQuality.high,
+          //         fit: BoxFit.cover,
+          //         width: width,
+          //         height: height)));
+          : (context, imageProvider) => Image(
+              image: imageProvider,
+              filterQuality: FilterQuality.high,
+              fit: BoxFit.cover,
+              width: width,
+              height: height),
+    );
   }
 }

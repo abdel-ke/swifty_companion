@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -51,10 +50,6 @@ class MyProfile extends StatelessWidget {
                 }
               },
             ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.ads_click),
-            ),
           ],
         ),
         body: SingleChildScrollView(
@@ -73,6 +68,7 @@ class MyProfile extends StatelessWidget {
             ),
           ),
         ),
+        // drawer: const MyDrawer());
         drawer: const MyDrawer());
   }
 }
@@ -91,6 +87,7 @@ Widget userInfo(context, data, Coalition coalition) => Container(
         children: [
           const SizedBox(height: 42),
           GestureDetector(
+            // onTap: () => displayImage(context, data.imageUrl, blur: false),
             onTap: () => displayImage(context, data.imageUrl),
             child: MyImageProfile(imageUrl: data.imageUrl),
           ),

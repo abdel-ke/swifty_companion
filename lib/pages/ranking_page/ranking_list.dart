@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:swifty_companion/constants/constant.dart';
 import 'package:swifty_companion/models/ranking.dart';
 import 'package:swifty_companion/pages/Skeletonizer/Skeletonizer_rank_page.dart';
 import 'package:swifty_companion/providers/provider.dart';
+import 'package:swifty_companion/widgets/drawer.dart';
 import 'package:swifty_companion/widgets/profile_page/user_card.dart';
 
 class RankingList extends StatefulWidget {
@@ -33,11 +35,11 @@ class MyRankingListState extends State<RankingList> {
       final promo = Provider.of<MyProvider>(context, listen: false).promo;
       final city = promo.split(' ')[0];
       final selectedPromo = promo.split(' ')[1];
-      final cursusId = city == 'khouribga'
-          ? 16
-          : city == "Bengurir"
-              ? 21
-              : 55;
+      final cursusId = city == 'Khouribga'
+          ? KHOURIBGAID
+          : city == "BenGuerir"
+              ? BENGURIRID
+              : MEDID;
       List<Ranking> newData =
           await Provider.of<MyProvider>(context, listen: false)
               .auth
@@ -89,6 +91,7 @@ class MyRankingListState extends State<RankingList> {
             }),
         ),
       ),
+      drawer: const MyDrawer(),
     );
   }
 }

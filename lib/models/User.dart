@@ -87,11 +87,9 @@ class User {
       phone: json['phone'] ?? "-",
       alumni: json['alumni?'],
       projects: (json['projects_users'] as List).map((projectJson) {
-        // print('projectJson ${jsonEncode(projectJson)}');
         if (projectJson['id'] == 2431897) {
           JsonEncoder encoder = const JsonEncoder.withIndent('  ');
           String prettyprint = encoder.convert(projectJson);
-          print('projectJson: $prettyprint');
         }
         return Project.fromJson(projectJson);
       }).toList(),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:swifty_companion/providers/provider.dart';
 import 'package:swifty_companion/widgets/my_button.dart';
 import 'package:swifty_companion/widgets/search_delegate.dart';
 
@@ -14,7 +12,6 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
-    final user = context.read<MyProvider>().controller;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
