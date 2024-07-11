@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 class User {
@@ -87,10 +85,6 @@ class User {
       phone: json['phone'] ?? "-",
       alumni: json['alumni?'],
       projects: (json['projects_users'] as List).map((projectJson) {
-        if (projectJson['id'] == 2431897) {
-          JsonEncoder encoder = const JsonEncoder.withIndent('  ');
-          String prettyprint = encoder.convert(projectJson);
-        }
         return Project.fromJson(projectJson);
       }).toList(),
       skills: (json['cursus_users'][index]['skills'] as List)
