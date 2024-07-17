@@ -53,14 +53,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // if (isLogged == 0) {
-    //   return const SkeletonizerProfile();
-    // } 
-    // else
-    // if (isLogged == 1) {
-    //   return const LoginPage();
-    // }
-    // return const MyProfile();
+    if (isLogged == 0) {
+      return const SkeletonizerProfile();
+    } 
+    else
+    if (isLogged == 1) {
       return const LoginPage();
+    }
+    return const MyProfile();
   }
 }
