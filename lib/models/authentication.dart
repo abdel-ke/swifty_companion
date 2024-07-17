@@ -142,7 +142,7 @@ class Authentication {
   //   }
   // }
 
-  Future<List<SearchUser>> fetchSearchedUser(String search) async {
+  Future<List<SearchUser>> fetchSearchedUsers(String search) async {
     try {
       AccessTokenResponse? token = await _helper.getToken();
       if (!token!.isExpired()) {

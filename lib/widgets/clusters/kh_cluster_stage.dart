@@ -32,7 +32,7 @@ class ClusterStage extends StatelessWidget {
               minScale: 0.1,
               maxScale: 3.0,
               child: Stack(
-                children: [
+                children: [ 
                   ...text.map((e) => _buildTextPositioned(
                       e, viewBoxValues, widthSize, heightSize)),
                   ...images.map((e) => _buildImagePositioned(

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/ranking.dart';
 import 'package:swifty_companion/models/user.dart';
 import 'package:swifty_companion/pages/clusters/bg_cluster.dart';
-import 'package:swifty_companion/pages/clusters/clusters.dart';
+import 'package:swifty_companion/pages/clusters/kh_clusters.dart';
 import 'package:swifty_companion/pages/clusters/med_cluster.dart';
 import 'package:swifty_companion/providers/provider.dart';
 import 'package:swifty_companion/widgets/profile_page/my_image_profile.dart';

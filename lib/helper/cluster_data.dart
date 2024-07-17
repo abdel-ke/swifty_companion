@@ -45,11 +45,10 @@ String addImageLinksToSVG(String svgString, rectImageMap) {
 }
 
 Future<String> fetchClusters(String url, int compusId) async {
-  final res = await http.get(Uri.parse(url));
-  final Map<String, dynamic> data =
-      await fetchPosts("https://www.42tools.me/api/deprecated_locations/$compusId");
-  // await fetchPosts("https://clusters-watcher.onrender.com/16");
-  String xmlString = addImageLinksToSVG(res.body, data);
+  final clusterSvg = await http.get(Uri.parse(url)); // fetch cluster svg
+  final Map<String, dynamic> clusterData =
+      await fetchPosts("https://www.42tools.me/api/deprecated_locations/$compusId"); // fetch cluster data of users connected
+  String xmlString = addImageLinksToSVG(clusterSvg.body, clusterData);
   xmlString = xmlString.replaceAll(RegExp(r'<g\b[^>]*?>'), '');
   xmlString = xmlString.replaceAll(RegExp(r'</g>'), '');
   final myTransformer = Xml2Json();
@@ -57,3 +56,5 @@ Future<String> fetchClusters(String url, int compusId) async {
   final jsonString = myTransformer.toGData();
   return jsonString;
 }
+
+ 

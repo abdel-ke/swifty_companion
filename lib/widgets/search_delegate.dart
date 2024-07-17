@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:swifty_companion/helper/functions.dart';
-import 'package:swifty_companion/models/authentication.dart';
 import 'package:swifty_companion/models/user.dart';
+import 'package:swifty_companion/providers/provider.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   @override
@@ -28,7 +29,7 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return buidlSuggest();
+    return buidlSuggest(context);
   }
 
   @override
@@ -38,9 +39,12 @@ class CustomSearchDelegate extends SearchDelegate {
     );
   }
 
-  FutureBuilder<dynamic> buidlSuggest() {
+  FutureBuilder<dynamic> buidlSuggest(BuildContext context) {
+    // final auth = Provider.of<MyProvider>(context, listen: false);
+    final auth = Provider.of<MyProvider>(context, listen: false).auth;
     return FutureBuilder(
-      future: Authentication().fetchSearchedUser(query),
+      // future: Authentication().fetchSearchedUsers(query),
+      future: auth.fetchSearchedUsers(query),
       builder: (context, snapshot) {
         if (snapshot.data == false) {
           return const Center(
