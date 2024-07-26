@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/constants/constant.dart';
 import 'package:swifty_companion/models/ranking.dart';
-import 'package:swifty_companion/pages/Skeletonizer/Skeletonizer_rank_page.dart';
+import 'package:swifty_companion/views/Skeletonizer/Skeletonizer_rank_page.dart';
 import 'package:swifty_companion/providers/provider.dart';
 import 'package:swifty_companion/widgets/drawer.dart';
 import 'package:swifty_companion/widgets/profile_page/user_card.dart';

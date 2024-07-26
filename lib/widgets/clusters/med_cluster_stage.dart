@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:swifty_companion/constants/constant.dart';
 import 'package:swifty_companion/helper/cluster_data.dart';
-import 'package:swifty_companion/helper/functions.dart';
-import 'package:swifty_companion/pages/profile_page/profile_info.dart';
+import 'package:swifty_companion/utils/functions.dart';
+import 'package:swifty_companion/views/profile_page/profile_info.dart';
 import 'package:swifty_companion/widgets/profile_page/my_image_profile.dart';
 
 class MedClusterStage extends StatelessWidget {

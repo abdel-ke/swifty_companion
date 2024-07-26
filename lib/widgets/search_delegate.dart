@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:swifty_companion/helper/functions.dart';
+import 'package:swifty_companion/utils/functions.dart';
 import 'package:swifty_companion/models/user.dart';
 import 'package:swifty_companion/providers/provider.dart';
 

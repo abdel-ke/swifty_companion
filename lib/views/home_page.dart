@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/models/user.dart';
-import 'package:swifty_companion/pages/Skeletonizer/skeletonizer_profile.dart';
-import 'package:swifty_companion/pages/login_page/login_page.dart';
-import 'package:swifty_companion/pages/profile_page/my_profile.dart';
+import 'package:swifty_companion/views/Skeletonizer/skeletonizer_profile.dart';
+import 'package:swifty_companion/views/login_page/login_page.dart';
+import 'package:swifty_companion/views/profile_page/my_profile.dart';
 import 'package:swifty_companion/providers/provider.dart';
 
 class HomePage extends StatefulWidget {
