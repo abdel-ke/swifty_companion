@@ -46,7 +46,7 @@ class Projects extends StatelessWidget {
                   itemBuilder: (context, index) {
                     if (projects[index].cursusIds == 21) {
                       return Card(
-                        color: Theme.of(context).colorScheme.background,
+                        color: Theme.of(context).colorScheme.surface,
                         child: ListTile(
                           title: Text(projects[index].name),
                           subtitle: timeAgo(projects[index].markedAt),
@@ -56,7 +56,7 @@ class Projects extends StatelessWidget {
                     } else if (projects[index].cursusIds != 21 &&
                         grade == "Novice") {
                       return Card(
-                        color: Theme.of(context).colorScheme.background,
+                        color: Theme.of(context).colorScheme.surface,
                         child: ListTile(
                           title: Text(projects[index].name),
                           trailing: projDetail(index),

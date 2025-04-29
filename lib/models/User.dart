@@ -16,23 +16,23 @@ class User {
   final bool alumni;
   final List<Project> projects;
   final List<Skills> skills;
-  
+
   User.empty()
-      : email = '',
-        login = '',
-        fullName = '',
-        imageUrl = '',
-        location = '',
-        level = 0.0,
-        correctionPoint = 0,
-        wallet = 0,
-        grade = '',
-        city = '',
-        phone = '',
-        blackholedAt = '',
-        alumni = false,
-        projects = [],
-        skills = [];
+    : email = '',
+      login = '',
+      fullName = '',
+      imageUrl = '',
+      location = '',
+      level = 0.0,
+      correctionPoint = 0,
+      wallet = 0,
+      grade = '',
+      city = '',
+      phone = '',
+      blackholedAt = '',
+      alumni = false,
+      projects = [],
+      skills = [];
 
   User({
     required this.email,
@@ -53,22 +53,32 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
-    int index = json['cursus_users']
-        .indexWhere((element) => element['grade'] == 'Member');
+    // int index = json['cursus_users']
+    //     .indexWhere((element) => element['grade'] == 'Member');
 
-    if (index == -1) {
-      index = json['cursus_users']
-          .indexWhere((element) => element['grade'] == 'Student');
-    }
+    // if (index == -1) {
+    //   index = json['cursus_users']
+    //       .indexWhere((element) => element['grade'] == 'Student');
+    // }
 
-    if (index == -1) {
-      index = json['cursus_users']
-          .indexWhere((element) => element['grade'] == 'Learner');
-    }
+    // if (index == -1) {
+    //   index = json['cursus_users']
+    //       .indexWhere((element) => element['grade'] == 'Transcender');
+    // }
 
-    if (index == -1) {
-      index = json['cursus_users']
-          .indexWhere((element) => element['grade'] == null);
+    // if (index == -1) {
+    //   index = json['cursus_users']
+    //       .indexWhere((element) => element['grade'] == 'Learner');
+    // }
+
+    // if (index == -1) {
+    //   index = json['cursus_users']
+    //       .indexWhere((element) => element['grade'] == null);
+    // }
+    // if length is 2 set index to 1 insted set it to 0
+    int index = 0;
+    if (json['cursus_users'].length == 2) {
+      index = 1;
     }
     return User(
       email: json['email'] ?? "Unavailable",
@@ -84,12 +94,14 @@ class User {
       city: json['campus'][0]['city'] ?? "Unavailable",
       phone: json['phone'] ?? "-",
       alumni: json['alumni?'],
-      projects: (json['projects_users'] as List).map((projectJson) {
-        return Project.fromJson(projectJson);
-      }).toList(),
-      skills: (json['cursus_users'][index]['skills'] as List)
-          .map((skillJson) => Skills.fromJson(skillJson))
-          .toList(),
+      projects:
+          (json['projects_users'] as List).map((projectJson) {
+            return Project.fromJson(projectJson);
+          }).toList(),
+      skills:
+          (json['cursus_users'][index]['skills'] as List)
+              .map((skillJson) => Skills.fromJson(skillJson))
+              .toList(),
     );
   }
 
@@ -135,16 +147,13 @@ class Skills {
   String name;
   double level;
 
-  Skills({
-    required this.id,
-    required this.name,
-    required this.level,
-  });
+  Skills({required this.id, required this.name, required this.level});
   factory Skills.fromJson(Map<String, dynamic> json) {
     return Skills(
-        id: json['id'] ?? 0,
-        name: json['name'] ?? "undefined",
-        level: json['level'] ?? 0.0);
+      id: json['id'] ?? 0,
+      name: json['name'] ?? "undefined",
+      level: json['level'] ?? 0.0,
+    );
   }
 }
 
@@ -152,14 +161,9 @@ class Coalition {
   String coverUrl;
   Color color;
 
-  Coalition.empty()
-      : coverUrl = 'null',
-        color = const Color(0xff02cdd1);
+  Coalition.empty() : coverUrl = 'null', color = const Color(0xff02cdd1);
 
-  Coalition({
-    required this.coverUrl,
-    required this.color,
-  });
+  Coalition({required this.coverUrl, required this.color});
 
   factory Coalition.fromJson(json) {
     if (json.isEmpty) {
@@ -167,9 +171,12 @@ class Coalition {
     }
     return Coalition(
       coverUrl: json[0]['cover_url'] ?? "null",
-      color: (json[0]['color'] != null && json[0]['color'].isNotEmpty)
-          ? Color(int.parse('FF${json[0]['color'].substring(1)}', radix: 16))
-          : const Color(0xff02cdd1),
+      color:
+          (json[0]['color'] != null && json[0]['color'].isNotEmpty)
+              ? Color(
+                int.parse('FF${json[0]['color'].substring(1)}', radix: 16),
+              )
+              : const Color(0xff02cdd1),
     );
   }
 }
@@ -178,10 +185,7 @@ class SearchUser {
   String login;
   String imageUrl;
 
-  SearchUser({
-    required this.login,
-    required this.imageUrl,
-  });
+  SearchUser({required this.login, required this.imageUrl});
 
   factory SearchUser.fromJson(Map<String, dynamic> json) {
     return SearchUser(

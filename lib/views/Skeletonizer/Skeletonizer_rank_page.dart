@@ -33,7 +33,7 @@ class SkeletonizerCardUser extends StatelessWidget {
     return Skeletonizer(
       child: Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Column(

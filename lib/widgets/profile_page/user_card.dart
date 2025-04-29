@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:swifty_companion/utils/functions.dart';
@@ -23,7 +22,7 @@ class CardUser extends StatelessWidget {
       },
       child: Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Column(

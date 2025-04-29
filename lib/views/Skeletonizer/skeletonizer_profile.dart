@@ -23,7 +23,7 @@ class SkeletonizerProfile extends StatelessWidget {
                       itemCount: 5,
                       itemBuilder: (context, index) {
                         return Card(
-                          color: Theme.of(context).colorScheme.background,
+                          color: Theme.of(context).colorScheme.surface,
                           child: const ListTile(
                             title: Text('project Name'),
                             trailing: Text('in progress'),

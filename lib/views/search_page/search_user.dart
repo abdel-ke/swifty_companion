@@ -16,7 +16,7 @@ class _SearchPageState extends State<SearchPage> {
 
     return Scaffold(
       appBar: appBar(context),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

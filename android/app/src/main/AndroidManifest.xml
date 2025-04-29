@@ -1,5 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="swifty_companion"
         android:name="${applicationName}"
@@ -31,22 +30,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-
-
-
-
-        <activity
-            android:name="com.linusu.flutter_web_auth_2.CallbackActivity"
-            android:exported="true">
-            <intent-filter android:label="flutter_web_auth_2">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="myapp" /> <!-- This must correspond to the custom scheme used for instantiatng the client... See below -->
-            </intent-filter>
-        </activity>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
