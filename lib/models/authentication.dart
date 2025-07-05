@@ -14,10 +14,11 @@ import 'package:swifty_companion/models/user.dart';
 class Authentication {
   late final OAuth2Helper _helper;
   final client = OAuth2Client(
-      authorizeUrl: authorizeURL,
-      tokenUrl: tokenURL,
-      redirectUri: dotenv.env['REDIRECTURL'].toString(),
-      customUriScheme: dotenv.env['CUSTOMURISCHEME'].toString());
+    authorizeUrl: authorizeURL,
+    tokenUrl: tokenURL,
+    redirectUri: dotenv.env['REDIRECTURL'].toString(),
+    customUriScheme: dotenv.env['CUSTOMURISCHEME'].toString(),
+  );
 
   Authentication() {
     _helper = OAuth2Helper(
@@ -58,8 +59,10 @@ class Authentication {
       token = await _helper.getToken();
     }
     Uri url = Uri.parse('$intraURL/v2/users/$login');
-    final response = await http
-        .get(url, headers: {'Authorization': 'Bearer ${token!.accessToken}'});
+    final response = await http.get(
+      url,
+      headers: {'Authorization': 'Bearer ${token!.accessToken}'},
+    );
     if (response.statusCode == 200) {
       return User.fromJson(jsonDecode(response.body));
     } else {
@@ -70,8 +73,10 @@ class Authentication {
   Future<Coalition> fetchCoalition(String login) async {
     AccessTokenResponse? token = await _helper.getToken();
     String url = '$intraURL/v2/users/$login/coalitions';
-    final response = await http.get(Uri.parse(url),
-        headers: {'Authorization': 'Bearer ${token!.accessToken}'});
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {'Authorization': 'Bearer ${token!.accessToken}'},
+    );
     if (response.statusCode == 200) {
       return Coalition.fromJson(jsonDecode(response.body));
     } else {
@@ -84,9 +89,12 @@ class Authentication {
       AccessTokenResponse? token = await _helper.getToken();
       if (!token!.isExpired()) {
         Uri url = Uri.parse(
-            '$intraURL/v2/cursus/21/cursus_users?&filter[campus_id]=$compus&range[begin_at]=${promo[city]![date]}&page=$page&per_page=20&sort=-level');
-        final response = await http.get(url,
-            headers: {'Authorization': 'Bearer ${token.accessToken}'});
+          '$intraURL/v2/cursus/21/cursus_users?&filter[campus_id]=$compus&range[begin_at]=${promo[city]![date]}&page=$page&per_page=20&sort=-level',
+        );
+        final response = await http.get(
+          url,
+          headers: {'Authorization': 'Bearer ${token.accessToken}'},
+        );
         if (response.statusCode == 200) {
           return Ranking.fromListJson(jsonDecode(response.body));
         } else {
@@ -105,9 +113,10 @@ class Authentication {
       AccessTokenResponse? token = await _helper.getToken();
       if (!token!.isExpired()) {
         final Uri url = Uri.parse("$intraURL/v2/me");
-        final response = await http.get(url, headers: {
-          'Authorization': 'Bearer ${token.accessToken}',
-        });
+        final response = await http.get(
+          url,
+          headers: {'Authorization': 'Bearer ${token.accessToken}'},
+        );
         if (response.statusCode == 200) {
           return User.fromJson(jsonDecode(response.body));
         } else {
@@ -151,9 +160,7 @@ class Authentication {
         final response = await dio.get(
           url,
           options: Options(
-            headers: {
-              'Authorization': 'Bearer ${token.accessToken}',
-            },
+            headers: {'Authorization': 'Bearer ${token.accessToken}'},
           ),
         );
         if (response.statusCode == 200) {

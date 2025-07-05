@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:swifty_companion/constants/constant.dart';
+import 'package:swifty_companion/models/ranking.dart';
 import 'package:swifty_companion/routes.dart';
 import 'package:swifty_companion/utils/functions.dart';
 import 'package:swifty_companion/views/home_page.dart';
@@ -13,10 +14,10 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   secretId = await getSecretId();
+  promo = await getPromo();
+  generation = await getGenerations();
   await dotenv.load(fileName: ".env");
   runApp(const MainApp());
 }
@@ -27,16 +28,12 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => MyProvider()),
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => MyProvider())],
       child: MaterialApp(
         theme: lightTheme,
         darkTheme: darkTheme,
         debugShowCheckedModeBanner: false,
-        home: const Scaffold(
-          body: HomePage(),
-        ),
+        home: const Scaffold(body: HomePage()),
         routes: routes,
       ),
     );
@@ -49,13 +46,13 @@ class MainApp extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.logout),
           onPressed: () {
-            Provider.of<MyProvider>(context, listen: false)
-                .auth
-                .helper
-                .disconnect();
+            Provider.of<MyProvider>(
+              context,
+              listen: false,
+            ).auth.helper.disconnect();
             Navigator.pushNamed(context, '/login');
           },
-        )
+        ),
       ],
     );
   }

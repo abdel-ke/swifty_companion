@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:swifty_companion/models/ranking.dart';
 import 'package:swifty_companion/views/profile_page/profile_info.dart';
 import 'package:swifty_companion/providers/provider.dart';
 
@@ -58,42 +59,112 @@ List getLastTwoNumber(String str) {
 
 Future<String> getSecretId() async {
   final db = FirebaseFirestore.instance;
-  final result = await db.collection("intra").get();
-  final secretId = await result.docs.first.data()["secretId"];
+  final result = await db.collection("intra").doc("credentials").get();
+  final secretId = await result.data()?["secretId"] ?? "defaultSecretId";
   return secretId;
 }
 
-void search(BuildContext context, String login) async {
-    if (login.isNotEmpty) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          });
-      try {
-        await Provider.of<MyProvider>(context, listen: false)
-            .auth
-            .fetchUser(login);
-        if (!context.mounted) return;
-        Navigator.pop(context);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ProfileInfo(login: login)));
-      } catch (e) {
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(
-              'User not found',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white),
-            ),
-            duration: Duration(seconds: 4),
-          ),
-        );
+Future<Map<String, Map<String, dynamic>>> getPromo() async {
+  try {
+    final db = FirebaseFirestore.instance;
+    
+    // Define campus documents to fetch
+    final campusIds = ['khouribga', 'BenGuerir', 'Tetouan', 'Rabat'];
+    final campusNames = ['Khouribga', 'BenGuerir', 'Tetouan', 'Rabat'];
+    
+    // Fetch all documents in parallel for better performance
+    final futures = campusIds.map((id) => 
+      db.collection("intra").doc(id).get()
+    ).toList();
+    
+    final snapshots = await Future.wait(futures);
+    
+    // Check if all documents exist
+    if (snapshots.every((snapshot) => snapshot.exists)) {
+      // Build the result map
+      final promoData = <String, Map<String, dynamic>>{};
+      
+      for (int i = 0; i < snapshots.length; i++) {
+        final data = snapshots[i].data() as Map<String, dynamic>;
+        promoData[campusNames[i]] = data;
       }
+      return promoData;
+    } else {
+      final missingDocs = <String>[];
+      for (int i = 0; i < snapshots.length; i++) {
+        if (!snapshots[i].exists) {
+          missingDocs.add(campusIds[i]);
+        }
+      }
+      print('Error: Missing documents: ${missingDocs.join(', ')}');
+      return defaultPromo;
+    }
+  } catch (e) {
+    print('Error fetching promo data: $e');
+    return defaultPromo;
+  }
+}
+
+Future<Map<String, Map<String, dynamic>>> getGenerations() async {
+  try {
+    final db = FirebaseFirestore.instance;
+    final result = db.collection("generations");
+    final khouribga = await result.doc("Khouribga").get();
+    final benGuerir = await result.doc("BenGuerir").get();
+    final tetouan = await result.doc("Tetouan").get();
+    final rabat = await result.doc("Rabat").get();
+
+    if (khouribga.exists && benGuerir.exists && tetouan.exists && rabat.exists) {
+      final generation = {
+        'Khouribga': khouribga.data() as Map<String, dynamic>,
+        'BenGuerir': benGuerir.data() as Map<String, dynamic>,
+        'Tetouan': tetouan.data() as Map<String, dynamic>,
+        'Rabat': rabat.data() as Map<String, dynamic>,
+      };
+      print('Generations data loaded successfully: $generation');
+      return generation;
+    } else {
+      print('Error: One or more documents do not exist');
+      return defaultGeneration;
+    }
+  } catch (e) {
+    print('Error fetching generations data: $e');
+    return defaultGeneration;
+  }
+}
+
+void search(BuildContext context, String login) async {
+  if (login.isNotEmpty) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+    try {
+      await Provider.of<MyProvider>(
+        context,
+        listen: false,
+      ).auth.fetchUser(login);
+      if (!context.mounted) return;
+      Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ProfileInfo(login: login)),
+      );
+    } catch (e) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            'User not found',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
+          ),
+          duration: Duration(seconds: 4),
+        ),
+      );
     }
   }
-  
+}

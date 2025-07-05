@@ -35,15 +35,25 @@ class MyRankingListState extends State<RankingList> {
       final promo = Provider.of<MyProvider>(context, listen: false).promo;
       final city = promo.split(' ')[0];
       final selectedPromo = promo.split(' ')[1];
-      final cursusId = city == 'Khouribga'
-          ? KHOURIBGAID
-          : city == "BenGuerir"
-              ? BENGURIRID
-              : MEDID;
-      List<Ranking> newData =
-          await Provider.of<MyProvider>(context, listen: false)
-              .auth
-              .fetchPromo(cursusId, city, selectedPromo, page);
+      late final int cursusId;
+      switch (city) {
+        case 'Khouribga':
+          cursusId = KHOURIBGAID;
+          break;
+        case 'BenGuerir':
+          cursusId = BENGURIRID;
+          break;
+        case 'Tetouan':
+          cursusId = MEDID;
+          break;
+        default:
+          cursusId = RABATID;
+          break;
+      }
+      List<Ranking> newData = await Provider.of<MyProvider>(
+        context,
+        listen: false,
+      ).auth.fetchPromo(cursusId, city, selectedPromo, page);
       setState(() {
         data.addAll(newData);
         page++;
@@ -62,10 +72,11 @@ class MyRankingListState extends State<RankingList> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          title: const Text('Ranking List',)),
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: const Text('Ranking List'),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: GridView.builder(
@@ -83,12 +94,12 @@ class MyRankingListState extends State<RankingList> {
               return CardUser(data: data[index], index: index);
             }
           },
-          controller: _controller
-            ..addListener(() {
-              if (!isLoading && _controller.position.extentAfter < 20) {
-                _loadData();
-              }
-            }),
+          controller:
+              _controller..addListener(() {
+                if (!isLoading && _controller.position.extentAfter < 20) {
+                  _loadData();
+                }
+              }),
         ),
       ),
       drawer: const MyDrawer(),

@@ -40,3 +40,4 @@ const List<String> clustersSvgUrl = [
 const KHOURIBGAID = 16;
 const BENGURIRID = 21;
 const MEDID = 55;
+const RABATID = 75;

@@ -13,7 +13,7 @@ class MedCluster extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text('Med Clusters'),
+          title: const Text('Tetouan Clusters'),
           bottom: TabBar(
             physics: const NeverScrollableScrollPhysics(),
             labelColor: Theme.of(context).appBarTheme.foregroundColor,
