@@ -98,6 +98,46 @@ class Authentication {
         if (response.statusCode == 200) {
           return Ranking.fromListJson(jsonDecode(response.body));
         } else {
+          print('Failed to load Promo: ${response.body}');
+          throw Exception('Failed to load Promo');
+        }
+      }
+      throw Exception('token is expired');
+    } catch (e) {
+      print('error: $e');
+      throw Exception(e);
+    }
+  }
+
+  Future<List<Ranking>> fetchAlumniPromo(compus, city, date, page) async {
+    try {
+      AccessTokenResponse? token = await _helper.getToken();
+      if (!token!.isExpired()) {
+        Uri url = Uri.parse(
+          '$intraURL/v2/cursus/21/cursus_users?&filter[campus_id]=$compus&range[begin_at]=${promo[city]![date]}&page=$page&per_page=100&sort=-level',
+        );
+        final response = await http.get(
+          url,
+          headers: {'Authorization': 'Bearer ${token.accessToken}'},
+        );
+        if (response.statusCode == 200) {
+          // Filter out alumni users
+          List<dynamic> jsonList = jsonDecode(response.body);
+          // filter the jsonList when the grade = Alumni
+          // return only alumni students
+          jsonList =
+              jsonList.where((item) {
+                return item['user']['alumni?'] == true &&
+                    item['grade'] != 'null' &&
+                    item['grade'] == 'Alumni';
+              }).toList();
+          // Convert the filtered list to Ranking objects
+          if (jsonList.isEmpty) {
+            throw Exception('Failed to load Promo');
+          }
+          return Ranking.fromListJson(jsonList);
+        } else {
+          print('Failed to load Promo: ${response.body}');
           throw Exception('Failed to load Promo');
         }
       }
